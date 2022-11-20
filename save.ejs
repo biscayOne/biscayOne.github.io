@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Progate</title>  
+  
+  
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="\stylesheet.css">
+  <script src="https://kit.fontawesome.com/b2946c68a8.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+</head>
+<body>
+  <!-- <div>タグに"change-css"というidをつけてください -->
+  <header>
+    
+      <a href="#" class="btna nnm test"><i class="fa-regular fa-circle-play fa"></i><span class="status">配信中</span></a>
+      <a href="#" class="btna nmm test"><i class="fa-regular fa-calendar-days fa"></i><span class="status">配信予定</span></a>
+      <a href="#" class="btna mmm test"><i class="fa-solid fa-database fa"></i><span class="status">配信終了</span></a>
+      <div class="timejst"><li class="clock3"><span id="Clock1"></span><span id="paypay">:</span><span id="Clock2"></span></li></div>
+      <div class="smart">
+       
+        
+        <a href="#" class="btna nnm"><i class="fa-regular fa-circle-play fa"></i></a>
+        <a href="#" class="btna nmm"><i class="fa-regular fa-calendar-days fa"></i></a>
+        <a href="#" class="btna mmm"><i class="fa-solid fa-database fa"></i></a>
+      </div>
+  </header>
+
+  <div class="btn" id="change-css">CSSを変更</div>
+  
+  <h1 id="text">Hello, World!</h1>
+  
+  <div><img src="https://i.ytimg.com/vi/A2wluz7IRXA/default_live.jpg" alt=""></div>
+
+  <h1 id="subtitle1" class="subtitle2">配信中</h1>
+  <div class="list">
+    
+  <% for(let i=0; i<total[1].length; i++){ %>
+  <div class="link"><a href="https://www.youtube.com/watch?v=<%= total[1][i].ID %>"><img src=<%= total[1][i].IMG %> class="img" alt=""><p><%= total[1][i].TITLE %></p><p><%= total[1][i].TIME %> (JST)</p></a></div>
+  <% } %>
+  </div>
+  
+  <h1 id="subtitle2" class="subtitle2">配信予定</h1>
+  <div class="list">
+    
+  <% for(let i=0; i<total[0].length; i++){ %>
+  <div class="link"><a href="https://www.youtube.com/watch?v=<%= total[0][i].ID %>"><img src=<%= total[0][i].IMG %><% console.log(total[0][i].ID) %> class="img" alt=""><p><%= total[0][i].TITLE %></p><p><%= total[0][i].TIME %> (JST)</p></a></div>
+  <% } %>
+  </div>
+
+  <h1 id="subtitle3" class="subtitle2">配信終了</h1>
+  <div class="list">
+    
+  <% for(let i=0; i<total[2].length; i++){ %>
+  <div class="link"><a href="https://www.youtube.com/watch?v=<%= total[2][i].ID %>"><img src=<%= total[2][i].IMG %> class="img" alt=""><p><%= total[2][i].TITLE %></p><p><%= total[2][i].TIME %> (JST)</p></a></div>
+  <% } %>
+  </div>
+
+  <script src="script.js"></script>
+  <script>const a = ()=>{console.log("AAA");alert('Click');}
+    
+ button = document.getElementById('change-css');
+button.addEventListener('click', a);
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VEEのスケジュール帳(非公式) -アルファ版-</title>  
+  <link rel="stylesheet" href="/stylesheet.css">
+  <script src="https://kit.fontawesome.com/b2946c68a8.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/fontawesome/css/all.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.css" type="text/css" media="all" />
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" /> 
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+  <div ontouchstart = "">
+
+    
+  <header>
+    <ul>
+      <li><button id="btnLN" class="btn"><i class="fa-fw fa-regular fa-circle-play fa faHeader"></i><span class="string">配信中</span></button></li>
+      <li><button id="btnUC" class="btn"><i class="fa-fw fa-regular fa-calendar-days fa faHeader"></i><span class="string">配信予定</span></button></li>
+      <li><button id="btnA" class="btn"><i class="fa-fw fa-solid fa-database fa faHeader"></i><span class="string">配信終了</span></button></li>
+    </ul>
+    <div id="clock"><div id="showClock"><span id="hours"></span><span id="blinking">:</span><span id="minutes"></span><span> (JST)</span></div></div>      
+  </header>
+
+
+  <div class="headlineParent"><h1 id="headlineLN" class="headline">配信中</h1></div>
+  <div class="subtitleParent"><h2 id="subtitleLN" class="subtitle">Live now</h2></div>
+  
+  <div id="noneParentFrame" class="optionParentFrame">
+    <div id="noneParent" class="optionParent">
+      <img class="optionImage" src="/images/noneImage.png">
+      <h2 id="noneString" class="optionString">Sorry!<br>No Live Streams at This Time.<br><br>See You Soon!</h2>
+      <a id="noneImageCredit" class="optionImageCredit" href="https://www.ac-illust.com/main/profile.php?id=i8j0Pxzf" target="_blank" rel="noopener noreferrer">イラストAC / ななか</a>
+    </div>
+  </div>
+  
+  <div class="container">
+
+    <% ObjectData[0].forEach((element)=>{ %>
+    <div class="videoParent">
+      <div class="video videoLN red">
+        <a href="https://www.youtube.com/watch?v=<%= element.videoId %>" target="_blank" rel="noopener noreferrer">
+          <div class="videoThumbnailParent">
+            <img src=<%= element.videoThumbnail %> class="videoThumbnail">            
+            <img class="icon iconLN" src="<%= element.icon %>">            
+          </div>
+          <div class="timeParent">
+            <i class="fa-fw fa-regular fa-hourglass-half faa-tada animated fa faVideo"></i><span class="time"><%= element.time %></span>
+          </div>
+          <div class="videoDetail red">
+            <span class="videoTitle"><%= element.videoTitle %></span>
+            <div class="collaboration red"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <% }) %>
+
+  </div>
+  
+  
+  <div class="headlineParent"><h1 id="headlineUC" class="headline">配信予定</h1></div>
+  <div class="subtitleParent"><h2 id="subtitleUC" class="subtitle">Upcoming Streams</h2></div>
+
+  <div id="birthdayParentFrame" class="optionParentFrame">
+    <div class="optionParent">
+      <img class="optionImage" src="/images/happyBirthday.jpg">
+      <h2 id="birthdayString" class="optionString"></h2>
+      <a id="birthdayImageCredit" class="optionImageCredit" href="https://www.ac-illust.com/main/profile.php?id=m57dQU7X" target="_blank" rel="noopener noreferrer">イラストAC / ユキ</a>
+      <a id="birthdayIconParent" href="" target="_blank" rel="noopener noreferrer"><img id="birthdayIcon" src=""></a>
+    </div>
+  </div>
+  
+  <div class="container">
+
+    <% ObjectData[1].forEach((element1)=>{ %>
+    <div class="scheduleDate"><%= element1[0] %></div>    
+      <% element1[1].forEach((element2)=>{ %>
+      <div class="videoParent">
+        <div class="video videoUC">
+          <a href="https://www.youtube.com/watch?v=<%= element2.videoId %>" target="_blank" rel="noopener noreferrer">
+            <div class="videoThumbnailParent">
+              <img src=<%= element2.videoThumbnail %> class="videoThumbnail">
+              <img class="icon iconUC" src="<%= element2.icon %>">
+              <span class='option premiere <%if(element2.status==="processed"){%><%= "premiereDisplay" %><% } %>'>プレミア公開</span>
+            </div>
+            <div class="timeParent">
+              <i class="fa-fw fa-solid fa-hourglass-start fa faVideo"></i><span class="time" optionTime="<%= element2.time2 %>"><%= element2.time %> (JST)</span>
+            </div>    
+            <div class="videoDetail">
+              <span class="videoTitle"><%= element2.videoTitle %></span>
+              <div class="collaboration"><% element2.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    <% }) %>
+
+  </div>
+
+  
+  <div class="headlineParent"><h1 id="headlineA" class="headline">配信終了</h1></div>
+  <div class="subtitleParent"><h2 class="subtitle">Video Archives</h2></div>
+  
+  <div class="container">
+    
+    <% ObjectData[2].forEach((element)=>{ %>
+    <div class="videoParent">
+      <div class="video">
+        <a href="https://www.youtube.com/watch?v=<%= element.videoId %>" target="_blank" rel="noopener noreferrer">
+          <div class="videoThumbnailParent">
+            <img src=<%= element.videoThumbnail %> class="videoThumbnail">
+            <img class="icon iconA" src="<%= element.icon %>">
+            <span class="option durationTime"><%= element.time2 %></span>
+          </div>
+          <div class="timeParent">
+            <i class="fa-fw fa-solid fa-hourglass-end fa faVideo"></i><span class="time"><%= element.time %> (JST)</span>
+          </div>
+          <div class="videoDetail">
+            <span class="videoTitle"><%= element.videoTitle %></span>
+            <div class="collaboration"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>           
+          </div>
+        </a>
+      </div>
+    </div>
+    <% }) %>
+
+  </div>
+
+  <div class="headlineParent"><h1 id="headlineTS" class="headline">連絡先</h1></div>
+  <div class="subtitleParent"><h2 class="subtitle">Contact</h2></div>
+
+  <div id="contactStringParent">
+    <p id="contactStringJapanese" class="contactString">ウェブサイトに問題がある場合は、<br>こちらのTwitterアカウントまでご連絡ください</p>
+    <p id="contactStringEnglish" class="contactString">If there's a problem with the website,<br>Please contact this Twitter account.</p>
+    <div id="twitterAccountParent"><a id="twitterAccountLink" href="https://twitter.com/rippakuriZero/status/1586990214601666560" target="_blank" rel="noopener noreferrer"><i class="fa-fw fa-brands fa-square-twitter fa faAccount"></i><span id="twitterAccount">@rippakuriZero</span></a></div>
+    <div id="topScrollParent"><button id="topScroll"><i class="fa-fw fa-solid fa-angles-up fa faScroll"></i></button></div>
+  </div>
+
+  
+  </div>
+  <script src="JQuery.js"></script>
+</body>
+</html>
