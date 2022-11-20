@@ -1,0 +1,1110 @@
+*{
+  box-sizing: border-box;
+
+  font-family: sans-serif;
+}
+
+body{
+  margin-top: 0px;
+}
+
+div img {
+  vertical-align: top;
+}
+
+a{
+  color: #000;
+  text-decoration: none;
+}
+
+ul{
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+}
+
+li{
+  float: left;
+}
+
+button{
+  border: none;
+
+  padding: 0;
+}
+
+.faHeader{
+  margin-right: 5px;
+}
+
+.faVideo{
+  margin-right: 3px;
+}
+
+@mixin videoShadowBox($color) {
+  box-shadow: 1.8px 0px 3.0px $color, -1.8px 0px 3.0px $color, 0px 1.8px 3.0px $color, 0px -1.8px 3.0px $color;
+}
+
+.red{
+  @include videoShadowBox(#f44);
+}
+
+.orange{
+  @include videoShadowBox(#f80);
+}
+
+.gray{
+  box-shadow: 0px 6px 6px -6px rgb(0,0,0,0.5);
+}
+
+.iconLN{
+  border: 1.6px solid #f44;
+}
+
+.iconUC{
+  border: 1.6px solid #f80;
+}
+
+.iconA{
+  border: 1.6px solid #807e83;
+}
+
+header {
+  position: fixed;  
+  top:0px;
+  left: 0px;
+  z-index: 364364;
+
+  width: 100%;
+  height: 60px;
+
+  background-color: #333;
+
+  .btn{
+    color: #fff;
+    background-color: #333;
+    font-size: 18px;
+    line-height: 60px;
+  
+    padding: 0 20px;
+    
+    cursor: pointer;
+    transition: all 0.2s;
+  
+    &:hover{
+      color: #4b74ff;
+    }
+
+  }
+
+  #clock{
+    float: right;
+  
+    color: #fff;  
+    font-size: 20px;
+    line-height: 60px;
+    
+    padding-right:20px;
+  
+    #showClock{
+      float: left;  
+    }
+
+  }
+
+}
+
+.optionParentFrame{
+  margin: 0 auto;
+
+  width: 503.2px;
+
+  background-color: #fff;
+  border: 1.6px solid #807e83;
+  border-radius: 12.54px;
+
+  padding: 10px;
+
+  display: none;
+
+  .optionParent{
+    position: relative;
+  
+    margin: 0 auto;
+    
+    width: 480px;
+    border: 1.6px solid #807e83;
+    border-radius: 12px;
+  
+    overflow: hidden;
+  
+    .optionImage{
+      width: 100%;
+    }
+  
+    .optionString{
+      position: absolute;
+      left: 0px;
+    
+      text-align: center;
+    
+      width: 100%;
+    
+      margin: 0px;
+    }
+
+    .optionImageCredit{
+      position: absolute;
+    
+      font-size: 10px;
+    
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+#birthdayParentFrame{
+  box-shadow: 0px -6px 6px #ffcde1, 6px 0px 6px #ffcde1, 0px 6px 6px #ffcde1, -6px 0px 6px #ffcde1;
+
+  margin-top: 12px;
+  margin-bottom: 24px;
+
+  #birthdayString{
+    top: 103.29px;
+  
+    font-size: 22px;
+
+    #underLine{
+      text-decoration: underline;
+    
+      cursor: pointer;
+    }
+  }
+
+  #birthdayImageCredit{
+    right: 3px;
+    bottom: 0px;
+  }
+  
+  #birthdayIcon{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  
+    width: 120px;
+    height: 120px;
+  
+    border: 4px solid;
+    border-radius: 50%;
+  
+    cursor: pointer;
+  }
+
+}
+
+#noneParentFrame{
+  box-shadow: 5px 0px 5px -5px rgb(0,0,0,0.5), 0px 10px 10px -10px rgb(0,0,0,0.5), -5px 0px 5px -5px rgb(0,0,0,0.5);
+
+  margin-bottom: 12px;
+
+  #noneParent{
+    background-color: #9fcff7;
+
+    #noneString{
+      top: 108.2px;
+    
+      font-size: 24px;
+    }
+    
+    #noneImageCredit{
+      right: 5px;
+      bottom: 2px;
+    }
+    
+  }
+
+}
+
+.headlineParent{
+  text-align: center;
+
+  .headline{
+    color: #fff;
+    font-size: 40px;
+    border-radius: 30px;
+    box-shadow: 0px 12px 12px -12px rgb(0,0,0,0.5);
+  
+    padding: 0 30px 0 30px;
+    margin: 36px 0px 6px 0;
+    
+    display: inline-block;
+  }
+
+  #headlineLN{
+    background-color: #f44;
+    
+    margin-top: 96px;    
+  }  
+  
+  #headlineUC{
+    background-color: #f80;
+  }
+    
+  #headlineA{
+    background-color: #00c2cb;
+  }
+  
+  #headlineTS{
+    background-color: #999999;
+  
+    margin-top: 360px;
+  }
+
+}
+
+.subtitleParent{
+  text-align: center;
+
+  padding: 0;
+
+  .subtitle{  
+    font-size: 30px;
+    font-family: monospace;
+  
+    margin: 0px 0px 24px 0px;
+  
+    display: inline-block;
+  }
+
+  #subtitleUC{
+    margin-bottom: 12px;
+  }
+
+}
+
+.container{
+  margin: 0 auto;
+
+  width: 1720px;
+
+  padding-bottom: 24px;
+  border-bottom: 4px solid #DCDDDD;
+  
+  display: flex;
+  flex-wrap: wrap;
+
+  .scheduleDate{
+    text-align: center;
+  
+    width: 100%;
+    color: #fff;
+    background-color: #333;
+    font-size: 24px;
+    border-radius: 5px;
+    
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  .videoParent{
+    width: 20%;
+  
+    padding: 0px 6px 12px 6px;
+  
+    .video{        
+      position: relative;
+        
+      text-align: center;
+        
+      background-color: #807e83;
+      border: 0.8px solid #807e83;  
+        
+      cursor: pointer;
+      transition: all 0.32s;
+  
+      .videoThumbnailParent{
+        position: relative;
+  
+        .videoThumbnail{    
+          width: 100%;
+        
+          border-bottom: 0.8px solid #807e83;
+        }
+  
+        .icon{
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          
+          width: 60px;
+          
+          border-radius: 50%;  
+        }
+  
+        .option{
+          position: absolute;
+          right: 0px;
+          bottom: 0px;
+          
+          color: #fff;
+          font-size: 18px;
+          border-radius: 13.6px 0px 0px 13.6px;
+          border: 0.8px solid #807e83;
+          border-right: none;
+          
+          padding: 0 1.8px 0 6.8px; 
+        }
+        
+        .premiere{ 
+          background-color: #c36;
+          
+          visibility: hidden;
+        }
+  
+        .premiereDisplay{
+          visibility: visible;
+        }
+        
+        .durationTime{
+          background-color: #00c2cb;
+        }
+  
+      }
+  
+      .timeParent{
+        height: 36px;
+      
+        background-color: #fff;
+        font-size: 18px;
+        line-height: 36px;
+      
+        .fa-hourglass-half{
+          color: #f44;
+        }
+        
+        .fa-hourglass-start{
+          color: #f80;
+        }
+        
+        .fa-bell{
+          color: #f80;    
+        }
+        
+        .fa-hourglass-end{
+          color: #757575;
+        }
+      
+        .time{  
+          color: #000;
+          font-size: 18px;
+          line-height: 36px;  
+        }
+      
+      }
+  
+      .videoDetail{
+        position: absolute;
+        right: -0.8px;
+        left: -0.8px;
+      
+        width: calc(100% + 1.6px);
+        background-color: #fff;
+        border: 0.8px solid #807e83;
+        
+        margin-top: 0px;  
+        
+        display: none;
+        .videoTitle{
+          font-size: 18px;
+
+          padding: 6px;
+
+          display: inline-block;
+        }
+        .collaboration{
+          border-top: 0.8px solid #807e83;
+
+          padding: 3px;
+          margin-top: 0px;
+
+          display: none;
+          .collaborationIcon{
+            width: 20%;
+          
+            border-radius: 50%;
+
+            padding: 3px;
+
+            display: inline-block;
+          }
+        }
+      }
+  
+    }
+  
+  }
+
+}
+
+
+#contactStringParent{
+  position: relative;
+
+  margin: 0 auto;
+
+  text-align: center;
+
+  width: 1720px;
+
+  border-bottom: 4px solid #DCDDDD;
+
+  padding-bottom: 36px;
+  .contactString{
+    margin-top: 0;
+  }
+  #contactStringJapanese{    
+    font-size: 30px;
+    
+    margin-bottom: 12px;
+  }
+  
+  #contactStringEnglish{
+    font-size: 27.5px;
+  
+    margin-bottom: 24px;
+  }
+  #twitterAccountParent{
+    height: 60px;
+  
+    font-size: 40px;
+    line-height: 60px;
+    #twitterAccountLink{
+      cursor: pointer;
+      .fa-square-twitter{
+        color: #55acee;
+      }
+      
+      #twitterAccount{
+        font-size: 40px;
+        line-height: 60px;
+        text-decoration: underline;
+      }
+    }
+  }
+  #topScrollParent{
+    position: fixed;
+    bottom: 8px;
+  
+    width: 1720px;
+  
+    display: none;
+    #topScroll{
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 114514;
+    
+      text-align: center;
+    
+      width: 108px;
+      height: 108px;
+    
+      color: #fff;
+      background-color: #505050;
+      opacity: 0.5;
+      font-size: 57.6px;
+      line-height: 108px;
+      
+      border-radius: 50%;
+    
+      cursor: pointer;
+    }
+  }
+}
+
+
+@media(max-width:1919px) {
+
+  .faHeader{
+    margin-right: 3px;
+  }
+  
+  .faVideo{
+    margin-right: 2px;
+  }
+
+  @mixin videoShadowBox($color) {
+    box-shadow: 1.5px 0px 2.5px $color, -1.5px 0px 2.5px $color, 0px 1.5px 2.5px $color, 0px -1.5px 2.5px $color;
+  }
+
+  .red{
+    @include videoShadowBox(#f44);
+  }
+  
+  .orange{
+    @include videoShadowBox(#f80);
+  }
+  
+  .gray{
+    box-shadow: 0px 5px 5px -5px rgb(0,0,0,0.5);
+  }
+
+  header {
+    height: 50px;
+
+    .btn{
+      font-size: 16px;
+      line-height: 50px;
+    
+      padding: 0 16px;
+    }
+
+    #clock{ 
+      font-size: 18px;
+      line-height: 50px;
+      
+      padding-right:18px;
+    }
+
+  }
+
+  #birthdayParentFrame{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  #noneParentFrame{
+    margin-bottom: 10px;
+  }
+
+  .headlineParent{
+
+    .headline{
+      font-size: 32px;
+      border-radius: 24px;
+      box-shadow: 0px 9px 9px -9px rgb(0,0,0,0.5);
+    
+      padding: 0 24px;
+      margin: 30px 0px 5px 0;
+    }
+  
+    #headlineLN{
+      margin-top: 80px;    
+    }
+  
+    #headlineTS{
+      margin-top: 300px;
+    }
+
+  }
+
+  .subtitleParent{
+
+    .subtitle{  
+      font-size: 24px;
+    
+      margin: 0px 0px 20px 0px;
+    }
+    
+    #subtitleUC{
+      margin-bottom: 10px;
+    }
+
+  }
+
+  .container{
+    width: 1103px;
+
+    padding-bottom: 20px;
+
+    .scheduleDate{
+      font-size: 20px;
+      border-radius: 4px;
+      
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .videoParent{
+      width: 25%;
+      
+      padding: 0px 5px 10px 5px;
+
+      .video{
+
+        .videoThumbnailParent{
+    
+          .icon{
+            width: 48px; 
+          }
+    
+          .option{
+            font-size: 15px;
+            border-radius: 11.2px 0px 0px 11.2px;
+          
+            padding: 0 1.5px 0 5.6px;
+          }
+    
+        }
+    
+        .timeParent{
+          height: 30px;
+        
+          font-size: 15px;
+          line-height: 30px;
+      
+          .time{  
+            font-size: 15px;
+            line-height: 30px;  
+          }
+      
+        }
+    
+        .videoDetail{
+          .videoTitle{
+            font-size: 15px;
+          
+            padding: 5px;
+          }
+          .collaboration{
+            padding: 2.5px;
+            .collaborationIcon{
+              padding: 2.5px;
+            }
+          }
+        }
+        
+      }
+
+    }
+
+  }
+  
+  #contactStringParent{
+    width: 1103px;
+  
+    padding-bottom: 30px;
+    #contactStringJapanese{    
+      font-size: 24px;
+      
+      margin-bottom: 10px;
+    }
+  
+    #contactStringEnglish{
+      font-size: 22px;
+  
+      margin-bottom: 20px;
+    }
+    #twitterAccountParent{
+      height: 48px;
+  
+      font-size: 32px;
+      line-height: 48px;
+      #twitterAccountLink{
+        #twitterAccount{
+          font-size: 32px;
+          line-height: 48px;
+        }
+      }
+    }
+    #topScrollParent{  
+      width: 1103px;
+      #topScroll{
+        bottom: 10px;
+        right: 10px;
+    
+        width: 90px;
+        height: 90px;
+      
+        font-size: 48px;
+        line-height: 90px;
+      }
+    }
+  }
+
+
+}
+
+@media(max-width:1023px) {
+
+  header{
+
+    .btn{
+
+      &:hover{
+        color: #fff;
+      }
+
+    }
+
+  }
+
+  .container{
+    width: 733px;
+
+    .videoParent{
+      width: 33%;      
+
+      .video{
+        .videoThumbnailParent{
+          .option{
+            font-size: 14px;
+            border-radius: 10.8px 0px 0px 10.8px;
+          
+            padding: 0 1.4px 0 5.4px;
+          }
+        }
+        
+        .timeParent{
+          height: 28px;
+      
+          font-size: 14px;
+          line-height: 28px;
+          .time{
+            font-size: 14px;
+            line-height: 28px; 
+          }
+        }
+        .videoDetail{
+          .videoTitle{
+            font-size: 14px;
+      
+            padding: 4px;
+          }
+          .collaboration{
+            padding: 2px;
+            .collaborationIcon{
+              padding: 2px;
+            }
+          }
+        }
+
+      }
+    }
+  }  
+ 
+
+  #contactStringParent{
+    width: 733px;
+    #topScrollParent{  
+      width: 733px;
+    }
+  }
+
+    
+}
+
+@media(max-width:767px) {
+
+  .faHeader{
+    margin-right: 0px;
+  }
+
+  header{
+    .btn{
+      .string{
+        display: none;
+      }
+    }
+    #clock{  
+      padding-right:5px;
+    }
+  }
+    
+  .container{
+    width: 564px;
+    .videoParent{
+      width: 50%;  
+      .video{
+        .videoThumbnailParent{
+          .option{
+            font-size: 16px;
+            border-radius: 12.0px 0px 0px 12.0px;
+          
+            padding: 0 1.6px 0 6.0px;
+          }
+        }
+        .timeParent{
+          height: 32px;
+      
+          font-size: 16px;
+          line-height: 32px; 
+          .time{
+            font-size: 16px;
+            line-height: 32px; 
+          }
+        }
+        .videoDetail{
+          .videoTitle{
+            font-size: 16px;
+
+            padding: 5px;
+          }
+          .collaboration{
+            padding: 2.5px;
+            .collaborationIcon{
+              padding: 2.5px;
+            }
+          }       
+        }
+      }    
+    }
+  }  
+
+  #contactStringParent{
+    width: 564px;
+    #topScrollParent{  
+      width: 564px;
+    }
+  }
+  
+
+}
+
+@media(max-width:599px) {
+        
+  .faVideo{
+    margin-right: 1px;
+  }
+
+  @mixin videoShadowBox($color) {
+    box-shadow: 1.2px 0px 1.8px $color, -1.2px 0px 1.8px $color, 0px 1.2px 1.8px $color, 0px -1.2px 1.8px $color;
+  }
+  
+  .red{
+    @include videoShadowBox(#f44);
+  }
+  
+  .orange{
+    @include videoShadowBox(#f80);
+  }
+
+  .gray{
+    box-shadow: 0px 3px 3px -3px rgb(0,0,0,0.5);
+  }
+
+  header {
+    width: 100%;
+    height: 30px;
+
+    padding: 0 5px;
+    .btn{
+      font-size: 12px;
+      line-height: 30px;
+    
+      padding: 0 15px;
+      .string{
+        display: none;
+      }
+    }
+    #clock{ 
+      font-size: 13px;
+      line-height: 30px;
+    }
+  }
+
+
+  #birthdayParentFrame{
+    box-shadow: 0px -4px 4px #ffcde1, 4px 0px 4px #ffcde1, 0px 4px 4px #ffcde1, -4px 0px 4px #ffcde1;
+
+    margin-top: 4px;
+    margin-bottom: 16px;
+    #birthdayString{
+      top: 64.4px;
+    
+      font-size: 16px;
+    }
+    #birthdayIcon{
+      top: 3px;
+      left: 3px;
+    
+      width: 80px;
+      height: 80px;
+  
+      border: 3px solid;
+    }
+  
+    #birthdayImageCredit{
+      right: 2px;
+      bottom: -1px;
+    }
+  }
+
+
+  .headlineParent{
+    .headline{
+      font-size: 20px;
+      border-radius: 15.2px;
+      box-shadow: 0px 6px 6px -6px rgb(0,0,0,0.5);
+    
+      padding: 0 15.2px 0 15.2px;
+      margin: 20px 0px 3px 0;
+    }
+    
+    #headlineLN{
+      margin-top: 50px;    
+    }
+  
+    #headlineTS{
+      margin-top: 200px;
+    }
+  }
+  
+  .subtitleParent{
+    .subtitle{  
+      font-size: 16px;
+    
+      margin: 0px 0px 10px 0px;
+    }
+  
+    #subtitleUC{
+      margin-bottom: 6px;
+    }
+  }
+  
+  .optionParentFrame{
+    width: 335.2px;
+    
+    border-radius: 8.34px;
+
+    padding: 6px;
+    .optionParent{
+      width: 320px;
+  
+      border-radius: 8px;
+      .optionImageCredit{
+        font-size: 7px;
+      }
+    }
+  }
+
+  #noneParentFrame{
+    box-shadow: 3px 0px 3px -3px rgb(0,0,0,0.5), 0px 6px 6px -6px rgb(0,0,0,0.5), -6px 0px 6px -6px rgb(0,0,0,0.5);
+
+    margin-bottom: 6px;
+    #noneParent{
+      #noneString{
+        top: 72.2px;
+    
+        font-size: 16px;
+      }
+        
+      #noneImageCredit{
+        right: 3px;
+        bottom: 1px;
+      }
+    }
+  }
+
+  .container{
+    width: 352px;
+
+    border-bottom: 3px solid #DCDDDD;
+
+    padding-bottom: 14px;
+    .scheduleDate{
+      font-size: 13px;
+      border-radius: 3px;
+      
+      margin-top: 4px;
+      margin-bottom: 10px;
+    }
+    .videoParent{
+      width: 50%;
+  
+      padding: 0px 3px 6px 3px;
+      .video{
+        .videoThumbnailParent{
+          .option{
+            font-size: 11px;
+            border-radius: 8.4px 0px 0px 8.4px;
+        
+            padding: 0 1.1px 0 4.2px;
+          }
+          .icon{
+            width: 32px;
+          }
+        }
+        .timeParent{
+          height: 22px;
+      
+          font-size: 11px;
+          line-height: 22px;
+          .time{
+            font-size: 11px;
+            line-height: 22px;
+          }
+        }
+        .videoDetail{
+          .videoTitle{
+            font-size: 11px;
+      
+            padding: 3px;
+          }
+          .collaboration{
+            padding: 1.5px;
+            .collaborationIcon{
+              padding: 1.5px;
+            }
+          }   
+        }
+      }
+    }
+  }
+ 
+
+  #contactStringParent{
+    width: 352px;
+
+    border-bottom: 3px solid #DCDDDD;
+  
+    padding-bottom: 20px;
+    #contactStringJapanese{    
+      font-size: 15px;
+      
+      margin-bottom: 6px;
+    }
+  
+    #contactStringEnglish{
+      font-size: 13.75px;
+  
+      margin-bottom: 10px;
+    }
+    #twitterAccountParent{
+      height: 30px;
+
+      font-size: 20px;
+      line-height: 30px;
+      #twitterAccountLink{
+        #twitterAccount{
+          font-size: 20px;
+          line-height: 30px;
+        }
+      }
+    }
+    #topScrollParent{  
+      width: 352px;
+      #topScroll{
+        bottom: 6px;
+        right: 6px;
+    
+        width: 60px;
+        height: 60px;
+      
+        font-size: 32px;
+        line-height: 60px;
+      }
+    }
+  }
+
+
+}
+  
+
+  
+  
+  
+
