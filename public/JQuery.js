@@ -65,9 +65,9 @@ $(function() {
       case "2月7日":
         newBirthdayCard("ミュウ・ガルシア", "MewGarcia_king", "Mew");
         break;
-      case "2月17日":
-        newBirthdayCard("神童児 丫子", "Ako_shindouji", "Ako");
-        break;
+      //case "2月17日":
+        //newBirthdayCard("神童児 丫子", "Ako_shindouji", "Ako");
+        //break;
       case "3月1日":
         newBirthdayCard("日和 ちひよ", "hiyohiyovee", "Chihiyo");
         break;
@@ -83,9 +83,9 @@ $(function() {
       case "4月26日":
         newBirthdayCard("偉雷 アマエ", "EraiAmae", "Amae");
         break;
-      case "4月27日":
-        newBirthdayCard("漣 とあ", "toatoaman", "Toa");
-        break;
+      //case "4月27日":
+        //newBirthdayCard("漣 とあ", "toatoaman", "Toa");
+        //break;
       case "5月1日":
         newBirthdayCard("言のハ", "TwiCoto", "Cotonoha");
         break;
@@ -167,7 +167,12 @@ $(function() {
         $(".videoUC").eq(i).addClass("orange");        
         $(".videoUC").eq(i).find(".videoDetail").addClass("orange");
         $(".videoUC").eq(i).find(".collaboration").addClass("orange");
-      }                           
+      }
+      if(waitingTime < -3.0){
+        $(".videoUC").eq(i).find(".videoThumbnail").css("opacity", "0.62");
+        $(".videoUC").eq(i).find(".faVideo").removeClass("fa-bell faa-wrench animated");
+        $(".videoUC").eq(i).find(".faVideo").addClass("fa-triangle-exclamation");
+      }                       
     }
   }
 
