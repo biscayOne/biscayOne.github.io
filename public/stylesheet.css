@@ -133,8 +133,11 @@ header #clock #showClock {
   margin-top: 12px;
   margin-bottom: 24px;
 }
+#birthdayParentFrame #birthdayImage {
+  background-color: #FFFAEF;
+}
 #birthdayParentFrame #birthdayString {
-  top: 103.29px;
+  top: 113.19px;
   font-size: 22px;
 }
 #birthdayParentFrame #birthdayString #underLine {
@@ -160,14 +163,14 @@ header #clock #showClock {
   box-shadow: 5px 0px 5px -5px rgba(0, 0, 0, 0.5), 0px 10px 10px -10px rgba(0, 0, 0, 0.5), -5px 0px 5px -5px rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
 }
-#noneParentFrame #noneParent {
+#noneParentFrame #noneImage {
   background-color: #9fcff7;
 }
-#noneParentFrame #noneParent #noneString {
+#noneParentFrame #noneString {
   top: 108.2px;
   font-size: 24px;
 }
-#noneParentFrame #noneParent #noneImageCredit {
+#noneParentFrame #noneImageCredit {
   right: 5px;
   bottom: 2px;
 }
@@ -291,6 +294,9 @@ header #clock #showClock {
   color: #f80;
 }
 .container .videoParent .video .timeParent .fa-bell {
+  color: #f80;
+}
+.container .videoParent .video .timeParent .fa-triangle-exclamation {
   color: #f80;
 }
 .container .videoParent .video .timeParent .fa-hourglass-end {
@@ -641,7 +647,7 @@ header #clock #showClock {
     margin-bottom: 16px;
   }
   #birthdayParentFrame #birthdayString {
-    top: 64.4px;
+    top: 70.79px;
     font-size: 16px;
   }
   #birthdayParentFrame #birthdayIcon {
@@ -691,11 +697,11 @@ header #clock #showClock {
     box-shadow: 3px 0px 3px -3px rgba(0, 0, 0, 0.5), 0px 6px 6px -6px rgba(0, 0, 0, 0.5), -6px 0px 6px -6px rgba(0, 0, 0, 0.5);
     margin-bottom: 6px;
   }
-  #noneParentFrame #noneParent #noneString {
+  #noneParentFrame #noneString {
     top: 72.2px;
     font-size: 16px;
   }
-  #noneParentFrame #noneParent #noneImageCredit {
+  #noneParentFrame #noneImageCredit {
     right: 3px;
     bottom: 1px;
   }
