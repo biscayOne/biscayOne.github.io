@@ -86,6 +86,18 @@ function NGW(listNG){
   }
 }
 
+function URLW(listURL){
+  if(listURL.length > 0){
+    let URLWords = `${listURL[0]}`;
+    for(let i=1; i<listURL.length; i++){
+      URLWords = `${URLWords} OR ${listURL[i]}`;
+    }
+    return URLWords;
+  }else if(listURL.length === 0){
+    return "";
+  }
+}
+
 let listAll = [];
 let listAll2 = [];
 let listAll3 = [];
@@ -299,58 +311,58 @@ function collaboration(element, listIcon, icon1, icon2){
   }
   const text = element.snippet.description;
   const title = element.snippet.title;
-  if(/Ruki Otokado 音門るき \[VEE\]/.test(text) || (/音門るき|音門\s+るき/.test(text) && (/\/channel\/UCAUicVZlApAIhcdL9df3gWw/.test(text) || /\/c\/OtokadoDeviRuki/i.test(text) || /@Otokado_Ruki/i.test(text))) || /音門るき|音門\s+るき/.test(title)){
+  if(/Ruki Otokado 音門るき \[VEE\]/.test(text) || (/音門るき|音門\s+るき/.test(text) && (/\/channel\/UCAUicVZlApAIhcdL9df3gWw/.test(text) || /\/c\/OtokadoDeviRuki/i.test(text) || /@Otokado_Ruki/i.test(text)))){
     icon2.push(listIcon[1]);
   }
-  if(/九条 林檎【Kujo Ringo Official】/.test(text) || (/九条林檎|九条\s+林檎/.test(text) && (/\/channel\/UCf57-IJn5mUJDyqd9uNEmrg/.test(text) || /\/c\/KujoRingo/i.test(text) || /@KujoRingo/i.test(text))) || /九条林檎|九条\s+林檎/.test(title)){
+  if(/九条 林檎【Kujo Ringo Official】/.test(text) || (/九条林檎|九条\s+林檎/.test(text) && (/\/channel\/UCf57-IJn5mUJDyqd9uNEmrg/.test(text) || /\/c\/KujoRingo/i.test(text) || /@KujoRingo/i.test(text)))){
     icon2.push(listIcon[2]);
   }
-  if(/Syusetu kohaku\/秋雪こはく/.test(text) || (/秋雪こはく|秋雪\s+こはく/.test(text) && (/\/channel\/UCQLyq7TDKHlmp2Ufd5Z2qMw/.test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text) || /@Syusetu_kohaku/i.test(text))) || /秋雪こはく|秋雪\s+こはく/.test(title)){
+  if(/Syusetu kohaku\/秋雪こはく/.test(text) || (/秋雪こはく|秋雪\s+こはく/.test(text) && (/\/channel\/UCQLyq7TDKHlmp2Ufd5Z2qMw/.test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text) || /@Syusetu_kohaku/i.test(text)))){
     icon2.push(listIcon[3]);
   }
-  if(/魔王トゥルシー \/ Tulsi-Nightmare Madness IV/.test(text) || (/魔王トゥルシー|魔王\s+トゥルシー/.test(text) && (/\/channel\/UCUdlDvZJGGP78zvta3swIhw/.test(text) || /@Tulsi_Nightmare/i.test(text))) || /魔王トゥルシー|魔王\s+トゥルシー/.test(title)){
+  if(/魔王トゥルシー \/ Tulsi-Nightmare Madness IV/.test(text) || (/魔王トゥルシー|魔王\s+トゥルシー/.test(text) && (/\/channel\/UCUdlDvZJGGP78zvta3swIhw/.test(text) || /@Tulsi_Nightmare/i.test(text)))){
     icon2.push(listIcon[4]);
   }
-  if(/雛星あいる Hinahoshi Airu/.test(text) || (/雛星あいる|雛星\s+あいる/.test(text) && (/\/channel\/UCJGQPbaqTY91JhVzD8gIZyw/.test(text) || /@Hinahoshi_Airu/i.test(text))) || /雛星あいる|雛星\s+あいる/.test(title)){
+  if(/雛星あいる Hinahoshi Airu/.test(text) || (/雛星あいる|雛星\s+あいる/.test(text) && (/\/channel\/UCJGQPbaqTY91JhVzD8gIZyw/.test(text) || /@Hinahoshi_Airu/i.test(text)))){
     icon2.push(listIcon[5]);
   }
-  if(/桜鳥ミーナ \/ Audrey Mina/.test(text) || (/桜鳥ミーナ|桜鳥\s+ミーナ/.test(text) && (/\/channel\/UCFkHpBGMeNSQW-j9-F0nxnQ/.test(text) || /@MinaAudrey/i.test(text))) || /桜鳥ミーナ|桜鳥\s+ミーナ/.test(title)){
+  if(/桜鳥ミーナ \/ Audrey Mina/.test(text) || (/桜鳥ミーナ|桜鳥\s+ミーナ/.test(text) && (/\/channel\/UCFkHpBGMeNSQW-j9-F0nxnQ/.test(text) || /@MinaAudrey/i.test(text)))){
     icon2.push(listIcon[6]);
   }
-  if(/白粉いと \/ Oshiro Ito/.test(text) || (/白粉いと|白粉\s+いと/.test(text) && (/\/channel\/UCzv_W7v9ix39tFPDB-TV0Vg/.test(text) || /\/c\/OshiroIto/i.test(text) || /@oshiroito/i.test(text))) || /白粉いと|白粉\s+いと/.test(title)){
+  if(/白粉いと \/ Oshiro Ito/.test(text) || (/白粉いと|白粉\s+いと/.test(text) && (/\/channel\/UCzv_W7v9ix39tFPDB-TV0Vg/.test(text) || /\/c\/OshiroIto/i.test(text) || /@oshiroito/i.test(text)))){
     icon2.push(listIcon[7]);
   }
-  if(/日和ちひよ \/ Hiyori Chihiyo/.test(text) || (/日和ちひよ|日和\s+ちひよ/.test(text) && (/\/channel\/UCnBOUGfsfcD6nUbpdDAwMfw/.test(text) || /@HiyoriChihiyo/i.test(text))) || /日和ちひよ|日和\s+ちひよ/.test(title)){
+  if(/日和ちひよ \/ Hiyori Chihiyo/.test(text) || (/日和ちひよ|日和\s+ちひよ/.test(text) && (/\/channel\/UCnBOUGfsfcD6nUbpdDAwMfw/.test(text) || /@HiyoriChihiyo/i.test(text)))){
     icon2.push(listIcon[9]);
   }
-  if(/Mew Garcia \/ ミュウ・ガルシア/.test(text) || (/ミュウ・ガルシア/.test(text) && (/\/channel\/UC7FUtGR0AsvwzXrEmdUBAFw/.test(text) || /@MewGarcia/i.test(text))) || /ミュウ・ガルシア/.test(title)){
+  if(/Mew Garcia \/ ミュウ・ガルシア/.test(text) || (/ミュウ・ガルシア/.test(text) && (/\/channel\/UC7FUtGR0AsvwzXrEmdUBAFw/.test(text) || /@MewGarcia/i.test(text)))){
     icon2.push(listIcon[10]);
   }
-  if(/Aomiya Yozuri Ch\. 蒼宮よづり/.test(text) || (/蒼宮よづり|蒼宮\s+よづり/.test(text) && (/\/channel\/UCWhFUlcawiD78qAD7zzS6Bw/.test(text) || /@AomiyaYozuri/i.test(text))) || /蒼宮よづり|蒼宮\s+よづり/.test(title)){
+  if(/Aomiya Yozuri Ch\. 蒼宮よづり/.test(text) || (/蒼宮よづり|蒼宮\s+よづり/.test(text) && (/\/channel\/UCWhFUlcawiD78qAD7zzS6Bw/.test(text) || /@AomiyaYozuri/i.test(text)))){
     icon2.push(listIcon[12]);
   }
-  if(/亞生うぱる【VEE】/.test(text) || (/亞生うぱる|亞生\s+うぱる/.test(text) && (/\/channel\/UCQfp96ujs7PXiUG6ov29RKg/.test(text) || /@AnewUparu/i.test(text))) || /亞生うぱる|亞生\s+うぱる/.test(title)){
+  if(/亞生うぱる【VEE】/.test(text) || (/亞生うぱる|亞生\s+うぱる/.test(text) && (/\/channel\/UCQfp96ujs7PXiUG6ov29RKg/.test(text) || /@AnewUparu/i.test(text)))){
     icon2.push(listIcon[13]);
   }
-  if(/糶 \/ URIYONE/.test(text) || (/糶/.test(text) && (/\/channel\/UCJpsYQtNyVDc023clkqMhTQ/.test(text) || /@URIYONE/i.test(text))) || /糶/.test(title)){
+  if(/糶 \/ URIYONE/.test(text) || (/糶/.test(text) && (/\/channel\/UCJpsYQtNyVDc023clkqMhTQ/.test(text) || /@URIYONE/i.test(text)))){
     icon2.push(listIcon[14]);
   }
-  if(/言のハ-Cotonoha-/.test(text) || (/言のハ/.test(text) && (/\/channel\/UCOd-qYH_8e-tgxpPIcqwenA/.test(text) || /@Cotonoha/i.test(text))) || /言のハ/.test(title)){
+  if(/言のハ-Cotonoha-/.test(text) || (/言のハ/.test(text) && (/\/channel\/UCOd-qYH_8e-tgxpPIcqwenA/.test(text) || /@Cotonoha/i.test(text)))){
     icon2.push(listIcon[15]);
   }
-  if(/るみなす・すいーと【LUMINOUS Ch】/.test(text) || (/るみなす・すいーと/.test(text) && (/\/channel\/UC02dJeNmcQLqENdHFG1svJw/.test(text) || /@Luminous_Sweet/i.test(text))) || /るみなす・すいーと/.test(title)){
+  if(/るみなす・すいーと【LUMINOUS Ch】/.test(text) || (/るみなす・すいーと/.test(text) && (/\/channel\/UC02dJeNmcQLqENdHFG1svJw/.test(text) || /@Luminous_Sweet/i.test(text)))){
     icon2.push(listIcon[16]);
   }
-  if(/偉雷アマエ \/ Erai Amae/.test(text) || (/偉雷アマエ|偉雷\s+アマエ/.test(text) && (/\/channel\/UC6b4Ta_J0wbylnPu1auaQiA/.test(text) || /@EraiAmae/i.test(text))) || /偉雷アマエ|偉雷\s+アマエ/.test(title)){
+  if(/偉雷アマエ \/ Erai Amae/.test(text) || (/偉雷アマエ|偉雷\s+アマエ/.test(text) && (/\/channel\/UC6b4Ta_J0wbylnPu1auaQiA/.test(text) || /@EraiAmae/i.test(text)))){
     icon2.push(listIcon[17]);
   }
-  if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text) || /@kakapo_research/i.test(text))) || /北白川かかぽ|北白川\s+かかぽ/.test(title)){
+  if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text) || /@kakapo_research/i.test(text)))){
     icon2.push(listIcon[18]);
   }
-  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && (/\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text) || /@yurikawayun6056/i.test(text))) || /ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
+  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && (/\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text) || /@yurikawayun6056/i.test(text)))){
     icon2.push(listIcon[19]);
   }
-  if(/華灯/.test(text) || /華灯/.test(title)){
+  if(/華灯/.test(text)){
     icon2.push("/images/Hanavee.jpg");
   }
   if(icon1[0]!=="/images/shakeHands.jpg" && icon2.length>0){
@@ -364,13 +376,14 @@ function collaboration(element, listIcon, icon1, icon2){
 }
 
 class VEE{
-  constructor(number, name, channelId, list, listIcon, twitterId, listNG){
+  constructor(number, name, channelId, list, listIcon, twitterId, listURL, listNG){
     this.number = number;
     this.name = name;
     this.channelId = channelId;
     this.list = list;
     this.listIcon = listIcon;
-    this.twitterId = twitterId; 
+    this.twitterId = twitterId;
+    this.listURL = listURL;
     this.listNG = listNG;
   }
   api0(key){      
@@ -392,7 +405,7 @@ class VEE{
       });    
   }
   api(key, daysAgo){      
-    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.name} OR ${this.twitterId} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`)
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.name} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`)
       .then((response)=>{
         if(!response.ok){
           throw new Error(response.statusText);
@@ -427,11 +440,11 @@ class VEE{
 }
 
 //Dev-a
-const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', []);
-const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", listAll, listIcon, '"ringo_0_0_5"', []);
-const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", listAll, listIcon, '"Syusetu_kohaku"', []);
-const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", listAll, listIcon, '"IDmadeMiruna"', []);
-const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", listAll, listIcon, '"airu_Lv115"', []);
+const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], []);
+const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", listAll, listIcon, '"ringo_0_0_5"', ['"/c/KujoRingo"', '"KujoRingo"'], []);
+const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", listAll, listIcon, '"Syusetu_kohaku"', ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], []);
+const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", listAll, listIcon, '"IDmadeMiruna"', ['"Tulsi_Nightmare"'], []);
+const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", listAll, listIcon, '"airu_Lv115"', ['"Hinahoshi_Airu"'], []);
 function devA(){
   Ruki.api(key, 6);
   Ringo.api(key, 11);
@@ -448,11 +461,11 @@ function devA2(){
 }
 
 //Dev-b
-const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", listAll, listIcon, '"mina0x0audrey"', []);
-const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", listAll, listIcon, '"oshiroito"', []);
-const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", listAll, listIcon, '"hiyohiyovee"', []);
-const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", listAll, listIcon, '"MewGarcia_king"', []);
-const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", listAll, listIcon, '"_vee_official_"', []);
+const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", listAll, listIcon, '"mina0x0audrey"', ['"MinaAudrey"'], []);
+const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", listAll, listIcon, '"oshiroito"', ['"/c/OshiroIto"', '"oshiroito"'], []);
+const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", listAll, listIcon, '"hiyohiyovee"', ['"HiyoriChihiyo"'], []);
+const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", listAll, listIcon, '"MewGarcia_king"', ['"MewGarcia"'], []);
+const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", listAll, listIcon, '"_vee_official_"', [], []);
 function devB(){
   Mina.api(key, 8);
   Ito.api(key, 8);
@@ -467,11 +480,11 @@ function devB2(){
 }
 
 //Dev-c
-const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", listAll, listIcon, '"aomiyayozuri"', ['"蒼宮よづり 切り抜きCh."', '"成田という男(切り抜き製作所)"']);
-const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", listAll, listIcon, '"UPARU_JP"', []);
-const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", listAll, listIcon, '"URIYONEE"', []);
-const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", listAll, listIcon, '"TwiCoto"', []);
-const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", listAll, listIcon, '"luminous_amaama"', []);
+const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", listAll, listIcon, '"aomiyayozuri"', ['"AomiyaYozuri"'], ['"蒼宮よづり 切り抜きCh."', '"成田という男(切り抜き製作所)"']);
+const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", listAll, listIcon, '"UPARU_JP"', ['"AnewUparu"'], []);
+const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", listAll, listIcon, '"URIYONEE"', ['"URIYONE"'], []);
+const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", listAll, listIcon, '"TwiCoto"', ['"Cotonoha"'], []);
+const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", listAll, listIcon, '"luminous_amaama"', ['"Luminous_Sweet"'], []);
 function devC(){
   Yozuri.api(key, 11);
   Uparu.api(key, 8);
@@ -488,9 +501,9 @@ function devC2(){
 }
 
 //Dev-d
-const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", listAll, listIcon, '"EraiAmae"', ['"元動画はこちら"']);
-const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", listAll, listIcon, '"kakapo_research"', []);
-const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", listAll, listIcon, '"yun_yurikawa"', []);
+const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", listAll, listIcon, '"EraiAmae"', ['"EraiAmae"'], ['"元動画はこちら"']);
+const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", listAll, listIcon, '"kakapo_research"', ['"/c/kakaporesearch"', '"kakapo_research"'], []);
+const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", listAll, listIcon, '"yun_yurikawa"', ['"yurikawayun6056"'], []);
 function devD(){
   Amae.api(key, 4);
   Kakapo.api(key, 8);
@@ -536,8 +549,8 @@ const process1 = (list, listIcon, printLN, printUC, printA, key2)=>{
           if(json.items[i].snippet.channelId ==="UCLJ7sTH2gc9ElQl2tVJXYUA" && /【Rust】/.test(json.items[i].snippet.title) && !checkName.test(json.items[i].snippet.description)){
             continue;
           } 
-          
-          const checkID = /(UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
+          // UCYcnLc0n1ryBDZeGWQTVJ_g は カシ・オトハ のチャンネルID
+          const checkID = /(UCYcnLc0n1ryBDZeGWQTVJ_g|UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
           if(json.items[i].snippet.liveBroadcastContent==="live"){
             if(json.items[i].status.uploadStatus==="processed" && !checkID.test(json.items[i].snippet.channelId)){
               continue;
@@ -744,7 +757,7 @@ function apiBoot(){
   setTimeout(function(){process2(printLN, printUC, printA, ObjectData)},25000);    
 }
   
-cron.schedule('0 10,40 * * * *', () => {
+cron.schedule('0 12,42 * * * *', () => {
   apiBoot();
   
   console.log('30分経過だよ');
