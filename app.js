@@ -99,7 +99,6 @@ function URLW(listURL){
 }
 
 let listAll = [];
-let listAll2 = [];
 let listAll3 = [];
 function divisor(listAll){
   const listAllNew = listAll.filter((element,index)=>{
@@ -118,10 +117,14 @@ function replaceAll(string){
   return string
           .replace(/&amp;/g, "&")
           .replace(/&#39;/g, "'")
-          .replace("】","】<br>")
+          .replace(/】(?=.)/,"】<br>")
           .replace(/(?<=.)【/,"<br>【")
           .replace(/》\s+|》/, "》<br>")
           .replace(/￤\s+|￤/, "￤<br>");
+}
+
+function replaceThumbnailURL(thumbnailURL){
+  return thumbnailURL.replace("_live.jpg", ".jpg");
 }
 
 function sortDate(first, second){
@@ -311,58 +314,58 @@ function collaboration(element, listIcon, icon1, icon2){
   }
   const text = element.snippet.description;
   const title = element.snippet.title;
-  if(/Ruki Otokado 音門るき \[VEE\]/.test(text) || (/音門るき|音門\s+るき/.test(text) && (/\/channel\/UCAUicVZlApAIhcdL9df3gWw/.test(text) || /\/c\/OtokadoDeviRuki/i.test(text) || /@Otokado_Ruki/i.test(text)))){
+  if(/Ruki Otokado 音門るき \[VEE\]/.test(text) || (/音門るき|音門\s+るき/.test(text) && (/\/channel\/UCAUicVZlApAIhcdL9df3gWw/.test(text) || /\/c\/OtokadoDeviRuki/i.test(text))) || /@Otokado_Ruki/i.test(text) || /音門るき|音門\s+るき/.test(title)){
     icon2.push(listIcon[1]);
   }
-  if(/九条 林檎【Kujo Ringo Official】/.test(text) || (/九条林檎|九条\s+林檎/.test(text) && (/\/channel\/UCf57-IJn5mUJDyqd9uNEmrg/.test(text) || /\/c\/KujoRingo/i.test(text) || /@KujoRingo/i.test(text)))){
+  if(/九条 林檎【Kujo Ringo Official】/.test(text) || (/九条林檎|九条\s+林檎/.test(text) && (/\/channel\/UCf57-IJn5mUJDyqd9uNEmrg/.test(text) || /\/c\/KujoRingo/i.test(text))) || /@KujoRingo/i.test(text) || /九条林檎|九条\s+林檎/.test(title)){
     icon2.push(listIcon[2]);
   }
-  if(/Syusetu kohaku\/秋雪こはく/.test(text) || (/秋雪こはく|秋雪\s+こはく/.test(text) && (/\/channel\/UCQLyq7TDKHlmp2Ufd5Z2qMw/.test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text) || /@Syusetu_kohaku/i.test(text)))){
+  if(/Syusetu kohaku\/秋雪こはく/.test(text) || (/秋雪こはく|秋雪\s+こはく/.test(text) && (/\/channel\/UCQLyq7TDKHlmp2Ufd5Z2qMw/.test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text))) || /@Syusetu_kohaku/i.test(text) || /秋雪こはく|秋雪\s+こはく/.test(title)){
     icon2.push(listIcon[3]);
   }
-  if(/魔王トゥルシー \/ Tulsi-Nightmare Madness IV/.test(text) || (/魔王トゥルシー|魔王\s+トゥルシー/.test(text) && (/\/channel\/UCUdlDvZJGGP78zvta3swIhw/.test(text) || /@Tulsi_Nightmare/i.test(text)))){
+  if(/魔王トゥルシー \/ Tulsi-Nightmare Madness IV/.test(text) || (/魔王トゥルシー|魔王\s+トゥルシー/.test(text) && /\/channel\/UCUdlDvZJGGP78zvta3swIhw/.test(text)) || /@Tulsi_Nightmare/i.test(text) || /魔王トゥルシー|魔王\s+トゥルシー/.test(title)){
     icon2.push(listIcon[4]);
   }
-  if(/雛星あいる Hinahoshi Airu/.test(text) || (/雛星あいる|雛星\s+あいる/.test(text) && (/\/channel\/UCJGQPbaqTY91JhVzD8gIZyw/.test(text) || /@Hinahoshi_Airu/i.test(text)))){
+  if(/雛星あいる Hinahoshi Airu/.test(text) || (/雛星あいる|雛星\s+あいる/.test(text) && /\/channel\/UCJGQPbaqTY91JhVzD8gIZyw/.test(text)) || /@Hinahoshi_Airu/i.test(text) || /雛星あいる|雛星\s+あいる/.test(title)){
     icon2.push(listIcon[5]);
   }
-  if(/桜鳥ミーナ \/ Audrey Mina/.test(text) || (/桜鳥ミーナ|桜鳥\s+ミーナ/.test(text) && (/\/channel\/UCFkHpBGMeNSQW-j9-F0nxnQ/.test(text) || /@MinaAudrey/i.test(text)))){
+  if(/桜鳥ミーナ \/ Audrey Mina/.test(text) || (/桜鳥ミーナ|桜鳥\s+ミーナ/.test(text) && /\/channel\/UCFkHpBGMeNSQW-j9-F0nxnQ/.test(text)) || /@MinaAudrey/i.test(text) || /桜鳥ミーナ|桜鳥\s+ミーナ/.test(title)){
     icon2.push(listIcon[6]);
   }
-  if(/白粉いと \/ Oshiro Ito/.test(text) || (/白粉いと|白粉\s+いと/.test(text) && (/\/channel\/UCzv_W7v9ix39tFPDB-TV0Vg/.test(text) || /\/c\/OshiroIto/i.test(text) || /@oshiroito/i.test(text)))){
+  if(/白粉いと \/ Oshiro Ito/.test(text) || (/白粉いと|白粉\s+いと/.test(text) && (/\/channel\/UCzv_W7v9ix39tFPDB-TV0Vg/.test(text) || /\/c\/OshiroIto/i.test(text))) || /@oshiroito/i.test(text) || /白粉いと|白粉\s+いと/.test(title)){
     icon2.push(listIcon[7]);
   }
-  if(/日和ちひよ \/ Hiyori Chihiyo/.test(text) || (/日和ちひよ|日和\s+ちひよ/.test(text) && (/\/channel\/UCnBOUGfsfcD6nUbpdDAwMfw/.test(text) || /@HiyoriChihiyo/i.test(text)))){
+  if(/日和ちひよ \/ Hiyori Chihiyo/.test(text) || (/日和ちひよ|日和\s+ちひよ/.test(text) && /\/channel\/UCnBOUGfsfcD6nUbpdDAwMfw/.test(text)) || /@HiyoriChihiyo/i.test(text) || /日和ちひよ|日和\s+ちひよ/.test(title)){
     icon2.push(listIcon[9]);
   }
-  if(/Mew Garcia \/ ミュウ・ガルシア/.test(text) || (/ミュウ・ガルシア/.test(text) && (/\/channel\/UC7FUtGR0AsvwzXrEmdUBAFw/.test(text) || /@MewGarcia/i.test(text)))){
+  if(/Mew Garcia \/ ミュウ・ガルシア/.test(text) || (/ミュウ・ガルシア/.test(text) && /\/channel\/UC7FUtGR0AsvwzXrEmdUBAFw/.test(text)) || /@MewGarcia/i.test(text) || /ミュウ・ガルシア/.test(title)){
     icon2.push(listIcon[10]);
   }
-  if(/Aomiya Yozuri Ch\. 蒼宮よづり/.test(text) || (/蒼宮よづり|蒼宮\s+よづり/.test(text) && (/\/channel\/UCWhFUlcawiD78qAD7zzS6Bw/.test(text) || /@AomiyaYozuri/i.test(text)))){
+  if(/Aomiya Yozuri Ch\. 蒼宮よづり/.test(text) || (/蒼宮よづり|蒼宮\s+よづり/.test(text) && /\/channel\/UCWhFUlcawiD78qAD7zzS6Bw/.test(text)) || /@AomiyaYozuri/i.test(text) || /蒼宮よづり|蒼宮\s+よづり/.test(title)){
     icon2.push(listIcon[12]);
   }
-  if(/亞生うぱる【VEE】/.test(text) || (/亞生うぱる|亞生\s+うぱる/.test(text) && (/\/channel\/UCQfp96ujs7PXiUG6ov29RKg/.test(text) || /@AnewUparu/i.test(text)))){
+  if(/亞生うぱる【VEE】/.test(text) || (/亞生うぱる|亞生\s+うぱる/.test(text) && /\/channel\/UCQfp96ujs7PXiUG6ov29RKg/.test(text)) || /@AnewUparu/i.test(text) || /亞生うぱる|亞生\s+うぱる/.test(title)){
     icon2.push(listIcon[13]);
   }
-  if(/糶 \/ URIYONE/.test(text) || (/糶/.test(text) && (/\/channel\/UCJpsYQtNyVDc023clkqMhTQ/.test(text) || /@URIYONE/i.test(text)))){
+  if(/糶 \/ URIYONE/.test(text) || (/糶/.test(text) && /\/channel\/UCJpsYQtNyVDc023clkqMhTQ/.test(text)) || /@URIYONE/i.test(text) || /糶/.test(title)){
     icon2.push(listIcon[14]);
   }
-  if(/言のハ-Cotonoha-/.test(text) || (/言のハ/.test(text) && (/\/channel\/UCOd-qYH_8e-tgxpPIcqwenA/.test(text) || /@Cotonoha/i.test(text)))){
+  if(/言のハ-Cotonoha-/.test(text) || (/言のハ/.test(text) && /\/channel\/UCOd-qYH_8e-tgxpPIcqwenA/.test(text)) || /@Cotonoha/i.test(text) || /言のハ/.test(title)){
     icon2.push(listIcon[15]);
   }
-  if(/るみなす・すいーと【LUMINOUS Ch】/.test(text) || (/るみなす・すいーと/.test(text) && (/\/channel\/UC02dJeNmcQLqENdHFG1svJw/.test(text) || /@Luminous_Sweet/i.test(text)))){
+  if(/るみなす・すいーと【LUMINOUS Ch】/.test(text) || (/るみなす・すいーと/.test(text) && /\/channel\/UC02dJeNmcQLqENdHFG1svJw/.test(text)) || /@Luminous_Sweet/i.test(text) || /るみなす・すいーと/.test(title)){
     icon2.push(listIcon[16]);
   }
-  if(/偉雷アマエ \/ Erai Amae/.test(text) || (/偉雷アマエ|偉雷\s+アマエ/.test(text) && (/\/channel\/UC6b4Ta_J0wbylnPu1auaQiA/.test(text) || /@EraiAmae/i.test(text)))){
+  if(/偉雷アマエ \/ Erai Amae/.test(text) || (/偉雷アマエ|偉雷\s+アマエ/.test(text) && /\/channel\/UC6b4Ta_J0wbylnPu1auaQiA/.test(text)) || /@EraiAmae/i.test(text) || /偉雷アマエ|偉雷\s+アマエ/.test(title)){
     icon2.push(listIcon[17]);
   }
-  if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text) || /@kakapo_research/i.test(text)))){
+  if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text))) || /@kakapo_research/i.test(text) || /北白川かかぽ|北白川\s+かかぽ/.test(title)){
     icon2.push(listIcon[18]);
   }
-  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && (/\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text) || /@yurikawayun6056/i.test(text)))){
+  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && /\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text)) || /@yurikawayun6056/i.test(text) || /ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
     icon2.push(listIcon[19]);
   }
-  if(/華灯/.test(text)){
+  if(/華灯/.test(text) && /hanavee_pr/.test(text)){
     icon2.push("/images/Hanavee.jpg");
   }
   if(icon1[0]!=="/images/shakeHands.jpg" && icon2.length>0){
@@ -440,10 +443,10 @@ class VEE{
 }
 
 //Dev-a
-const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], []);
-const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", listAll, listIcon, '"ringo_0_0_5"', ['"/c/KujoRingo"', '"KujoRingo"'], []);
-const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", listAll, listIcon, '"Syusetu_kohaku"', ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], []);
-const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", listAll, listIcon, '"IDmadeMiruna"', ['"Tulsi_Nightmare"'], []);
+const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"하타치 Hatachi"', '"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
+const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", listAll, listIcon, '"ringo_0_0_5"', ['"/c/KujoRingo"', '"KujoRingo"'], ['"VEE切り抜きおきば"']);
+const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", listAll, listIcon, '"Syusetu_kohaku"', ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
+const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", listAll, listIcon, '"IDmadeMiruna"', ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
 const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", listAll, listIcon, '"airu_Lv115"', ['"Hinahoshi_Airu"'], []);
 function devA(){
   Ruki.api(key, 6);
@@ -462,7 +465,7 @@ function devA2(){
 
 //Dev-b
 const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", listAll, listIcon, '"mina0x0audrey"', ['"MinaAudrey"'], []);
-const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", listAll, listIcon, '"oshiroito"', ['"/c/OshiroIto"', '"oshiroito"'], []);
+const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", listAll, listIcon, '"oshiroito"', ['"/c/OshiroIto"', '"oshiroito"'], ['"woni_clip"', '"시번 sibun"', '"BubblesClip"']);
 const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", listAll, listIcon, '"hiyohiyovee"', ['"HiyoriChihiyo"'], []);
 const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", listAll, listIcon, '"MewGarcia_king"', ['"MewGarcia"'], []);
 const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", listAll, listIcon, '"_vee_official_"', [], []);
@@ -480,13 +483,13 @@ function devB2(){
 }
 
 //Dev-c
-const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", listAll, listIcon, '"aomiyayozuri"', ['"AomiyaYozuri"'], ['"蒼宮よづり 切り抜きCh."', '"成田という男(切り抜き製作所)"']);
+const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", listAll, listIcon, '"aomiyayozuri"', ['"AomiyaYozuri"'], ['"成田という男(切り抜き製作所)"']);
 const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", listAll, listIcon, '"UPARU_JP"', ['"AnewUparu"'], []);
 const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", listAll, listIcon, '"URIYONEE"', ['"URIYONE"'], []);
-const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", listAll, listIcon, '"TwiCoto"', ['"Cotonoha"'], []);
+const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", listAll, listIcon, '"TwiCoto"', ['"Cotonoha"'], ['"太田圭亮のViolinトーク"']);
 const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", listAll, listIcon, '"luminous_amaama"', ['"Luminous_Sweet"'], []);
 function devC(){
-  Yozuri.api(key, 11);
+  Yozuri.api(key, 22);
   Uparu.api(key, 8);
   Uriyone.api(key, 11);
   Cotonoha.api(key, 8);
@@ -503,9 +506,9 @@ function devC2(){
 //Dev-d
 const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", listAll, listIcon, '"EraiAmae"', ['"EraiAmae"'], ['"元動画はこちら"']);
 const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", listAll, listIcon, '"kakapo_research"', ['"/c/kakaporesearch"', '"kakapo_research"'], []);
-const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", listAll, listIcon, '"yun_yurikawa"', ['"yurikawayun6056"'], []);
+const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", listAll, listIcon, '"yun_yurikawa"', ['"yurikawayun"'], []);
 function devD(){
-  Amae.api(key, 4);
+  Amae.api(key, 6);
   Kakapo.api(key, 8);
   Yun.api(key, 8);
 }
@@ -549,18 +552,24 @@ const process1 = (list, listIcon, printLN, printUC, printA, key2)=>{
           if(json.items[i].snippet.channelId ==="UCLJ7sTH2gc9ElQl2tVJXYUA" && /【Rust】/.test(json.items[i].snippet.title) && !checkName.test(json.items[i].snippet.description)){
             continue;
           } 
+
+          // const checkKohaCup = /(UC2hx0xVkMoHGWijwr_lA01w|UCyxtGMdWlURZ30WSnEjDOQw|UCO9rPI15LSo7U40UX4ukUAA|UCrBx2Gy-0PBUWTP_4uGNkZA|UCQz5mRHdiwt7NrS9tc4D1Dg|UCLr0X7ktuRImhXJrkASkSQw|UCjs-5fTyhaRVQVfdEmVyyqw|UC0vzxUUsMHyGnhD9G8k14yg|UCV1xUwfM2v2oBtT3JNvic3w|UCC7rRD6P7RQcx0hKv9RQP4w|UCHjeZylSgXDSnor8wUnwU_g|UCVQROe7sDdROh4x0BpYHP1w|UCdlxcNp-rmCrIfZwORXr0Og|UCFahBR2wixu0xOex84bXFvg|UC01gb86Qdlkh23Nqk3A1OLQ|UCYqTYMZa5rx4S8o1Xlm21YQ|UCAr4bfXugIgm0HicVyvxacg|UCc6hwdN1yu2QT9o4yIHUPnQ|UCnvBsJQ0TztZ4Mq7qDaL_FA|UCpzxZW5kghGnO5TmAFJQAVw|UCwaS8_S7kMiKA3izlTWHbQg|UCKu59gTZ_rdEmerdx5rV4Yg|UCUpysYEAnksyyr1ykN8JBCw|UCP6J6k7n8SgxslDpYVrqwEA|UCdpFSbJeT9_tR5kR75r6DmQ|UCGAtHjeWWgyWboVQ33ZQX6Q|UCWU7kvLd_JBaBqO_ilTYd_A|UCwtyxO7B0xIv3XdtSvdnYgQ|UCyBSz2-Pnec2_HvG09NScIQ|UC1r_ILeKhs2XHyFQ3_oSicA|UCEEar_TJCxAWpQkSlozVBMg|UCH-wVHHDDrpt5W59UUPJvXA|UCjeoRcWBJKGSEoBJ6XH2QPQ|UCytdhnkcqUA1njZqd1U1PUg|UCe33NIg6hC9vNq2NluwFh9g|UCLChoN0emEvVFNU6_kP-YrQ|UCKR_dxrRj5tmyzEPUieFVfA)/;
+          // if(checkKohaCup.test(json.items[i].snippet.channelId)){
+            // continue;
+          // }
+
           // UCYcnLc0n1ryBDZeGWQTVJ_g は カシ・オトハ のチャンネルID
           const checkID = /(UCYcnLc0n1ryBDZeGWQTVJ_g|UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
           if(json.items[i].snippet.liveBroadcastContent==="live"){
             if(json.items[i].status.uploadStatus==="processed" && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printLN.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
+            printLN.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
           }else if(json.items[i].snippet.liveBroadcastContent==="upcoming"){
             if(json.items[i].status.uploadStatus==="processed" && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printUC.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:json.items[i].status.uploadStatus, icon:icon1[0], icon2:icon2});
+            printUC.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:json.items[i].status.uploadStatus, icon:icon1[0], icon2:icon2});
           }else if(json.items[i].snippet.liveBroadcastContent==="none"){
             if(json.items[i].liveStreamingDetails===undefined){
               continue;
@@ -568,7 +577,7 @@ const process1 = (list, listIcon, printLN, printUC, printA, key2)=>{
             if((json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=H)/)===null && (json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=M)/)===null || json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=M)/)[0]<30)) && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printA.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.actualStartTime, time2:json.items[i].contentDetails.duration, time3:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
+            printA.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.actualStartTime, time2:json.items[i].contentDetails.duration, time3:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
           }             
         }
       })
@@ -585,17 +594,7 @@ function process1s(){
 
 let ObjectData = [[], [], []];
 function process2(printLN, printUC, printA, ObjectData){
-  let printNewLN = ObjectData[0];
-  for(let i=0; i<printLN.length; i++){    
-    if(printNewLN.find((element)=>{if(printLN[i].videoId===element.videoId){return true}})){
-        continue;
-    }
-    printLN[i].time = standardTime(printLN[i].time);
-    printNewLN.push(printLN[i]);
-  }
-  printNewLN.sort(sortDate);
-
-
+  
   const JST = (time)=>{      
       return dayjs(time).utc().add(9, "h").format("ddd MMM DD, HH:mm");
   }
@@ -612,8 +611,12 @@ function process2(printLN, printUC, printA, ObjectData){
 
   printOldUC = printOldUC.flat();
 
+  let listOldData = printOldUC.map((element)=>{
+    return element;
+  })
+
   for(let i=0; i<printUC2.length; i++){    
-    if(printOldUC.find((element)=>{if(printUC2[i].videoId===element.videoId){return true}})){
+    if(listOldData.find((element)=>{if(printUC2[i].videoId===element.videoId){return true}})){
         continue;
     }
     printUC2[i].time2 = standardTime(printUC2[i].time);
@@ -627,9 +630,28 @@ function process2(printLN, printUC, printA, ObjectData){
   dateList(printOldUC,printNewUC);
 
 
+  let printNewLN = ObjectData[0];
+
+  printNewLN.forEach((element)=>{
+    listOldData.push(element);
+  })
+  for(let i=0; i<printLN.length; i++){    
+    if(listOldData.find((element)=>{if(printLN[i].videoId===element.videoId){return true}})){
+        continue;
+    }
+    printLN[i].time = standardTime(printLN[i].time);
+    printNewLN.push(printLN[i]);
+  }
+  printNewLN.sort(sortDate);
+
+
   let printA2 = ObjectData[2];
+
+  printA2.forEach((element)=>{
+    listOldData.push(element);
+  })
   for(let i=0; i<printA.length; i++){    
-    if(printA2.find((element)=>{if(printA[i].videoId===element.videoId){return true}})){
+    if(listOldData.find((element)=>{if(printA[i].videoId===element.videoId){return true}})){
         continue;
     }
     printA[i].time = JST(printA[i].time);
@@ -666,7 +688,7 @@ const adjust01 = (list, listAll3, key2)=>{
 
 function adjust01s(){
   let list0 = [];
-  listAll2.splice(0,listAll2.length);
+  let listAll2 = [];
   ObjectData[0].forEach((element)=>{
     listAll2.push(element.videoId);
   });
@@ -679,9 +701,12 @@ function adjust01s(){
   ObjectData[2].forEach((element)=>{
     listAll2.push(element.videoId);
   });
-  divisor(listAll2);
-  listAll3.splice(0,listAll3.length);
-  listAll2.forEach((array)=>{
+  const length = Math.ceil(listAll2.length/50);
+  const listNew = new Array(length).fill().map((_, i)=>{
+    return listAll2.slice(i*50, (i+1)*50);
+  });
+  listAll3.splice(0, listAll3.length);
+  listNew.forEach((array)=>{
     adjust01(array, listAll3, key2);
   });
 }
@@ -712,16 +737,16 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
       }
     }
     if(listAll3[i].snippet.liveBroadcastContent==="live"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
       newObject.time = standardTime(newObject.time);
       printLN.push(newObject);
     }else if(listAll3[i].snippet.liveBroadcastContent==="upcoming"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:listAll3[i].status.uploadStatus, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:listAll3[i].status.uploadStatus, icon:icon1[0], icon2:icon2};
       newObject.time2 = standardTime(newObject.time);
       newObject.time = dayjs(newObject.time).utc().add(9, "h").format("ddd MMM DD, HH:mm");
       printUC.push(newObject);
     }else if(listAll3[i].snippet.liveBroadcastContent==="none"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.actualStartTime, time2:listAll3[i].contentDetails.duration, time3:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.actualStartTime, time2:listAll3[i].contentDetails.duration, time3:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
       newObject.time =dayjs(newObject.time).utc().add(9, "h").format("ddd MMM DD, HH:mm");
       newObject.time2 = duration(newObject);
       if(newObject.time3 < dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
@@ -757,7 +782,7 @@ function apiBoot(){
   setTimeout(function(){process2(printLN, printUC, printA, ObjectData)},25000);    
 }
   
-cron.schedule('0 12,42 * * * *', () => {
+cron.schedule('0 10,40 * * * *', () => {
   apiBoot();
   
   console.log('30分経過だよ');
