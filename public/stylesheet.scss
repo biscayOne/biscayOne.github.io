@@ -34,6 +34,10 @@ button{
   padding: 0;
 }
 
+iframe{
+  vertical-align: bottom;
+}
+
 .faHeader{
   margin-right: 5px;
 }
@@ -172,8 +176,12 @@ header {
   margin-top: 12px;
   margin-bottom: 24px;
 
+  #birthdayImage{
+    background-color: #FFFAEF;
+  }
+
   #birthdayString{
-    top: 103.29px;
+    top: calc(50% + (-68px));
   
     font-size: 22px;
 
@@ -203,6 +211,16 @@ header {
     cursor: pointer;
   }
 
+  #birthdayImageCover{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+
+    cursor: pointer;
+  }
+
 }
 
 #noneParentFrame{
@@ -210,20 +228,113 @@ header {
 
   margin-bottom: 12px;
 
-  #noneParent{
+  #noneImage{
     background-color: #9fcff7;
+  }
 
-    #noneString{
-      top: 108.2px;
+  #noneString{
+    top: 88.8px;
     
+    font-size: 24px;
+    font-weight: bold;
+
+    #btnOpen{
+      width: 113.63px;
+      
+      color: #fff;
+      background-color: #f00;
       font-size: 24px;
+      border-radius: 18px;
+      box-shadow: 0px 5px darken(#f00, 15%);
+    
+      cursor: pointer;
+        
+      display: inline-block;
+
+      &:active{
+        position: relative;
+        top: 5px;
+        
+        box-shadow: none;
+      }
+    } 
+  }
+    
+  #noneImageCredit{
+    top: 341.2px;
+    right: 5px;
+  }
+
+  #recommendedTalent{
+    display: none;
+    .recommendedVideoParent{
+      position: relative;
+    
+      visibility: hidden;
+      #recommendedVideo{
+        width: 476.8px;
+        height: 268.2px;
+      }
     }
     
-    #noneImageCredit{
-      right: 5px;
-      bottom: 2px;
+    #channelIntroduction{   
+      text-align: center;
+
+      border-top: 1.6px solid #807e83;
+      border-bottom: 1.6px solid #807e83;
+    
+      padding: 10px;
     }
     
+    .channelIcon{
+      width: 72px;
+      height: 72px;
+
+      border-radius: 50%;
+      
+      visibility: hidden;
+    
+      display: inline-block;
+    }
+    
+    .channelName{
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: underline;
+
+      margin-top: 5px;
+
+      visibility: hidden;
+      
+      display: inline-block;
+    }
+    
+    @keyframes fade-in{
+      0% {
+        opacity: 0;
+
+        visibility: hidden;        
+      }   
+      55% {
+        opacity: 0;
+
+        visibility: hidden;        
+      }   
+      100% {
+        opacity: 1;
+
+        visibility: visible;       
+      }
+    }
+
+    .fadeIn{
+      visibility: visible;
+
+      animation-duration: 1.5s;
+      animation-timing-function:ease-out;
+      animation-name: fade-in;
+    }
+     
   }
 
 }
@@ -295,6 +406,13 @@ header {
   
   display: flex;
   flex-wrap: wrap;
+
+  .scheduleDateParent{
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
 
   .scheduleDate{
     text-align: center;
@@ -390,6 +508,10 @@ header {
         }
         
         .fa-bell{
+          color: #f80;    
+        }
+
+        .fa-triangle-exclamation{
           color: #f80;    
         }
         
@@ -913,7 +1035,7 @@ header {
     margin-top: 4px;
     margin-bottom: 16px;
     #birthdayString{
-      top: 64.4px;
+      top: calc(50% + (-50.4px));
     
       font-size: 16px;
     }
@@ -985,16 +1107,52 @@ header {
     box-shadow: 3px 0px 3px -3px rgb(0,0,0,0.5), 0px 6px 6px -6px rgb(0,0,0,0.5), -6px 0px 6px -6px rgb(0,0,0,0.5);
 
     margin-bottom: 6px;
-    #noneParent{
-      #noneString{
-        top: 72.2px;
+
+    #noneString{
+      top: 58.8px;
     
-        font-size: 16px;
-      }
+      font-size: 16px;
+
+      #btnOpen{
         
-      #noneImageCredit{
-        right: 3px;
-        bottom: 1px;
+        width: 75.75px;
+  
+        font-size: 16px;
+        border-radius: 12px;
+        box-shadow: 0px 3px darken(#f00, 15%);
+
+        &:active{
+          top: 3px;
+        }
+      }      
+    }
+        
+    #noneImageCredit{
+      right: 3px;
+      top: 226.2px;
+    }
+
+    #recommendedTalent{
+      .recommendedVideoParent{
+        #recommendedVideo{
+          width: 316.8px;
+          height: 178.2px;
+        }
+      }
+    
+      #channelIntroduction{
+        padding: 6px;
+      }
+    
+      .channelIcon{
+        width: 48px;
+        height: 48px;
+      }
+    
+      .channelName{
+        font-size: 13px;
+    
+        margin-top: 3px;
       }
     }
   }
