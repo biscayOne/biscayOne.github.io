@@ -45,12 +45,15 @@ $(function() {
     const Day = JST.getUTCDate();  
     const HBD = Month + '月' + Day + '日';
 
-    function birthdayCard(HBD, name, twitterID, twitterIcon, imageColor){
+    function birthdayCard(HBD, name, twitterID, twitterIcon, imageColor, birthdayImage, imageCredit, imageCreditId){
       $("#birthdayParentFrame").css("display", "block");
-      $("#birthdayString").html(`Happy Birthday!<br><br>本日${HBD}は…<br><a id="underLine" href=https://twitter.com/${twitterID} target="_blank" rel="noopener noreferrer">${name}</a> の誕生日！`);
+      $("#birthdayString").html(`Happy Birthday!<br><br><span style="font-family: serif">本日${HBD}は…</span><br><a id="underLine" href=https://twitter.com/${twitterID} target="_blank" rel="noopener noreferrer">${name}</a> <span style="font-family: serif">の誕生日！</span>`);
       $("#birthdayIconParent").attr("href", `https://twitter.com/${twitterID}`);
       $("#birthdayIcon").attr("src", `/images/${twitterIcon}.jpg`);
       $("#birthdayIcon").css("border-color", `${imageColor}`);
+      $("#birthdayImage").attr("src", `/images/${birthdayImage}`);
+      $("#birthdayImageCredit").text(`イラストAC / ${imageCredit}`);
+      $("#birthdayImageCredit").attr("href", `https://www.ac-illust.com/main/profile.php?id=${imageCreditId}`);
     }
 
     const newBirthdayCard = birthdayCard.bind(null, HBD);
@@ -111,7 +114,7 @@ $(function() {
         newBirthdayCard("魔王 トゥルシー", "IDmadeMiruna", "Tulsi", "#d72d6d");
         break;
       case "12月30日":
-        newBirthdayCard("九条 林檎", "ringo_0_0_5", "Ringo");
+        newBirthdayCard("九条 林檎", "ringo_0_0_5", "Ringo", "#A50000", "birthdayCake.png", "たののすけ", "2T5D2rg6");
         break;
     }
   }
@@ -163,16 +166,23 @@ $(function() {
       if(waitingTime < 1.0){
         $(".videoUC").eq(i).find(".faVideo").removeClass("fa-hourglass-start");
         $(".videoUC").eq(i).find(".faVideo").addClass("fa-bell faa-wrench animated");
-        $(".videoUC").eq(i).removeClass("gray");
         $(".videoUC").eq(i).addClass("orange");        
         $(".videoUC").eq(i).find(".videoDetail").addClass("orange");
         $(".videoUC").eq(i).find(".collaboration").addClass("orange");
       }
-      if(waitingTime < -3.0){
+      if(waitingTime < -1.0){
         $(".videoUC").eq(i).find(".videoThumbnail").css("opacity", "0.62");
         $(".videoUC").eq(i).find(".faVideo").removeClass("fa-bell faa-wrench animated");
         $(".videoUC").eq(i).find(".faVideo").addClass("fa-triangle-exclamation");
-      }                       
+        $(".videoUC").eq(i).removeClass("orange");        
+        $(".videoUC").eq(i).find(".videoDetail").removeClass("orange");
+        $(".videoUC").eq(i).find(".collaboration").removeClass("orange");
+        
+      }
+      if(waitingTime < -3.0){
+        $(".videoUC").eq(i).parent(".videoParent").addClass("emergency");
+        $(".videoUC").eq(i).parent(".videoParent").css("display", "none");
+      }                   
     }
   }
 
@@ -222,13 +232,65 @@ $(function() {
   setInterval(blinking,500);
 
   birthdayMessage();
+  $("#birthdayImageCover").click(function(){
+    $(this).fadeOut(2000);
+  })
     
   noneVideoLN();
+
+  $("#btnOpen").click(function(){
+    const listTalent = [
+                        {channelName:"VEE official channel", videoId:"DTrfSlMN8Sc", setList:["0"], channelURL:"UCXWiGKfAXjHUsxa_GNLgv-A", channelIcon:"vhgGxT2ROGSByTxS-lfULhoNWtC_A7ubuMTdchPHAFYx15Ov2FE0sBf94Oo91lNpPxeqKyAf=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"Ruki Otokado 音門るき [VEE]", videoId:"vsOBbXUgVS4", setList:["420", "1027", "1491"], channelURL:"UCAUicVZlApAIhcdL9df3gWw", channelIcon:"7q9hOlgVOLGGMGNDnAokhFo7vECpLIyKCOj3xLKwBqPvQuu2-kkLS9E3kkNd-rrfdK0GKepd4w=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"九条 林檎【Kujo Ringo Official】", videoId:"N_Sj1QjHlvA", setList:["203", "1079", "1725"], channelURL:"UCf57-IJn5mUJDyqd9uNEmrg", channelIcon:"Rln7rmZcpjY0mIPPfF0BXCA4SLtEPo04b1QJuldTkrOMx03pwEv54f97SXd3cazOqGuylwQN=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"魔王トゥルシー / Tulsi-Nightmare Madness IV", videoId:"aBvTY27-0Z4", setList:["267", "710", "1258", "1526"], channelURL:"UCUdlDvZJGGP78zvta3swIhw", channelIcon:"BBywT_hHFYqk_AvQ7xbd-l1in8838u3kVUqZmZFBuWsN2E2EJ4iS6BCBtFZ89wtJAnmmUZw_qBY=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"雛星あいる Hinahoshi Airu", videoId:"D8IAro9f7eA", setList:["0"], channelURL:"UCJGQPbaqTY91JhVzD8gIZyw", channelIcon:"8zlUH6WXzKYQfAC-yDr8-Ok8oPYueyOsIL980DUniGMbaN5LgoRN3bwEFmel30BjQkGPf4_EoA=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"桜鳥ミーナ / Audrey Mina", videoId:"6ghA1MleHpg", setList:["439", "982", "1424"], channelURL:"UCFkHpBGMeNSQW-j9-F0nxnQ", channelIcon:"nftD5_O_9HQxYdWXZa_TyAFIFEzuwmQzqM6y3eIm6eT7TU7aomDGmjFKYLVDVXeZOi0qqL1p=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"日和ちひよ / Hiyori Chihiyo", videoId:"g1JKFfYzp1M", setList:["149", "747", "1270"], channelURL:"UCnBOUGfsfcD6nUbpdDAwMfw", channelIcon:"7P3MYe928q3hA5eosHfOfRW0gjTFU9BVRjo1J5kyl92PORQs1W0w_NJUNqOkenqXljBeQkIX7fs=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"Mew Garcia / ミュウ・ガルシア", videoId:"6eIAmiexSXo", setList:["1850", "2788", "3786", "4718", "4963"], channelURL:"UC7FUtGR0AsvwzXrEmdUBAFw", channelIcon:"qM-PWb43IfrKqCnU4n8nB4YVhHl340yjJIkIaukRex2_9j_EsfplB5YE80i4TKPFgZbr8cJFcg=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"Aomiya Yozuri Ch. 蒼宮よづり", videoId:"Q0fSqO3aVfQ", setList:["0"], channelURL:"UCWhFUlcawiD78qAD7zzS6Bw", channelIcon:"eqK_S6SXxSh--EU_EPMLytHKEvh9J9Hw5oLGbG-CCTAMAgkWRUn2ndT9mdyeehcBcqQeTZZs=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"言のハ-Cotonoha-", videoId:"N32qBOf2iqc", setList:["196", "722", "1122", "1325"], channelURL:"UCOd-qYH_8e-tgxpPIcqwenA", channelIcon:"gkCaF4FvG0JhBaYnqEPaXXgdxzm6SUbKb3hVR4AhtPvGiGCfxGNqroDS_ShhKnOjVxT1xSeeow=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"偉雷アマエ / Erai Amae", videoId:"BDNFo6LVy68", setList:["292", "1290", "1938", "2583"], channelURL:"UC6b4Ta_J0wbylnPu1auaQiA", channelIcon:"eJumgdOJUO9AYc6HsEwUGiZqjeu3fm3awR1NDUnSfmoM6w_ZWLEE7z4ww3epxEve2aJx5QhozA=s176-c-k-c0x00ffffff-no-rj"},
+                        {channelName:"北白川かかぽ / Kakapo Kitashirakawa", videoId:"P9ELefUBdRU", setList:["76", "677", "1123", "1626", "2458", "2974"], channelURL:"UCEoAD_2jSLoYQd2MJZxWuxQ", channelIcon:"XcZWuahAYyqFeXXM_VuJvf2ElEzFYz3gwCq1aoUSGwlQ4rJlrO1WI2vavl0rc3VNkI4GLat20u0=s176-c-k-c0x00ffffff-no-rj"},
+                       ];
+    const num = Math.floor(Math.random() * (listTalent.length));
+    const num2 = Math.floor(Math.random() * (listTalent[num].setList.length));
+    if(!$("#btnOpen").hasClass("openT")){
+      $("#recommendedVideo").attr("src", `https://www.youtube.com/embed/${listTalent[num].videoId}?start=${listTalent[num].setList[num2]}`);      
+      $("#recommendedTalent").slideDown(500);
+      $(".channelIcon").attr("src", `https://yt3.ggpht.com/${listTalent[num].channelIcon}`);
+      $(".channelName").text(listTalent[num].channelName);
+      $(".channelURL").attr("href", `https://www.youtube.com/channel/${listTalent[num].channelURL}`);
+      $(".recommendedVideoParent").addClass("fadeIn");
+      $(".channelIcon").addClass("fadeIn");
+      $(".channelName").addClass("fadeIn");
+      $(this).text("CLOSE");
+      $(this).addClass("openT");      
+    }else{
+      $("#recommendedVideo").attr("src", "");
+      $(".channelIcon").attr("src", "");
+      $(".channelName").text("");
+      $(".channelURL").attr("href", "");
+      $("#recommendedTalent").slideUp(500); 
+      $(".recommendedVideoParent").removeClass("fadeIn");
+      $(".channelIcon").removeClass("fadeIn");
+      $(".channelName").removeClass("fadeIn");
+      $(this).text("OPEN");
+      $(this).removeClass("openT");      
+    }
+  });
 
   iconBorder();
   brVideoTitle();
   elapsedTime();
   orangeTime();
+  for(let i=0; i<$(".scheduleDateParent").length; i++){
+    const videoParent = $(".scheduleDateParent").eq(i).find(".videoParent").length;
+    const emergency = $(".scheduleDateParent").eq(i).find(".emergency").length;    
+    if(videoParent === emergency){
+      $(".scheduleDateParent").eq(i).css("display", "none");
+    }
+  }
   collaboration();
 
   let n = 0;
@@ -257,6 +319,7 @@ $(function() {
   $("#topScroll").click(function(){
     $("html, body").animate({'scrollTop': 0},500);
   });
+
   
   let IMG = $(".kou").prop('naturalWidth');
      
