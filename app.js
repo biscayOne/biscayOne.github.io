@@ -76,11 +76,10 @@ cron.schedule('0 0,1,2,3,4 22 * * *', () => {
 
 function NGW(listNG){
   if(listNG.length > 0){
-    let NGWords = `-${listNG[0]}-`;
-    for(let i=1; i<listNG.length; i++){
-      NGWords = `${NGWords} -${listNG[i]}-`;
-    }
-    return NGWords;
+    const preNGWords = listNG.reduce(function(NGWords, NGWord){
+                         return `${NGWords} -${NGWord}-`;
+                       });
+    return `-${listNG[0]}-${preNGWords.slice(listNG[0].length, preNGWords.length)}`;              
   }else if(listNG.length === 0){
     return "";
   }
@@ -88,37 +87,41 @@ function NGW(listNG){
 
 function URLW(listURL){
   if(listURL.length > 0){
-    let URLWords = `${listURL[0]}`;
-    for(let i=1; i<listURL.length; i++){
-      URLWords = `${URLWords} OR ${listURL[i]}`;
-    }
-    return URLWords;
+    return listURL.reduce(function(URLWords, URLWord){
+      return `${URLWords} OR ${URLWord}`;
+    });
   }else if(listURL.length === 0){
     return "";
   }
+}
+
+function divisor50(array){
+  const length = Math.ceil(array.length/50);
+  return new Array(length).fill().map((_, i)=>{
+    return array.slice(i*50, (i+1)*50);
+  });
 }
 
 let listAll = [];
 let listAll3 = [];
 function divisor(listAll){
   const listAllNew = listAll.filter((element,index)=>{
-                     if(listAll.indexOf(element)===index){
-                       return element;
-                     }
-                   });
+                       if(listAll.indexOf(element)===index){
+                         return element;
+                       }
+                     });
   listAll.splice(0,listAll.length);
-  const length = Math.ceil(listAllNew.length/50);
-  for(let i=0; i<length; i++){
-    listAll.push(listAllNew.slice(i*50, (i+1)*50));
-  }
+  divisor50(listAllNew).forEach((array)=>{
+    listAll.push(array);
+  });
 }
 
 function replaceAll(string){
   return string
           .replace(/&amp;/g, "&")
           .replace(/&#39;/g, "'")
-          .replace(/】(?=.)/,"】<br>")
-          .replace(/(?<=.)【/,"<br>【")
+          .replace(/】(?=.)/, "】<br>")
+          .replace(/(?<=.)【/g, "<br>【")
           .replace(/》\s+|》/, "》<br>")
           .replace(/￤\s+|￤/, "￤<br>");
 }
@@ -158,13 +161,7 @@ function sortDate3(first, second){
 }
 
 function set0(num){
-  let ret;
-  if(num<10){
-    ret = "0" + num;
-  }else{
-    ret = num;
-  }
-  return ret;
+  return ("0" + num).slice(-2);
 }
 
 function duration(element){
@@ -362,7 +359,7 @@ function collaboration(element, listIcon, icon1, icon2){
   if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text))) || /@kakapo_research/i.test(text) || /北白川かかぽ|北白川\s+かかぽ/.test(title)){
     icon2.push(listIcon[18]);
   }
-  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && /\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text)) || /@yurikawayun6056/i.test(text) || /ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
+  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && /\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text)) || /@yurikawayun/i.test(text) || /ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
     icon2.push(listIcon[19]);
   }
   if(/華灯/.test(text) && /hanavee_pr/.test(text)){
@@ -443,7 +440,7 @@ class VEE{
 }
 
 //Dev-a
-const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"하타치 Hatachi"', '"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
+const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", listAll, listIcon, '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"하타치 Hatachi"', '"แมวพิมพ์ [ Vtuber แปลไทย ]"', '"달땡(Moon 00)"']);
 const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", listAll, listIcon, '"ringo_0_0_5"', ['"/c/KujoRingo"', '"KujoRingo"'], ['"VEE切り抜きおきば"']);
 const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", listAll, listIcon, '"Syusetu_kohaku"', ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
 const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", listAll, listIcon, '"IDmadeMiruna"', ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
@@ -464,9 +461,9 @@ function devA2(){
 }
 
 //Dev-b
-const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", listAll, listIcon, '"mina0x0audrey"', ['"MinaAudrey"'], []);
+const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", listAll, listIcon, '"mina0x0audrey"', ['"MinaAudrey"'], ['"달땡(Moon 00)"']);
 const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", listAll, listIcon, '"oshiroito"', ['"/c/OshiroIto"', '"oshiroito"'], ['"woni_clip"', '"시번 sibun"', '"BubblesClip"']);
-const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", listAll, listIcon, '"hiyohiyovee"', ['"HiyoriChihiyo"'], []);
+const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", listAll, listIcon, '"hiyohiyovee"', ['"HiyoriChihiyo"'], ['"달땡(Moon 00)"']);
 const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", listAll, listIcon, '"MewGarcia_king"', ['"MewGarcia"'], []);
 const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", listAll, listIcon, '"_vee_official_"', [], []);
 function devB(){
@@ -558,18 +555,21 @@ const process1 = (list, listIcon, printLN, printUC, printA, key2)=>{
             // continue;
           // }
 
+          // UCXPSFGZZrJ0tQEeP7R2jRqQ は verse_n_projectのチャンネルID
+          // UCOg01LJmZF9UnwFbly73CVw は マル・ナナモナのチャンネルID
           // UCYcnLc0n1ryBDZeGWQTVJ_g は カシ・オトハ のチャンネルID
-          const checkID = /(UCYcnLc0n1ryBDZeGWQTVJ_g|UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
+          // UCmKfT7daL3aOt9o-PBJzOug は ダンジョンズ&ドラゴンズのチャンネルID
+          const checkID = /(UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
           if(json.items[i].snippet.liveBroadcastContent==="live"){
             if(json.items[i].status.uploadStatus==="processed" && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printLN.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
+            printLN.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
           }else if(json.items[i].snippet.liveBroadcastContent==="upcoming"){
             if(json.items[i].status.uploadStatus==="processed" && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printUC.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:json.items[i].status.uploadStatus, icon:icon1[0], icon2:icon2});
+            printUC.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:json.items[i].status.uploadStatus, icon:icon1[0], icon2:icon2});
           }else if(json.items[i].snippet.liveBroadcastContent==="none"){
             if(json.items[i].liveStreamingDetails===undefined){
               continue;
@@ -577,7 +577,7 @@ const process1 = (list, listIcon, printLN, printUC, printA, key2)=>{
             if((json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=H)/)===null && (json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=M)/)===null || json.items[i].contentDetails.duration.match(/[0-9]{1,2}(?=M)/)[0]<30)) && !checkID.test(json.items[i].snippet.channelId)){
               continue;
             }
-            printA.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:replaceThumbnailURL(json.items[i].snippet.thumbnails.medium.url), time:json.items[i].liveStreamingDetails.actualStartTime, time2:json.items[i].contentDetails.duration, time3:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
+            printA.push({videoId:json.items[i].id, videoTitle:replaceAll(json.items[i].snippet.title), videoThumbnail:json.items[i].snippet.thumbnails.medium.url, time:json.items[i].liveStreamingDetails.actualStartTime, time2:json.items[i].contentDetails.duration, time3:json.items[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2});
           }             
         }
       })
@@ -701,12 +701,8 @@ function adjust01s(){
   ObjectData[2].forEach((element)=>{
     listAll2.push(element.videoId);
   });
-  const length = Math.ceil(listAll2.length/50);
-  const listNew = new Array(length).fill().map((_, i)=>{
-    return listAll2.slice(i*50, (i+1)*50);
-  });
   listAll3.splice(0, listAll3.length);
-  listNew.forEach((array)=>{
+  divisor50(listAll2).forEach((array)=>{
     adjust01(array, listAll3, key2);
   });
 }
@@ -737,16 +733,16 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
       }
     }
     if(listAll3[i].snippet.liveBroadcastContent==="live"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
       newObject.time = standardTime(newObject.time);
       printLN.push(newObject);
     }else if(listAll3[i].snippet.liveBroadcastContent==="upcoming"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:listAll3[i].status.uploadStatus, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.scheduledStartTime, time2:"time2", status:listAll3[i].status.uploadStatus, icon:icon1[0], icon2:icon2};
       newObject.time2 = standardTime(newObject.time);
       newObject.time = dayjs(newObject.time).utc().add(9, "h").format("ddd MMM DD, HH:mm");
       printUC.push(newObject);
     }else if(listAll3[i].snippet.liveBroadcastContent==="none"){
-      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:replaceThumbnailURL(listAll3[i].snippet.thumbnails.medium.url), time:listAll3[i].liveStreamingDetails.actualStartTime, time2:listAll3[i].contentDetails.duration, time3:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
+      let newObject = {videoId:listAll3[i].id, videoTitle:replaceAll(listAll3[i].snippet.title), videoThumbnail:listAll3[i].snippet.thumbnails.medium.url, time:listAll3[i].liveStreamingDetails.actualStartTime, time2:listAll3[i].contentDetails.duration, time3:listAll3[i].liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2};
       newObject.time =dayjs(newObject.time).utc().add(9, "h").format("ddd MMM DD, HH:mm");
       newObject.time2 = duration(newObject);
       if(newObject.time3 < dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
@@ -782,7 +778,7 @@ function apiBoot(){
   setTimeout(function(){process2(printLN, printUC, printA, ObjectData)},25000);    
 }
   
-cron.schedule('0 10,40 * * * *', () => {
+cron.schedule('0 15,45 * * * *', () => {
   apiBoot();
   
   console.log('30分経過だよ');
