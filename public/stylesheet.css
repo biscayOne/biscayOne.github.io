@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -7,7 +8,7 @@ body {
   margin-top: 0px;
 }
 
-div img {
+img {
   vertical-align: top;
 }
 
@@ -29,6 +30,10 @@ li {
 button {
   border: none;
   padding: 0;
+}
+
+iframe {
+  vertical-align: bottom;
 }
 
 .faHeader {
@@ -61,6 +66,10 @@ button {
 
 .iconA {
   border: 1.6px solid #807e83;
+}
+
+.iconP {
+  border: 1.6px solid #c36;
 }
 
 header {
@@ -134,10 +143,11 @@ header #clock #showClock {
   margin-bottom: 24px;
 }
 #birthdayParentFrame #birthdayImage {
-  background-color: #FFFAEF;
+  background-color: #ffdbed;
 }
 #birthdayParentFrame #birthdayString {
-  top: 113.19px;
+  top: 50%;
+  transform: translate(0%, -50%);
   font-size: 22px;
 }
 #birthdayParentFrame #birthdayString #underLine {
@@ -158,21 +168,245 @@ header #clock #showClock {
   border-radius: 50%;
   cursor: pointer;
 }
+#birthdayParentFrame .birthdayImageCoverParent {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(#ff7cbe 0%, #ffdbed 55%, #ff9ee0 100%);
+  cursor: pointer;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #magicCircleBlossom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  transform: translate(-50%, -50%);
+  animation: rotate 18s linear infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #thunderShockParent {
+  background: #666;
+  display: none;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #thunderShockParent #thunderShock {
+  width: 100%;
+  height: 100%;
+  animation: thunderShock 1s linear infinite;
+}
+@keyframes thunderShock {
+  0%, 100% {
+    transform: translate(-1%, -1%);
+  }
+  50% {
+    transform: translate(1%, 1%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #gaze {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50%;
+  transform: translateY(-25%);
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #incubation {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 75%;
+  transform-origin: 50% 100%;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .incubator {
+  animation: piyopiyo 2s ease-in-out forwards;
+}
+@keyframes piyopiyo {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  69% {
+    transform: rotate(-10deg);
+  }
+  91% {
+    transform: rotate(1deg);
+  }
+  97% {
+    transform: rotate(-1deg);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #twoHearts {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 25%;
+  visibility: hidden;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .twoHeartsFadeIn {
+  animation: twoHeartsFadeIn 1.6s 0.4s ease-out forwards;
+}
+@keyframes twoHeartsFadeIn {
+  0% {
+    transform: translateY(25%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #invisibleCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#birthdayParentFrame #wave {
+  position: absolute;
+  border: solid 3px rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: luminous 3s;
+  animation-delay: 0s;
+  cursor: pointer;
+  display: none;
+}
+@keyframes luminous {
+  0% {
+    width: 120px;
+    height: 120px;
+    box-shadow: inset 6px 0 12px #fff, 6px 0 12px #fff, inset 3px 0 15px #fff, 3px 0 15px #fff;
+  }
+  100% {
+    width: 240px;
+    height: 240px;
+    box-shadow: inset 6px 0 12px #fff, 6px 0 12px #fff, inset 3px 0 15px #fff, 3px 0 15px #fff;
+  }
+}
 
 #noneParentFrame {
   box-shadow: 5px 0px 5px -5px rgba(0, 0, 0, 0.5), 0px 10px 10px -10px rgba(0, 0, 0, 0.5), -5px 0px 5px -5px rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
+  display: block;
 }
 #noneParentFrame #noneImage {
   background-color: #9fcff7;
 }
 #noneParentFrame #noneString {
-  top: 108.2px;
+  top: 88.8px;
   font-size: 24px;
+  font-weight: bold;
+}
+#noneParentFrame #noneString #btnOpen {
+  width: 113.63px;
+  color: #fff;
+  background-color: #f00;
+  font-size: 24px;
+  border-radius: 18px;
+  box-shadow: 0px 5px #b30000;
+  cursor: pointer;
+  display: inline-block;
+}
+#noneParentFrame #noneString #btnOpen:active {
+  position: relative;
+  top: 5px;
+  box-shadow: none;
 }
 #noneParentFrame #noneImageCredit {
+  top: 341.2px;
   right: 5px;
-  bottom: 2px;
+}
+#noneParentFrame #recommendedTalent {
+  display: none;
+}
+#noneParentFrame #recommendedTalent .recommendedVideoParent {
+  position: relative;
+  width: 476.8px;
+  height: 0;
+  padding-bottom: 56.25%;
+  visibility: hidden;
+}
+#noneParentFrame #recommendedTalent .recommendedVideoParent #recommendedVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#noneParentFrame #recommendedTalent #channelIntroduction {
+  text-align: center;
+  height: 124.2px;
+  border-top: 1.6px solid #807e83;
+  border-bottom: 1.6px solid #807e83;
+  padding: 10px;
+}
+#noneParentFrame #recommendedTalent .channelIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  visibility: hidden;
+  display: inline-block;
+}
+#noneParentFrame #recommendedTalent .channelName {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 5px;
+  visibility: hidden;
+  display: inline-block;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  55% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+#noneParentFrame #recommendedTalent .fadeIn {
+  visibility: visible;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-name: fade-in;
+}
+
+#notice {
+  margin: 0 auto;
+  width: 480px;
+  border: 1.6px solid #807e83;
+  border-radius: 12px;
+  box-shadow: 0px -6px 6px rgba(85, 172, 238, 0.5), 6px 0px 6px rgba(85, 172, 238, 0.5), 0px 6px 6px rgba(85, 172, 238, 0.5), -6px 0px 6px rgba(85, 172, 238, 0.5);
+  margin-bottom: 12px;
+}
+#notice .twitter-tweet {
+  margin: 0px !important;
 }
 
 .headlineParent {
@@ -197,9 +431,15 @@ header #clock #showClock {
 .headlineParent #headlineA {
   background-color: #00c2cb;
 }
+.headlineParent #headlineP {
+  background-color: #c36;
+}
 .headlineParent #headlineTS {
   background-color: #999999;
   margin-top: 360px;
+}
+.headlineParent #headlineEA {
+  background-color: #55acee;
 }
 
 .subtitleParent {
@@ -215,6 +455,9 @@ header #clock #showClock {
 .subtitleParent #subtitleUC {
   margin-bottom: 12px;
 }
+.subtitleParent .lineThrough {
+  text-decoration: line-through;
+}
 
 .container {
   margin: 0 auto;
@@ -222,6 +465,13 @@ header #clock #showClock {
   padding-bottom: 24px;
   border-bottom: 4px solid #DCDDDD;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.container .scheduleDateParent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 .container .scheduleDate {
@@ -246,6 +496,25 @@ header #clock #showClock {
   cursor: pointer;
   transition: all 0.32s;
 }
+.container .videoParent .video:hover {
+  transform: scale(1.1);
+}
+.container .videoParent .video:hover .icon {
+  opacity: 0.38;
+}
+.container .videoParent .video:hover .option {
+  opacity: 0.5;
+}
+.container .videoParent .video:hover .twitchIcon {
+  opacity: 0.5;
+}
+.container .videoParent .video:hover .videoDetail {
+  /*未完成*/
+  visibility: visible;
+}
+.container .videoParent .video:hover .videoDetail .collaboration {
+  display: block;
+}
 .container .videoParent .video .videoThumbnailParent {
   position: relative;
 }
@@ -259,6 +528,7 @@ header #clock #showClock {
   left: 0px;
   width: 60px;
   border-radius: 50%;
+  transition: opacity 0.32s;
 }
 .container .videoParent .video .videoThumbnailParent .option {
   position: absolute;
@@ -270,16 +540,20 @@ header #clock #showClock {
   border: 0.8px solid #807e83;
   border-right: none;
   padding: 0 1.8px 0 6.8px;
+  transition: opacity 0.32s;
 }
 .container .videoParent .video .videoThumbnailParent .premiere {
   background-color: #c36;
-  visibility: hidden;
-}
-.container .videoParent .video .videoThumbnailParent .premiereDisplay {
-  visibility: visible;
 }
 .container .videoParent .video .videoThumbnailParent .durationTime {
   background-color: #00c2cb;
+}
+.container .videoParent .video .videoThumbnailParent .twitchIcon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 60px;
+  transition: opacity 0.32s;
 }
 .container .videoParent .video .timeParent {
   height: 36px;
@@ -302,6 +576,9 @@ header #clock #showClock {
 .container .videoParent .video .timeParent .fa-hourglass-end {
   color: #757575;
 }
+.container .videoParent .video .timeParent .fa-floppy-disk {
+  color: #757575;
+}
 .container .videoParent .video .timeParent .time {
   color: #000;
   font-size: 18px;
@@ -315,7 +592,10 @@ header #clock #showClock {
   background-color: #fff;
   border: 0.8px solid #807e83;
   margin-top: 0px;
-  display: none;
+  /* 未完成 */
+  overflow: hidden;
+  transition: height 0.32s, visibility 0.32s;
+  visibility: hidden;
 }
 .container .videoParent .video .videoDetail .videoTitle {
   font-size: 18px;
@@ -326,13 +606,90 @@ header #clock #showClock {
   border-top: 0.8px solid #807e83;
   padding: 3px;
   margin-top: 0px;
-  display: none;
 }
 .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
   width: 20%;
   border-radius: 50%;
   padding: 3px;
   display: inline-block;
+}
+
+.containerCenter {
+  justify-content: center;
+}
+
+#containerRV {
+  padding-top: 42px;
+  padding-bottom: 42px;
+  display: block;
+}
+#containerRV .slideShowParent {
+  margin: 0 auto;
+  width: 540.1206px;
+  border-radius: 6px;
+  outline: 6px solid #777;
+  overflow: hidden;
+}
+#containerRV .slideShowParent .slideShow {
+  position: relative;
+  width: 100%;
+}
+#containerRV .slideShowParent .slideShow .theater {
+  width: 100%;
+}
+#containerRV .slideShowParent .slideShow .slideFrame {
+  position: absolute;
+  top: 38.8513px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 480px;
+  height: 270px;
+  outline: 12px double #777;
+}
+#containerRV .slideShowParent .slideShow .slide {
+  position: absolute;
+  top: 38.8513px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 480px;
+  opacity: 0;
+  cursor: pointer;
+  transition-property: opacity, z-index;
+  transition-duration: 1.5s;
+}
+#containerRV .slideShowParent .slideShow .slide img {
+  width: 100%;
+}
+#containerRV .slideShowParent .slideShow .slideCurrent {
+  z-index: 1;
+  opacity: 1;
+}
+#containerRV .slideShowParent .channelIconButtons {
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#containerRV .slideShowParent .channelIconButtons .channelIconButtonParent {
+  padding: 6px;
+}
+#containerRV .slideShowParent .channelIconButtons .channelIconButtonParent .channelIconButton {
+  opacity: 0.8;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition-property: opacity, outline;
+  transition-duration: 0.5s;
+}
+#containerRV .slideShowParent .channelIconButtons .channelIconButtonParent .channelIconButton img {
+  width: 100%;
+}
+#containerRV .slideShowParent .channelIconButtons .channelIconButtonParent .channelIconButtonCurrent {
+  opacity: 1;
+  outline: 6px solid #00c2cb;
 }
 
 #contactStringParent {
@@ -429,6 +786,9 @@ header #clock #showClock {
   #noneParentFrame {
     margin-bottom: 10px;
   }
+  #notice {
+    margin-bottom: 10px;
+  }
   .headlineParent .headline {
     font-size: 32px;
     border-radius: 24px;
@@ -471,6 +831,9 @@ header #clock #showClock {
     border-radius: 11.2px 0px 0px 11.2px;
     padding: 0 1.5px 0 5.6px;
   }
+  .container .videoParent .video .videoThumbnailParent .twitchIcon {
+    width: 48px;
+  }
   .container .videoParent .video .timeParent {
     height: 30px;
     font-size: 15px;
@@ -489,6 +852,10 @@ header #clock #showClock {
   }
   .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
     padding: 2.5px;
+  }
+  #containerRV {
+    padding-top: 36px;
+    padding-bottom: 36px;
   }
   #contactStringParent {
     width: 1103px;
@@ -647,7 +1014,6 @@ header #clock #showClock {
     margin-bottom: 16px;
   }
   #birthdayParentFrame #birthdayString {
-    top: 70.79px;
     font-size: 16px;
   }
   #birthdayParentFrame #birthdayIcon {
@@ -656,6 +1022,25 @@ header #clock #showClock {
     width: 80px;
     height: 80px;
     border: 3px solid;
+  }
+  #birthdayParentFrame #crown {
+    width: 80px;
+  }
+  #birthdayParentFrame #wave {
+    position: absolute;
+    border: solid 2px rgba(255, 255, 255, 0.8);
+  }
+  @keyframes luminous {
+    0% {
+      width: 80px;
+      height: 80px;
+      box-shadow: inset 4px 0 8px #fff, 4px 0 8px #fff, inset 2px 0 10px #fff, 2px 0 10px #fff;
+    }
+    100% {
+      width: 160px;
+      height: 160px;
+      box-shadow: inset 4px 0 8px #fff, 4px 0 8px #fff, inset 2px 0 10px #fff, 2px 0 10px #fff;
+    }
   }
   #birthdayParentFrame #birthdayImageCredit {
     right: 2px;
@@ -682,7 +1067,7 @@ header #clock #showClock {
     margin-bottom: 6px;
   }
   .optionParentFrame {
-    width: 335.2px;
+    width: 336px;
     border-radius: 8.34px;
     padding: 6px;
   }
@@ -698,15 +1083,44 @@ header #clock #showClock {
     margin-bottom: 6px;
   }
   #noneParentFrame #noneString {
-    top: 72.2px;
+    top: 58.8px;
     font-size: 16px;
+  }
+  #noneParentFrame #noneString #btnOpen {
+    width: 75.75px;
+    font-size: 16px;
+    border-radius: 12px;
+    box-shadow: 0px 3px #b30000;
+  }
+  #noneParentFrame #noneString #btnOpen:active {
+    top: 3px;
   }
   #noneParentFrame #noneImageCredit {
     right: 3px;
-    bottom: 1px;
+    top: 226.2px;
+  }
+  #noneParentFrame #recommendedTalent .recommendedVideoParent {
+    width: 316.8px;
+  }
+  #noneParentFrame #recommendedTalent #channelIntroduction {
+    height: 84px;
+    padding: 6px;
+  }
+  #noneParentFrame #recommendedTalent .channelIcon {
+    width: 48px;
+    height: 48px;
+  }
+  #noneParentFrame #recommendedTalent .channelName {
+    font-size: 13px;
+    margin-top: 3px;
+  }
+  #notice {
+    width: 320px;
+    box-shadow: 0px -4px 4px rgba(85, 172, 238, 0.5), 4px 0px 4px rgba(85, 172, 238, 0.5), 0px 4px 4px rgba(85, 172, 238, 0.5), -4px 0px 4px rgba(85, 172, 238, 0.5);
+    margin-bottom: 6px;
   }
   .container {
-    width: 352px;
+    width: 363px;
     border-bottom: 3px solid #DCDDDD;
     padding-bottom: 14px;
   }
@@ -728,6 +1142,9 @@ header #clock #showClock {
   .container .videoParent .video .videoThumbnailParent .icon {
     width: 32px;
   }
+  .container .videoParent .video .videoThumbnailParent .twitchIcon {
+    width: 32px;
+  }
   .container .videoParent .video .timeParent {
     height: 22px;
     font-size: 11px;
@@ -746,6 +1163,31 @@ header #clock #showClock {
   }
   .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
     padding: 1.5px;
+  }
+  #containerRV {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  #containerRV .slideShowParent {
+    width: 360.0804px;
+    border-radius: 4px;
+    outline: 4px solid #777;
+  }
+  #containerRV .slideShowParent .slideShow .slideFrame {
+    top: 25.9009px;
+    width: 320px;
+    height: 180px;
+    outline: 8px double #777;
+  }
+  #containerRV .slideShowParent .slideShow .slide {
+    top: 25.9009px;
+    width: 320px;
+  }
+  #containerRV .slideShowParent .channelIconButtons .channelIconButtonParent {
+    padding: 4px;
+  }
+  #containerRV .slideShowParent .channelIconButtons .channelIconButtonParent .channelIconButtonCurrent {
+    outline: 4px solid #00c2cb;
   }
   #contactStringParent {
     width: 352px;
