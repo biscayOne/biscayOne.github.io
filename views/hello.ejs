@@ -28,14 +28,18 @@
       <li><button id="btnLN" class="btn"><i class="fa-fw fa-regular fa-circle-play fa faHeader"></i><span class="string">配信中</span></button></li>
       <li><button id="btnUC" class="btn"><i class="fa-fw fa-regular fa-calendar-days fa faHeader"></i><span class="string">配信予定</span></button></li>
       <li><button id="btnA" class="btn"><i class="fa-fw fa-solid fa-database fa faHeader"></i><span class="string">配信終了</span></button></li>
+      <% if(ObjectData[3][1].length>0){ %>
+      <li><button id="btnP" class="btn"><i class="fa-fw fa-solid fa-bolt <% if(ObjectData[3][0]){ %>faa-float animated<% } %> fa faHeader"></i><span class="string">動画投稿</span></button></li>
+      <% } %>
     </ul>
     <div id="clock"><div id="showClock"><span id="hours"></span><span id="blinking">:</span><span id="minutes"></span><span> (JST)</span></div></div>      
   </header>
 
 
   <div class="headlineParent"><h1 id="headlineLN" class="headline">配信中</h1></div>
-  <div class="subtitleParent"><h2 id="subtitleLN" class="subtitle">Live now</h2></div>
+  <div class="subtitleParent"><h2 id="subtitleLN" class="subtitle <% if(ObjectData[0].length===0){ %>lineThrough<% } %>">Live now</h2></div>
   
+  <% if(ObjectData[0].length===0){ %>
   <div id="noneParentFrame" class="optionParentFrame">
     <div id="noneParent" class="optionParent">
       <img id="noneImage" class="optionImage" src="/images/noneImage.png">
@@ -47,23 +51,25 @@
       </div>
     </div>
   </div>
+  <% } %>
   
-  <div class="container">
+  <div class="container containerCenter">
 
     <% ObjectData[0].forEach((element)=>{ %>
     <div class="videoParent">
       <div class="video videoLN red">
-        <a href="https://www.youtube.com/watch?v=<%= element.videoId %>" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.<% if(element.platform==="youtube"){ %>youtube.com/watch?v=<%= element.videoId %><% }else if(element.platform==="twitch"){ %>twitch.tv/<%= element.loginName %><% } %>" target="_blank" rel="noopener noreferrer">
           <div class="videoThumbnailParent">
             <img src=<%= element.videoThumbnail %> class="videoThumbnail">            
-            <img class="icon iconLN" src="<%= element.icon %>">            
+            <img class="icon iconLN" src="<%= element.icon %>">
+            <% if(element.platform==="twitch"){ %><img class="twitchIcon" src="/images/twitchIcon.png"><% } %>     
           </div>
-          <div class="timeParent">
-            <i class="fa-fw fa-regular fa-hourglass-half faa-tada animated fa faVideo"></i><span class="time"><%= element.time %></span>
+          <div class="timeParent red">
+            <i class="fa-fw fa-regular fa-hourglass-half faa-tada animated fa faVideo"></i><span class="time"><%= element.timeBase %></span>
           </div>
           <div class="videoDetail red">
             <span class="videoTitle"><%= element.videoTitle %></span>
-            <div class="collaboration red"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>
+            <% if(element.icon2.length!==0){ %><div class="collaboration red"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div><% } %>
           </div>
         </a>
       </div>
@@ -71,7 +77,15 @@
     <% }) %>
 
   </div>
-  
+
+  <% if(true){ %>
+  <div class="headlineParent"><h1 id="headlineEA" class="headline">お知らせ</h1></div>
+  <div class="subtitleParent"><h2 id="subtitleEA" class="subtitle">Notice</h2></div>
+
+  <div class="container">
+    <div id="notice"><blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">【サイトの更新のお知らせ】<br>配信中（Live now）の一覧にツイッチの動画が表示されるようアップデートしました👍<br><br>しかし急ごしらえで追加したこともあり、まだ十分なテストを行えていません。<br>不具合が発生する可能性は否めないため、注意深く観察しながら機能を拡充していきたいと考えています🔧</p>&mdash; りっぱくり0号 (@rippakuriZero) <a href="https://twitter.com/rippakuriZero/status/1634953942856773632?ref_src=twsrc%5Etfw">March 12, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+  </div>
+  <% } %>
   
   <div class="headlineParent"><h1 id="headlineUC" class="headline">配信予定</h1></div>
   <div class="subtitleParent"><h2 id="subtitleUC" class="subtitle">Upcoming Streams</h2></div>
@@ -82,7 +96,15 @@
       <h2 id="birthdayString" class="optionString"></h2>
       <a id="birthdayImageCredit" class="optionImageCredit" href="" target="_blank" rel="noopener noreferrer"></a>
       <a id="birthdayIconParent" href="" target="_blank" rel="noopener noreferrer"><img id="birthdayIcon" src=""></a>
-      <img id="birthdayImageCover" src="/images/vampireCastle.jpg" alt="">
+      <div id="bICP" class="birthdayImageCoverParent">
+        <div class="birthdayImageCoverChild">
+          <img id="magicCircleBlossom" src="/images/magicCircleBlossom.png">
+          <div id="thunderShockParent" class="birthdayImageCoverParent">
+            <img id="thunderShock" src="/images/thunderShock.png">
+          </div>
+          <img id="invisibleCover" src="/images/invisible.png">
+        </div>
+      </div>
     </div>
   </div>
   
@@ -90,7 +112,7 @@
 
     <% ObjectData[1].forEach((element1)=>{ %>
     <div class="scheduleDateParent">
-    <div class="scheduleDate"><%= element1[0] %></div>    
+      <div class="scheduleDate"><%= element1[0] %></div>    
       <% element1[1].forEach((element2)=>{ %>
       <div class="videoParent">
         <div class="video videoUC">
@@ -98,14 +120,14 @@
             <div class="videoThumbnailParent">
               <img src=<%= element2.videoThumbnail %> class="videoThumbnail">
               <img class="icon iconUC" src="<%= element2.icon %>">
-              <span class='option premiere <%if(element2.status==="processed"){%><%= "premiereDisplay" %><% } %>'>プレミア公開</span>
+              <% if(element2.status==="processed"){ %><span class='option premiere'>プレミア公開</span><% } %>
             </div>
             <div class="timeParent">
-              <i class="fa-fw fa-solid fa-hourglass-start fa faVideo"></i><span class="time" optionTime="<%= element2.time2 %>"><%= element2.time %> (JST)</span>
+              <i class="fa-fw fa-solid fa-hourglass-start fa faVideo"></i><span class="time" optionTime="<%= element2.timeBase %>"><%= element2.time %> (JST)</span>
             </div>    
             <div class="videoDetail">
               <span class="videoTitle"><%= element2.videoTitle %></span>
-              <div class="collaboration"><% element2.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>
+              <% if(element2.icon2.length!==0){ %><div class="collaboration"><% element2.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div><% } %>
             </div>
           </a>
         </div>
@@ -113,6 +135,16 @@
       <% }) %>
     </div>
     <% }) %>
+
+  </div>
+
+
+  <div id="containerRV" class="container">
+
+    <div class="slideShowParent">
+      <div class="slideShow"><img class="theater" src="/images/theater.jpg"><div class="slideFrame"></div></div>
+      <div class="channelIconButtons"></div>
+    </div>
 
   </div>
 
@@ -125,18 +157,19 @@
     <% ObjectData[2].forEach((element)=>{ %>
     <div class="videoParent">
       <div class="video">
-        <a href="https://www.youtube.com/watch?v=<%= element.videoId %>" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.<% if(element.platform==="youtube"){ %>youtube.com/watch?v=<%= element.videoId %><% }else if(element.platform==="twitch"){ %>twitch.tv/videos/<%= element.videoIdT %><% } %>" target="_blank" rel="noopener noreferrer">
           <div class="videoThumbnailParent">
             <img src=<%= element.videoThumbnail %> class="videoThumbnail">
             <img class="icon iconA" src="<%= element.icon %>">
             <span class="option durationTime"><%= element.time2 %></span>
+            <% if(element.platform==="twitch"){ %><img class="twitchIcon" src="/images/twitchIcon.png"><% } %>
           </div>
           <div class="timeParent">
             <i class="fa-fw fa-solid fa-hourglass-end fa faVideo"></i><span class="time"><%= element.time %> (JST)</span>
           </div>
           <div class="videoDetail">
             <span class="videoTitle"><%= element.videoTitle %></span>
-            <div class="collaboration"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div>           
+            <% if(element.icon2.length!==0){ %><div class="collaboration"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div><% } %>
           </div>
         </a>
       </div>
@@ -145,17 +178,49 @@
 
   </div>
 
+
+  <% if(ObjectData[3][1].length>0){ %>
+  <div class="headlineParent"><h1 id="headlineP" class="headline">動画投稿</h1></div>
+  <div class="subtitleParent"><h2 class="subtitle">Posted Videos</h2></div>
+  
+  <div class="container containerCenter">
+    
+    <% ObjectData[3][1].forEach((element)=>{ %>
+    <div class="videoParent">
+      <div class="video">
+        <a href="https://www.youtube.com/watch?v=<%= element.videoId %>" target="_blank" rel="noopener noreferrer">
+          <div class="videoThumbnailParent">
+            <img src=<%= element.videoThumbnail %> class="videoThumbnail">
+            <img class="icon iconP" src="<%= element.icon %>">
+            <span class="option premiere"><%= element.time2 %></span>
+          </div>
+          <div class="timeParent">
+            <i class="fa-fw fa-solid fa-floppy-disk fa faVideo"></i><span class="time"><%= element.time %> (JST)</span>
+          </div>
+          <div class="videoDetail">
+            <span class="videoTitle"><%= element.videoTitle %></span>
+            <% if(element.icon2.length!==0){ %><div class="collaboration"><% element.icon2.forEach((elementChild)=>{ %><img class="collaborationIcon" src="<%= elementChild %>"><% }) %></div><% } %>
+          </div>
+        </a>
+      </div>
+    </div>
+    <% }) %>
+
+  </div>
+  <% } %>
+
+
   <div class="headlineParent"><h1 id="headlineTS" class="headline">連絡先</h1></div>
   <div class="subtitleParent"><h2 class="subtitle">Contact</h2></div>
 
   <div id="contactStringParent">
     <p id="contactStringJapanese" class="contactString">ウェブサイトに問題がある場合は、<br>こちらのTwitterアカウントまでご連絡ください</p>
     <p id="contactStringEnglish" class="contactString">If there's a problem with the website,<br>Please contact this Twitter account.</p>
-    <div id="twitterAccountParent"><a id="twitterAccountLink" href="https://twitter.com/rippakuriZero/status/1586990214601666560" target="_blank" rel="noopener noreferrer"><i class="fa-fw fa-brands fa-square-twitter fa faAccount"></i><span id="twitterAccount">@rippakuriZero</span></a></div>
+    <div id="twitterAccountParent"><a id="twitterAccountLink" href="https://twitter.com/rippakuriZero/status/1586990214601666560" target="_blank" rel="noopener noreferrer"><i class="fa-fw fa-brands fa-square-twitter fa faAccount"></i><span id="twitterAccount" optionData="<%= ObjectData[4] %>">@rippakuriZero</span></a></div>
     <div id="topScrollParent"><button id="topScroll"><i class="fa-fw fa-solid fa-angles-up fa faScroll"></i></button></div>
   </div>
 
-  
+
   </div>
   <script src="JQuery.js"></script>
 </body>
