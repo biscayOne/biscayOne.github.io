@@ -38,6 +38,19 @@ iframe{
   vertical-align: bottom;
 }
 
+@keyframes twoHeartsFadeIn {
+  0% {
+    transform: translateY(25%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .faHeader{
   margin-right: 5px;
 }
@@ -116,7 +129,18 @@ header {
     padding-right:20px;
   
     #showClock{
-      float: left;  
+      float: left;
+      #blinking{
+        animation: blinking 1.0s linear infinite;
+      }
+      @keyframes blinking {
+        0%, 50%{
+          color: #333;
+        }
+        51%, 100%{
+          color: #fff;
+        }
+      }
     }
 
   }
@@ -182,17 +206,22 @@ header {
 
   #birthdayImage{
     // background-color: #FFFAEF;
-    background-color: #ffdbed;
+    //background-color: #ffdbed;
+    background-color: #ffc136;
   }
 
   #birthdayString{
     top: 50%;
-    transform: translate(0%,-50%);
   
+    color: #fff;
     font-size: 22px;
+    text-shadow: 0.6px 0.6px 0px #333, -0.6px 0.6px 0px #333, 0.6px -0.6px 0px #333, -0.6px -0.6px 0px #333;
+
+    transform: translate(0%,-50%);
 
     #underLine{
-      text-decoration: underline;
+      color: #fff;
+      //text-decoration: underline;
     
       cursor: pointer;
     }
@@ -201,6 +230,8 @@ header {
   #birthdayImageCredit{
     right: 3px;
     bottom: 0px;
+
+    color: #000;
   }
   
   #birthdayIcon{
@@ -225,15 +256,397 @@ header {
     width: 100%;
     height: 100%;
 
-    background: radial-gradient(#ff7cbe 0%,#ffdbed 55%, #ff9ee0 100%);
+    background: #333;
+    //background: linear-gradient(180deg, #c8ceca 0%, #eadeb9 50%, #e2a872 100%);
+    //background: radial-gradient(#ff7cbe 0%,#ffdbed 55%, #ff9ee0 100%);
+    //outline: 10px solid #704cbc;
 
     cursor: pointer;
+
+    transition: transform 2.5s;
+
+    #touchHere{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      color: #fff;
+      font-size: 22px;
+
+      transform: translate(-50%, -50%);
+    }
+
+    #violetWindow{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: 20%;
+      height: 20%;
+
+      background: #948bdb;
+      box-shadow: 0 0 9px #948bdb, 0 0 36px #948bdb, 0 0 9px #948bdb;
+      
+      transform: translate(-50%, -50%) scale(0);
+    }
+
+    .vWScale{
+      animation: vWScale 1.0s linear forwards;
+    }
+
+    @keyframes vWScale {
+      0%{
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100%{
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .vWTransform{
+      animation: vWTransform 3.0s linear 0.1s forwards;
+    }
+
+    @keyframes vWTransform {
+      0%{
+        width: 20%;
+        height: 20%;
+      }
+      50%{
+        width: 100%;
+        height: 20%;
+      }
+      100%{
+        width: 100%;
+        height: 100%;
+      }
+    }
 
     .birthdayImageCoverChild{
       position: relative;
 
       width: 100%;
       height: 100%;
+
+      .littleStar{
+        position: absolute;
+
+        background-color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 5px 2px rgba(#fff, 0.2);
+        opacity: 0;
+      }
+
+      .twinkle{
+        animation: twinkle 5s infinite;
+      }
+
+      @keyframes twinkle {
+        0% {
+          transform: scale(1.0);
+          opacity: 0;
+        }
+      
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      
+        100% {
+          opacity: 0;
+          transform: scale(1.0);
+        }
+      }
+
+      #shootingStarParent{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        width: 5px;
+        height: 480px;
+        
+        transform: translate(-50%, -50%) rotateZ(45deg);
+
+        #shootingStar{
+          width: 5px;
+          height: 0;
+          
+          border-radius: 0px 0px 2.5px 2.5px;
+          background: linear-gradient(transparent, #fff);
+        }
+
+        .shootingStarGo{
+          animation: shootingStarGo 3.0s linear;
+        }
+        @keyframes shootingStarGo {
+          0% {
+            height: 0px;
+            opacity: 50%;
+          }
+        
+          50% {
+            height: 360px;
+            opacity: 100%;
+          }
+        
+          100% {
+            height: 480px;
+            opacity: 0;
+          }
+        }
+      }
+
+      .firstStepAmae{
+        position: absolute;
+        top: 40%;
+        left: 50%;
+
+        font-size: 48px;
+
+        transform: translate(-50%, -50%);
+
+        display: none;
+
+        .secondStepAmae{
+          .spinAmae{
+            animation: spinAmae 0.5s linear forwards;
+          }
+
+          @keyframes spinAmae {
+            0%{
+              transform: rotate(0deg);
+            }
+            100%{
+              transform: rotate(360deg);
+            }
+          }
+        }
+
+        .waveAmae0{
+          animation: waveAmae 2.0s linear 0.0s 2;
+        }
+        .waveAmae2{
+          animation: waveAmae 2.0s linear 0.3s 2;
+        }
+        .waveAmae4{
+          animation: waveAmae 2.0s linear 0.6s 2;
+        }
+        .waveAmae3{
+          animation: waveAmae 2.0s linear 0.9s 2;
+        }
+        .waveAmae1{
+          animation: waveAmae 2.0s linear 1.2s 2;
+        }
+        
+        
+        @keyframes waveAmae {
+          0%, 50%, 100%{
+            transform: translateY(0%);
+          } 
+          25%{
+            transform: translateY(-100%);
+          }
+          75%{
+            transform: translateY(100%);
+          }
+        }        
+      }
+
+      #energyMessage{
+        position: absolute;
+        bottom: 5%;
+        left: 0;
+        right: 0;
+
+        margin: 0 auto;
+
+        text-align: center;
+
+        width: 240px;
+
+        color: #333;
+        font-size: 48px;
+        letter-spacing: 3px;
+        border: 9px double #333;
+        border-radius: 12px;
+      }
+
+      .chargeCompleted{
+        animation: chargeCompleted 1.0s linear 3 forwards;
+      }
+
+      @keyframes chargeCompleted {
+        0%{
+          color: #333;
+          border: 9px double #333;
+        }
+        50%{
+          color: #333;
+          border: 9px double #333;
+        }
+        51%{
+          color: #f18d00;
+          border: 9px double #f18d00;
+        }
+        100%{
+          color: #f18d00;
+          border: 9px double #f18d00;
+        }
+      }
+      
+      .slideAmae0{
+        animation: num1Amae 2.0s ease 0.8s forwards;
+      }
+      @keyframes num1Amae {
+        0%{
+          translate: (-50%, -50%);
+        }
+        100%{
+          transform: translate(-250%, -50%);
+        }
+      }
+      .slideAmae2{
+        animation: num2Amae 2.0s ease 0.8s forwards;
+      }
+      @keyframes num2Amae {
+        0%{
+          translate: (-50%, -50%);
+        }
+        100%{
+          transform: translate(-150%, -50%);
+        }
+      }
+      .slideAmae3{
+        animation: num4Amae 2.0s ease 0.8s forwards;
+      }
+      @keyframes num4Amae {
+        0%{
+          translate: (-50%, -50%);
+        }
+        100%{
+          transform: translate(50%, -50%);
+        }
+      }
+      .slideAmae1{
+        animation: num5Amae 2.0s ease 0.8s forwards;
+      }
+      @keyframes num5Amae {
+        0%{
+          translate: (-50%, -50%);
+        }
+        100%{
+          transform: translate(150%, -50%);
+        }
+      }
+
+      #invaderParent{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        margin: 0 auto;
+
+        text-align: center;
+        
+        width: 100%;
+
+        font-size: 240px;
+
+        transform: translate(-50%, -130%);
+
+        #invader{
+          animation: dancing 1.0s linear infinite;
+        }
+  
+        @keyframes dancing {
+          0%, 100%{
+            transform: rotate(0deg);
+          }
+  
+          25%{
+            transform: rotate(3deg);
+          }
+          75%{
+            transform: rotate(-3deg);
+          }
+        }
+      }
+
+      #musicalNote{
+        position: absolute;
+        top: calc(100% * (-1/20));
+        right: calc(100% * (0/20));
+
+        width: calc(100% * (1/3));
+
+        visibility: hidden;
+      }
+
+      .invading{
+        animation: invading 5.0s linear 1.0s forwards;
+      }
+
+      @keyframes invading {
+        0%{
+          transform: translate(-50%, -130%);
+        }
+        100%{
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      #generalStore{
+        width: 100%;
+        height: 100%;
+        
+        transform: translateX(-100%);
+      }
+
+      .generalStoreSlide{
+        animation: gSS 3s linear forwards;
+      }
+
+      @keyframes gSS {
+        0%{
+          transform: translateX(-100%);
+        }
+        100%{
+          transform: translateX(0%);
+        }
+      }
+
+      #luckyCat{
+        position: absolute;
+        top: calc(50%);
+        left: calc(50%);
+
+        width: 70%;
+
+        transform: translate(-50%, -50%) translateY(15%);
+
+        animation: lCS 1.5s forwards;
+
+        display: none;
+      }
+
+      @keyframes lCS {
+        0%{
+          transform: translate(-50%, -50%) translateY(15%);
+        }
+        100%{
+          transform: translate(-50%, -50%) translateY(0%);
+        }
+      }
+
+      #crow{
+        position: absolute;
+        top: calc(50%);
+        left: calc(50%);
+
+        width: 70%;
+        transform: translate(-50%, -50%);
+      }
 
       #magicCircleBlossom{
         position: absolute;
@@ -334,26 +747,28 @@ header {
       .twoHeartsFadeIn{
         animation: twoHeartsFadeIn 1.6s 0.4s ease-out forwards;
       }
-      @keyframes twoHeartsFadeIn {
-        0% {
-          transform: translateY(25%);
-          opacity: 0;
-          visibility: hidden;
-        }
-        100% {
-          transform: translateY(0%);
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-      #invisibleCover{
-        position: absolute;
-        top: 0;
-        left: 0;
+    }
+  }
 
-        width: 100%;
-        height: 100%;
-      }
+  #invisibleCover{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .bICPSlide{
+    animation: bICPS 1.5s forwards;
+  }
+
+  @keyframes bICPS {
+    0%{
+      transform: translateY(0%);
+    }
+    100%{
+      transform: translateY(100%);
     }
   }
 
@@ -595,6 +1010,10 @@ header {
   #headlineP{
     background-color: #c36;
   }
+
+  #headlineMP{
+    background-color: #f58f98;
+  }
   
   #headlineTS{
     background-color: #999999;
@@ -689,6 +1108,9 @@ header {
         .option{
           opacity: 0.5;
         }
+        .progress{
+          opacity: 1.0;
+        }
         .twitchIcon{
           opacity: 0.5;
         }
@@ -715,7 +1137,7 @@ header {
           bottom: 0px;
           left: 0px;
           
-          width: 60px;
+          width: calc(1/5 * 100%); 
           
           border-radius: 50%;  
 
@@ -746,12 +1168,16 @@ header {
           background-color: #00c2cb;
         }
 
+        .progress{
+          background-color: #f58f98;
+        }
+
         .twitchIcon{
           position: absolute;
           top: 0px;
           left: 0px;
 
-          width: 60px;
+          width: calc(1/5 * 100%);
 
           transition: opacity 0.32s;
         }
@@ -787,6 +1213,10 @@ header {
 
         .fa-floppy-disk{
           color: #757575;
+        }
+
+        .fa-person-running{
+          color: #f44;
         }
       
         .time{  
@@ -954,6 +1384,105 @@ header {
   }
 }
 
+#containerNico{
+  padding-top: 40.8px;
+  padding-bottom: 40.8px;
+
+  display: none;
+
+  #nicoParent{
+    margin: 0 auto;
+  
+    width: 468px;
+  
+    border-radius: 6px;
+    outline: 4.8px solid #777;
+  
+    overflow: hidden;
+  
+    display: flex;
+    flex-wrap: wrap;
+  
+    #nicoVideoFrame{
+      position: relative;
+  
+      width: 100%;
+      height: 264px;
+      #nicoVideo{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        
+        background-color: #807e83;
+        
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+    }
+  
+    .nicoSchedule{
+      text-align: center;
+
+      width: 40%;
+      height: 72.3px;
+
+      font-size: 18px;
+      line-height: 67.5px;
+      border-top: 4.8px solid #777;
+    }
+  
+    .nicoCollaboration{
+      width: 60%;
+      height: 72.3px;
+  
+      border-top: 4.8px solid #777;
+      border-left: 4.8px solid #777;
+  
+      display: flex;
+      justify-content: center;
+      .nicoIcon{
+        width: 67.5px;
+        height: 67.5px;
+  
+        border-radius: 50%;
+  
+        padding: 6px;
+      }
+    }
+  }
+}
+
+#shakeHandsDisplayParent{
+  position: fixed;
+  bottom: 8px;
+  z-index: 114514;
+
+  width: 1720px;
+
+  display: block;
+  #shakeHandsDisplay{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+  
+    width: 108px;
+    height: 108px;
+  
+    background-color: #505050;
+    
+    border: 0.8px solid #505050;
+    border-radius: 50%;
+
+    overflow: hidden;
+  
+    cursor: pointer;
+    #shakeHandsIcon{
+      width: 100%;
+
+      transition: opacity 0.32s;
+    }
+  }
+}
+
 #contactStringParent{
   position: relative;
 
@@ -1001,6 +1530,7 @@ header {
   #topScrollParent{
     position: fixed;
     bottom: 8px;
+    z-index: 114514;
   
     width: 1720px;
   
@@ -1009,7 +1539,6 @@ header {
       position: absolute;
       bottom: 12px;
       right: 12px;
-      z-index: 114514;
     
       text-align: center;
     
@@ -1145,19 +1674,11 @@ header {
 
         .videoThumbnailParent{
     
-          .icon{
-            width: 48px; 
-          }
-    
           .option{
             font-size: 15px;
             border-radius: 11.2px 0px 0px 11.2px;
           
             padding: 0 1.5px 0 5.6px;
-          }
-
-          .twitchIcon{
-            width: 48px;
           }
     
         }
@@ -1195,9 +1716,25 @@ header {
 
   }
 
+  #shakeHandsDisplayParent{  
+    width: 1103px;
+    #shakeHandsDisplay{
+      bottom: 10px;
+      right: 10px;
+  
+      width: 90px;
+      height: 90px;
+    }
+  }
+
   #containerRV{
     padding-top: 36px;
     padding-bottom: 36px;
+  }
+
+  #containerNico{
+    padding-top: 34.8px;
+    padding-bottom: 34.8px;
   }
   
   #contactStringParent{
@@ -1255,6 +1792,10 @@ header {
         color: #fff;
       }
 
+      .string{
+        display: none;
+      }
+
     }
 
   }
@@ -1302,7 +1843,10 @@ header {
       }
     }
   }  
- 
+
+  #shakeHandsDisplayParent{  
+    width: 733px;
+  }
 
   #contactStringParent{
     width: 733px;
@@ -1321,11 +1865,6 @@ header {
   }
 
   header{
-    .btn{
-      .string{
-        display: none;
-      }
-    }
     #clock{  
       padding-right:5px;
     }
@@ -1370,6 +1909,10 @@ header {
       }    
     }
   }  
+
+  #shakeHandsDisplayParent{  
+    width: 564px;
+  }
 
   #contactStringParent{
     width: 564px;
@@ -1431,6 +1974,7 @@ header {
     margin-bottom: 16px;
     #birthdayString{
       font-size: 16px;
+      text-shadow: 0.4px 0.4px 0px #333, -0.4px 0.4px 0px #333, 0.4px -0.4px 0px #333, -0.4px -0.4px 0px #333;
     }
     #birthdayIcon{
       top: 3px;
@@ -1441,6 +1985,77 @@ header {
   
       border: 3px solid;
     }
+
+    .birthdayImageCoverParent{
+      //outline: 6px solid #704cbc;
+
+      #touchHere{
+        font-size: 16px;
+      }
+
+      #violetWindow{
+        box-shadow: 0 0 6px #948bdb, 0 0 24px #948bdb, 0 0 6px #948bdb;
+      }
+
+      .birthdayImageCoverChild{
+        #shootingStarParent{  
+          height: 320px;
+  
+          @keyframes shootingStarGo {
+            0% {
+              height: 0px;
+              opacity: 50%;
+            }
+          
+            50% {
+              height: 270px;
+              opacity: 100%;
+            }
+          
+            100% {
+              height: 320px;
+              opacity: 0;
+            }
+          }
+        }
+
+        .firstStepAmae{
+          font-size: 32px;
+        }
+  
+        #energyMessage{
+          width: 160px;
+  
+          font-size: 32px;
+          letter-spacing: 2px;
+          border: 6px double #333;
+          border-radius: 8px;
+        }
+  
+        @keyframes chargeCompleted {
+          0%{
+            color: #333;
+            border: 6px double #333;
+          }
+          50%{
+            color: #333;
+            border: 6px double #333;
+          }
+          51%{
+            color: #f18d00;
+            border: 6px double #f18d00;
+          }
+          100%{
+            color: #f18d00;
+            border: 6px double #f18d00;
+          }
+        }
+        
+        #invaderParent{
+          font-size: 160px;
+        }
+      }
+    }    
 
     #crown{
       width: 80px;
@@ -1606,12 +2221,6 @@ header {
         
             padding: 0 1.1px 0 4.2px;
           }
-          .icon{
-            width: 32px;
-          }
-          .twitchIcon{
-            width: 32px;
-          }
         }
         .timeParent{
           height: 22px;
@@ -1679,7 +2288,60 @@ header {
       }
     }
   }
+  
+  #containerNico{
+    padding-top: 23.2px;
+    padding-bottom: 23.2px;
+
+    #nicoParent{    
+      width: 312px;
+    
+      border-radius: 4px;
+      outline: 3.2px solid #777;
+    
+      #nicoVideoFrame{
+        height: 176px;
+        #nicoVideo{
+          transform: translate(-50%, -50%) scale(1.0);
+        }
+      }
+    
+      .nicoSchedule{
+        height: 48.2px;
+  
+        font-size: 13px;
+        line-height: 45px;
+        border-top: 3.2px solid #777;
+      }
+    
+      .nicoCollaboration{
+        height: 48.2px;
+    
+        border-top: 3.2px solid #777;
+        border-left: 3.2px solid #777;
+
+        .nicoIcon{
+          width: 45px;
+          height: 45px;
+    
+          border-radius: 50%;
+    
+          padding: 4px;
+        }
+      }
+    }
+  }
  
+  #shakeHandsDisplayParent{  
+    width: 352px;
+    #shakeHandsDisplay{
+      bottom: 6px;
+      right: 6px;
+  
+      width: 60px;
+      height: 60px;
+    }
+  }
 
   #contactStringParent{
     width: 352px;
