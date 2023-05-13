@@ -36,6 +36,18 @@ iframe {
   vertical-align: bottom;
 }
 
+@keyframes twoHeartsFadeIn {
+  0% {
+    transform: translateY(25%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+    visibility: visible;
+  }
+}
 .faHeader {
   margin-right: 5px;
 }
@@ -103,6 +115,17 @@ header #clock {
 header #clock #showClock {
   float: left;
 }
+header #clock #showClock #blinking {
+  animation: blinking 1s linear infinite;
+}
+@keyframes blinking {
+  0%, 50% {
+    color: #333;
+  }
+  51%, 100% {
+    color: #fff;
+  }
+}
 
 .optionParentFrame {
   margin: 0 auto;
@@ -143,20 +166,23 @@ header #clock #showClock {
   margin-bottom: 24px;
 }
 #birthdayParentFrame #birthdayImage {
-  background-color: #ffdbed;
+  background-color: #ffc136;
 }
 #birthdayParentFrame #birthdayString {
   top: 50%;
-  transform: translate(0%, -50%);
+  color: #fff;
   font-size: 22px;
+  text-shadow: 0.6px 0.6px 0px #333, -0.6px 0.6px 0px #333, 0.6px -0.6px 0px #333, -0.6px -0.6px 0px #333;
+  transform: translate(0%, -50%);
 }
 #birthdayParentFrame #birthdayString #underLine {
-  text-decoration: underline;
+  color: #fff;
   cursor: pointer;
 }
 #birthdayParentFrame #birthdayImageCredit {
   right: 3px;
   bottom: 0px;
+  color: #000;
 }
 #birthdayParentFrame #birthdayIcon {
   position: absolute;
@@ -174,13 +200,321 @@ header #clock #showClock {
   left: 0px;
   width: 100%;
   height: 100%;
-  background: radial-gradient(#ff7cbe 0%, #ffdbed 55%, #ff9ee0 100%);
+  background: #333;
   cursor: pointer;
+  transition: transform 2.5s;
+}
+#birthdayParentFrame .birthdayImageCoverParent #touchHere {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  font-size: 22px;
+  transform: translate(-50%, -50%);
+}
+#birthdayParentFrame .birthdayImageCoverParent #violetWindow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20%;
+  height: 20%;
+  background: #948bdb;
+  box-shadow: 0 0 9px #948bdb, 0 0 36px #948bdb, 0 0 9px #948bdb;
+  transform: translate(-50%, -50%) scale(0);
+}
+#birthdayParentFrame .birthdayImageCoverParent .vWScale {
+  animation: vWScale 1s linear forwards;
+}
+@keyframes vWScale {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .vWTransform {
+  animation: vWTransform 3s linear 0.1s forwards;
+}
+@keyframes vWTransform {
+  0% {
+    width: 20%;
+    height: 20%;
+  }
+  50% {
+    width: 100%;
+    height: 20%;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
 }
 #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild {
   position: relative;
   width: 100%;
   height: 100%;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .littleStar {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.2);
+  opacity: 0;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .twinkle {
+  animation: twinkle 5s infinite;
+}
+@keyframes twinkle {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #shootingStarParent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 480px;
+  transform: translate(-50%, -50%) rotateZ(45deg);
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #shootingStarParent #shootingStar {
+  width: 5px;
+  height: 0;
+  border-radius: 0px 0px 2.5px 2.5px;
+  background: linear-gradient(transparent, #fff);
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #shootingStarParent .shootingStarGo {
+  animation: shootingStarGo 3s linear;
+}
+@keyframes shootingStarGo {
+  0% {
+    height: 0px;
+    opacity: 50%;
+  }
+  50% {
+    height: 360px;
+    opacity: 100%;
+  }
+  100% {
+    height: 480px;
+    opacity: 0;
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  font-size: 48px;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .secondStepAmae .spinAmae {
+  animation: spinAmae 0.5s linear forwards;
+}
+@keyframes spinAmae {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .waveAmae0 {
+  animation: waveAmae 2s linear 0s 2;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .waveAmae2 {
+  animation: waveAmae 2s linear 0.3s 2;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .waveAmae4 {
+  animation: waveAmae 2s linear 0.6s 2;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .waveAmae3 {
+  animation: waveAmae 2s linear 0.9s 2;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae .waveAmae1 {
+  animation: waveAmae 2s linear 1.2s 2;
+}
+@keyframes waveAmae {
+  0%, 50%, 100% {
+    transform: translateY(0%);
+  }
+  25% {
+    transform: translateY(-100%);
+  }
+  75% {
+    transform: translateY(100%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #energyMessage {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  width: 240px;
+  color: #333;
+  font-size: 48px;
+  letter-spacing: 3px;
+  border: 9px double #333;
+  border-radius: 12px;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .chargeCompleted {
+  animation: chargeCompleted 1s linear 3 forwards;
+}
+@keyframes chargeCompleted {
+  0% {
+    color: #333;
+    border: 9px double #333;
+  }
+  50% {
+    color: #333;
+    border: 9px double #333;
+  }
+  51% {
+    color: #f18d00;
+    border: 9px double #f18d00;
+  }
+  100% {
+    color: #f18d00;
+    border: 9px double #f18d00;
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .slideAmae0 {
+  animation: num1Amae 2s ease 0.8s forwards;
+}
+@keyframes num1Amae {
+  0% {
+    translate: -50%, -50%;
+  }
+  100% {
+    transform: translate(-250%, -50%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .slideAmae2 {
+  animation: num2Amae 2s ease 0.8s forwards;
+}
+@keyframes num2Amae {
+  0% {
+    translate: -50%, -50%;
+  }
+  100% {
+    transform: translate(-150%, -50%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .slideAmae3 {
+  animation: num4Amae 2s ease 0.8s forwards;
+}
+@keyframes num4Amae {
+  0% {
+    translate: -50%, -50%;
+  }
+  100% {
+    transform: translate(50%, -50%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .slideAmae1 {
+  animation: num5Amae 2s ease 0.8s forwards;
+}
+@keyframes num5Amae {
+  0% {
+    translate: -50%, -50%;
+  }
+  100% {
+    transform: translate(150%, -50%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #invaderParent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  font-size: 240px;
+  transform: translate(-50%, -130%);
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #invaderParent #invader {
+  animation: dancing 1s linear infinite;
+}
+@keyframes dancing {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #musicalNote {
+  position: absolute;
+  top: -5%;
+  right: 0%;
+  width: 33.3333333333%;
+  visibility: hidden;
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .invading {
+  animation: invading 5s linear 1s forwards;
+}
+@keyframes invading {
+  0% {
+    transform: translate(-50%, -130%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #generalStore {
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .generalStoreSlide {
+  animation: gSS 3s linear forwards;
+}
+@keyframes gSS {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #luckyCat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  transform: translate(-50%, -50%) translateY(15%);
+  animation: lCS 1.5s forwards;
+  display: none;
+}
+@keyframes lCS {
+  0% {
+    transform: translate(-50%, -50%) translateY(15%);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(0%);
+  }
+}
+#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #crow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  transform: translate(-50%, -50%);
 }
 #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #magicCircleBlossom {
   position: absolute;
@@ -263,24 +597,23 @@ header #clock #showClock {
 #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .twoHeartsFadeIn {
   animation: twoHeartsFadeIn 1.6s 0.4s ease-out forwards;
 }
-@keyframes twoHeartsFadeIn {
-  0% {
-    transform: translateY(25%);
-    opacity: 0;
-    visibility: hidden;
-  }
-  100% {
-    transform: translateY(0%);
-    opacity: 1;
-    visibility: visible;
-  }
-}
-#birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #invisibleCover {
+#birthdayParentFrame #invisibleCover {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+#birthdayParentFrame .bICPSlide {
+  animation: bICPS 1.5s forwards;
+}
+@keyframes bICPS {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
 #birthdayParentFrame #wave {
   position: absolute;
@@ -434,6 +767,9 @@ header #clock #showClock {
 .headlineParent #headlineP {
   background-color: #c36;
 }
+.headlineParent #headlineMP {
+  background-color: #f58f98;
+}
 .headlineParent #headlineTS {
   background-color: #999999;
   margin-top: 360px;
@@ -505,6 +841,9 @@ header #clock #showClock {
 .container .videoParent .video:hover .option {
   opacity: 0.5;
 }
+.container .videoParent .video:hover .progress {
+  opacity: 1;
+}
 .container .videoParent .video:hover .twitchIcon {
   opacity: 0.5;
 }
@@ -526,7 +865,7 @@ header #clock #showClock {
   position: absolute;
   bottom: 0px;
   left: 0px;
-  width: 60px;
+  width: 20%;
   border-radius: 50%;
   transition: opacity 0.32s;
 }
@@ -548,11 +887,14 @@ header #clock #showClock {
 .container .videoParent .video .videoThumbnailParent .durationTime {
   background-color: #00c2cb;
 }
+.container .videoParent .video .videoThumbnailParent .progress {
+  background-color: #f58f98;
+}
 .container .videoParent .video .videoThumbnailParent .twitchIcon {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 60px;
+  width: 20%;
   transition: opacity 0.32s;
 }
 .container .videoParent .video .timeParent {
@@ -578,6 +920,9 @@ header #clock #showClock {
 }
 .container .videoParent .video .timeParent .fa-floppy-disk {
   color: #757575;
+}
+.container .videoParent .video .timeParent .fa-person-running {
+  color: #f44;
 }
 .container .videoParent .video .timeParent .time {
   color: #000;
@@ -692,6 +1037,79 @@ header #clock #showClock {
   outline: 6px solid #00c2cb;
 }
 
+#containerNico {
+  padding-top: 40.8px;
+  padding-bottom: 40.8px;
+  display: none;
+}
+#containerNico #nicoParent {
+  margin: 0 auto;
+  width: 468px;
+  border-radius: 6px;
+  outline: 4.8px solid #777;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+#containerNico #nicoParent #nicoVideoFrame {
+  position: relative;
+  width: 100%;
+  height: 264px;
+}
+#containerNico #nicoParent #nicoVideoFrame #nicoVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #807e83;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+#containerNico #nicoParent .nicoSchedule {
+  text-align: center;
+  width: 40%;
+  height: 72.3px;
+  font-size: 18px;
+  line-height: 67.5px;
+  border-top: 4.8px solid #777;
+}
+#containerNico #nicoParent .nicoCollaboration {
+  width: 60%;
+  height: 72.3px;
+  border-top: 4.8px solid #777;
+  border-left: 4.8px solid #777;
+  display: flex;
+  justify-content: center;
+}
+#containerNico #nicoParent .nicoCollaboration .nicoIcon {
+  width: 67.5px;
+  height: 67.5px;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+#shakeHandsDisplayParent {
+  position: fixed;
+  bottom: 8px;
+  z-index: 114514;
+  width: 1720px;
+  display: block;
+}
+#shakeHandsDisplayParent #shakeHandsDisplay {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 108px;
+  height: 108px;
+  background-color: #505050;
+  border: 0.8px solid #505050;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+#shakeHandsDisplayParent #shakeHandsDisplay #shakeHandsIcon {
+  width: 100%;
+  transition: opacity 0.32s;
+}
+
 #contactStringParent {
   position: relative;
   margin: 0 auto;
@@ -730,6 +1148,7 @@ header #clock #showClock {
 #contactStringParent #topScrollParent {
   position: fixed;
   bottom: 8px;
+  z-index: 114514;
   width: 1720px;
   display: none;
 }
@@ -737,7 +1156,6 @@ header #clock #showClock {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  z-index: 114514;
   text-align: center;
   width: 108px;
   height: 108px;
@@ -823,16 +1241,10 @@ header #clock #showClock {
     width: 25%;
     padding: 0px 5px 10px 5px;
   }
-  .container .videoParent .video .videoThumbnailParent .icon {
-    width: 48px;
-  }
   .container .videoParent .video .videoThumbnailParent .option {
     font-size: 15px;
     border-radius: 11.2px 0px 0px 11.2px;
     padding: 0 1.5px 0 5.6px;
-  }
-  .container .videoParent .video .videoThumbnailParent .twitchIcon {
-    width: 48px;
   }
   .container .videoParent .video .timeParent {
     height: 30px;
@@ -853,9 +1265,22 @@ header #clock #showClock {
   .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
     padding: 2.5px;
   }
+  #shakeHandsDisplayParent {
+    width: 1103px;
+  }
+  #shakeHandsDisplayParent #shakeHandsDisplay {
+    bottom: 10px;
+    right: 10px;
+    width: 90px;
+    height: 90px;
+  }
   #containerRV {
     padding-top: 36px;
     padding-bottom: 36px;
+  }
+  #containerNico {
+    padding-top: 34.8px;
+    padding-bottom: 34.8px;
   }
   #contactStringParent {
     width: 1103px;
@@ -894,6 +1319,9 @@ header #clock #showClock {
   header .btn:hover {
     color: #fff;
   }
+  header .btn .string {
+    display: none;
+  }
   .container {
     width: 733px;
   }
@@ -924,6 +1352,9 @@ header #clock #showClock {
   .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
     padding: 2px;
   }
+  #shakeHandsDisplayParent {
+    width: 733px;
+  }
   #contactStringParent {
     width: 733px;
   }
@@ -934,9 +1365,6 @@ header #clock #showClock {
 @media (max-width: 767px) {
   .faHeader {
     margin-right: 0px;
-  }
-  header .btn .string {
-    display: none;
   }
   header #clock {
     padding-right: 5px;
@@ -970,6 +1398,9 @@ header #clock #showClock {
   }
   .container .videoParent .video .videoDetail .collaboration .collaborationIcon {
     padding: 2.5px;
+  }
+  #shakeHandsDisplayParent {
+    width: 564px;
   }
   #contactStringParent {
     width: 564px;
@@ -1015,6 +1446,7 @@ header #clock #showClock {
   }
   #birthdayParentFrame #birthdayString {
     font-size: 16px;
+    text-shadow: 0.4px 0.4px 0px #333, -0.4px 0.4px 0px #333, 0.4px -0.4px 0px #333, -0.4px -0.4px 0px #333;
   }
   #birthdayParentFrame #birthdayIcon {
     top: 3px;
@@ -1022,6 +1454,60 @@ header #clock #showClock {
     width: 80px;
     height: 80px;
     border: 3px solid;
+  }
+  #birthdayParentFrame .birthdayImageCoverParent #touchHere {
+    font-size: 16px;
+  }
+  #birthdayParentFrame .birthdayImageCoverParent #violetWindow {
+    box-shadow: 0 0 6px #948bdb, 0 0 24px #948bdb, 0 0 6px #948bdb;
+  }
+  #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #shootingStarParent {
+    height: 320px;
+  }
+  @keyframes shootingStarGo {
+    0% {
+      height: 0px;
+      opacity: 50%;
+    }
+    50% {
+      height: 270px;
+      opacity: 100%;
+    }
+    100% {
+      height: 320px;
+      opacity: 0;
+    }
+  }
+  #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild .firstStepAmae {
+    font-size: 32px;
+  }
+  #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #energyMessage {
+    width: 160px;
+    font-size: 32px;
+    letter-spacing: 2px;
+    border: 6px double #333;
+    border-radius: 8px;
+  }
+  @keyframes chargeCompleted {
+    0% {
+      color: #333;
+      border: 6px double #333;
+    }
+    50% {
+      color: #333;
+      border: 6px double #333;
+    }
+    51% {
+      color: #f18d00;
+      border: 6px double #f18d00;
+    }
+    100% {
+      color: #f18d00;
+      border: 6px double #f18d00;
+    }
+  }
+  #birthdayParentFrame .birthdayImageCoverParent .birthdayImageCoverChild #invaderParent {
+    font-size: 160px;
   }
   #birthdayParentFrame #crown {
     width: 80px;
@@ -1139,12 +1625,6 @@ header #clock #showClock {
     border-radius: 8.4px 0px 0px 8.4px;
     padding: 0 1.1px 0 4.2px;
   }
-  .container .videoParent .video .videoThumbnailParent .icon {
-    width: 32px;
-  }
-  .container .videoParent .video .videoThumbnailParent .twitchIcon {
-    width: 32px;
-  }
   .container .videoParent .video .timeParent {
     height: 22px;
     font-size: 11px;
@@ -1188,6 +1668,47 @@ header #clock #showClock {
   }
   #containerRV .slideShowParent .channelIconButtons .channelIconButtonParent .channelIconButtonCurrent {
     outline: 4px solid #00c2cb;
+  }
+  #containerNico {
+    padding-top: 23.2px;
+    padding-bottom: 23.2px;
+  }
+  #containerNico #nicoParent {
+    width: 312px;
+    border-radius: 4px;
+    outline: 3.2px solid #777;
+  }
+  #containerNico #nicoParent #nicoVideoFrame {
+    height: 176px;
+  }
+  #containerNico #nicoParent #nicoVideoFrame #nicoVideo {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  #containerNico #nicoParent .nicoSchedule {
+    height: 48.2px;
+    font-size: 13px;
+    line-height: 45px;
+    border-top: 3.2px solid #777;
+  }
+  #containerNico #nicoParent .nicoCollaboration {
+    height: 48.2px;
+    border-top: 3.2px solid #777;
+    border-left: 3.2px solid #777;
+  }
+  #containerNico #nicoParent .nicoCollaboration .nicoIcon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    padding: 4px;
+  }
+  #shakeHandsDisplayParent {
+    width: 352px;
+  }
+  #shakeHandsDisplayParent #shakeHandsDisplay {
+    bottom: 6px;
+    right: 6px;
+    width: 60px;
+    height: 60px;
   }
   #contactStringParent {
     width: 352px;
