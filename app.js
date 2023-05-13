@@ -12,29 +12,30 @@ dayjs.extend(utc);
 
 let key = "AIzaSyBo5TPmmERm3zYP0Ngau6PlkaFu9XIBgiw";
 const key2 = "AIzaSyBo5TPmmERm3zYP0Ngau6PlkaFu9XIBgiw";
-if(dayjs().hour()<2){
+const nowHour = dayjs().utc().add(9, "h").hour();
+if(nowHour<2){
   key = "AIzaSyC5AqocsQC83pRCKcXEa9zoUiHLgMECwj0";
-}else if(dayjs().hour()<4){
+}else if(nowHour<4){
   key = "AIzaSyBDOlCzTCfxtpe9Lk7OT60v0VfRIn_RSrA";
-}else if(dayjs().hour()<6){
+}else if(nowHour<6){
   key = "AIzaSyARAMAEiJna6Tr5yf8SAulL7TZ1w0w7R5k";
-}else if(dayjs().hour()<8){
+}else if(nowHour<8){
   key = "AIzaSyCiqUsLRH44u9UcwZQRL7_dIMljqMIf4JI";
-}else if(dayjs().hour()<10){
+}else if(nowHour<10){
   key = "AIzaSyDb94UH4XZWe-OlMcWBSLwVcJrCYye8dUU";
-}else if(dayjs().hour()<12){
+}else if(nowHour<12){
   key = "AIzaSyCd7IonmJLfHH_5V8CrKv3kg6w1VCSPV1Q";
-}else if(dayjs().hour()<14){
+}else if(nowHour<14){
   key = "AIzaSyAc0ECaEi65tna4h1hb7NMbsnnmavn3K0Q";
-}else if(dayjs().hour()<16){
+}else if(nowHour<16){
   key = "AIzaSyAk5iMZRi4a0UmcvEc3C9rUno2o2fu9fzQ";
-}else if(dayjs().hour()<18){
+}else if(nowHour<18){
   key = "AIzaSyAP-A7RSKhcI2n-PpuhiLg9fJgYoJMoH-E";
-}else if(dayjs().hour()<20){
+}else if(nowHour<20){
   key = "AIzaSyCluyrETb8amHgNVArDqFzeJz07QJ7Vr7c";
-}else if(dayjs().hour()<22){
+}else if(nowHour<22){
   key = "AIzaSyDYc1BNMUNQwT-cWriHaKb_NTPL7YTI3gc";
-}else if(dayjs().hour()<24){
+}else if(nowHour<24){
   key = "AIzaSyDoqa0Z7dE2CpGwLi90w-KOV65rx6WdUAU";
 }
 cron.schedule('0 0,1,2,3,4 0 * * *', () => {
@@ -77,6 +78,8 @@ cron.schedule('0 0,1,2,3,4 22 * * *', () => {
 const clinetId = "w7c3ie7lvr4c75vegdd9u80e0aicwc";
 const clinetSecret = "ns28cq05ja4vfsyv23fm612dzemq3w";
 
+const shakeHands = "/images/shakeHands.jpg";
+
 function NGW(listNG){  
   let NGWords = "";
   listNG.forEach((NGWord)=>{
@@ -101,6 +104,24 @@ function userIdsReturn(listTwitch){
     userIds += `&user_id=${userId}`
   });
   return userIds.slice(1, userIds.length);
+}
+
+function loginNamesReturn(listLN){
+  let loginNames = "";
+  listLN.forEach((loginName)=>{
+    loginNames += `&user_login=${loginName}`
+  });
+  return loginNames;
+}
+
+function reTUI(listTwitch){
+  if(listTwitch.length > 0){
+    return listTwitch.reduce(function(TUIs, TUI){
+      return `${TUIs}|${TUI}`;
+    });
+  }else{
+    return "";
+  }
 }
 
 function divisor50(array){
@@ -129,51 +150,123 @@ function replaceAll(string){
           .replace(/￤\s+|￤/, "￤<br>");
 }
 
+function millionProgress(number){
+  const progress = String(Number(number) / 10000);
+  if(!/\./.test(progress)){
+    return progress + ".00";
+  }else{
+    if(/(?<=\.)\d{2}/.test(progress)){
+      const progressSplit = progress.split(".");
+      return progressSplit[0] + "." + progressSplit[1].slice(0, 2);
+    }else{
+      return progress + "0";
+    }
+  }
+}
+
+function titleAdjustLN(title, cJson){
+  let titleAdjust = title;
+  if(!/^【/.test(titleAdjust)){
+    titleAdjust = `【${cJson.game_name}】<br>${titleAdjust}`;
+  }
+  if(!/】$/.test(titleAdjust)){
+    titleAdjust = `${titleAdjust}<br>【${cJson.user_name}】`
+  }
+  return titleAdjust;
+}
+
+function titleAdjustA(title, cJson){
+  let titleAdjust = title;
+  if(!/】$/.test(titleAdjust)){
+    titleAdjust = `${titleAdjust}<br>【${cJson.user_name}】`
+  }
+  return titleAdjust;
+}
+
 function replaceThumbnailURL(thumbnailURL){
   return thumbnailURL.replace("_live.jpg", ".jpg");
 }
 
 function sizeThumbnailURL(thumbnailURL){
-  return thumbnailURL.replace(/(%{width}|{width})/, "320").replace(/(%{height}|{height})/, "180");
+  return thumbnailURL.replace(/%?{width}/, "320").replace(/%?{height}/, "180");
 }
 
 function channelIconReturn(userId){
   switch(userId){
-    case "715990491":
+    case Dtto.getTUI():
       return listIcon[8];
-    case "806658817":
+    case Ruki.getTUI():
       return listIcon[1];
-    case "582501849":
+    case Kohaku.getTUI():
       return listIcon[3];
-    case "886124634":
+    case Mina.getTUI():
+      return listIcon[6];
+    case Yozuri.getTUI():
       return listIcon[12];
-    case "879316180":
+    case Cotonoha.getTUI():
+      return listIcon[15];
+    case Yun.getTUI():
       return listIcon[19];
+    case Yae.getTUI():
+      return listIcon[20];
+    default:
+      return shakeHands;
   }
 }
 
 function rOLN(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:cJson.liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2, platform:"youtube"};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:cJson.liveStreamingDetails.actualStartTime, icon:icon1, icon2:icon2, platform:"youtube"};
 }
 
 function rOLNT(cJson){
-  return {videoId:undefined, streamId:cJson.id, loginName:cJson.user_login, videoTitle:replaceAll(cJson.title), videoThumbnail:sizeThumbnailURL(cJson.thumbnail_url), timeBase:standardTime(cJson.started_at), icon:channelIconReturn(cJson.user_id), icon2:collaborationReturn(cJson.title, cJson.user_id), platform:"twitch"};
+  return {videoId:undefined, streamId:cJson.id, loginName:cJson.user_login, videoTitle:titleAdjustLN(replaceAll(cJson.title), cJson), videoThumbnail:sizeThumbnailURL(cJson.thumbnail_url), timeBase:standardTime(cJson.started_at), icon:channelIconReturn(cJson.user_id), icon2:collaborationReturn(cJson.title, cJson.user_id), platform:"twitch"};
+}
+
+function rOLNSR(json){
+  return {videoId:undefined, roomURLKey:json.room_url_key, videoTitle:`《SR配信》<br>${json.room_name}`, videoThumbnail:json.image_s, timeBase:standardTime(json.started_at * 1000), icon:listIcon[2], icon2:[], platform:"showRoom"};
 }
 
 function rOUC(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.liveStreamingDetails.scheduledStartTime, timeBase:"", status:cJson.status.uploadStatus, icon:icon1[0], icon2:icon2};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.liveStreamingDetails.scheduledStartTime, timeBase:"", status:cJson.status.uploadStatus, icon:icon1, icon2:icon2};
 }
 
 function rOA(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.liveStreamingDetails.actualStartTime, time2:cJson.contentDetails.duration, timeBase:cJson.liveStreamingDetails.actualStartTime, icon:icon1[0], icon2:icon2, platform:"youtube"};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.liveStreamingDetails.actualStartTime, time2:cJson.contentDetails.duration, timeBase:cJson.liveStreamingDetails.actualStartTime, icon:icon1, icon2:icon2, platform:"youtube"};
 }
 
 function rOAT(cJson){
-  return {videoId:undefined, streamId:cJson.stream_id, videoIdT:cJson.id, videoTitle:replaceAll(cJson.title), videoThumbnail:sizeThumbnailURL(cJson.thumbnail_url), time:JST(cJson.published_at), time2:duration(cJson.duration), timeBase:cJson.published_at, icon:channelIconReturn(cJson.user_id), icon2:collaborationReturn(cJson.title, cJson.user_id), platform:"twitch"};
+  return {videoId:undefined, streamId:cJson.stream_id, videoIdT:cJson.id, videoTitle:titleAdjustA(replaceAll(cJson.title), cJson), videoThumbnail:sizeThumbnailURL(cJson.thumbnail_url), time:JST(cJson.published_at), time2:duration(cJson.duration), timeBase:cJson.published_at, icon:channelIconReturn(cJson.user_id), icon2:collaborationReturn(cJson.title, cJson.user_id), platform:"twitch"};
 }
 
 function rOP(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.snippet.publishedAt, time2:cJson.contentDetails.duration, timeBase:cJson.snippet.publishedAt, icon:icon1[0], icon2:icon2};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.snippet.publishedAt, time2:cJson.contentDetails.duration, timeBase:cJson.snippet.publishedAt, icon:icon1, icon2:icon2};
+}
+
+const millionProgressMina = ["13900"];
+function rOMP(cJson, icon1, icon2){
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:standardTime(cJson.liveStreamingDetails.actualStartTime), progress:millionProgress(millionProgressMina[0]), icon:icon1, icon2:icon2};
+}
+
+function videoIdCheck(list, object){
+  let boolean = false;
+  for(let i=0; i<list.length; i++){
+    if(list[i].videoId === object.videoId){
+      boolean = true;
+      break;
+    }
+  }
+  return boolean;
+}
+
+function videoIdCheckA(list, videoId){
+  let boolean = false;
+  for(let i=0; i<list.length; i++){
+    if(list[i] === videoId){
+      boolean = true;
+      break;
+    }
+  }
+  return boolean;
 }
 
 function sortDate(first, second){
@@ -201,25 +294,6 @@ function set0(num){
 }
 
 function duration(time){
-  let hours ="00";
-  let minutes = "00";
-  let seconds = "00";
-  const hoursArray = time.match(/[0-9]{1,2}(?=[Hh])/);
-  const minutesArray = time.match(/[0-9]{1,2}(?=[Mm])/);
-  const secondsArray = time.match(/[0-9]{1,2}(?=[Ss])/);
-  if(hoursArray!==null){
-    hours = set0(hoursArray[0]);
-  }
-  if(minutesArray!==null){
-    minutes = set0(minutesArray[0]);
-  }
-  if(secondsArray!==null){
-    seconds = set0(secondsArray[0]);
-  }
-  return hours+":"+minutes+":"+seconds;
-}
-
-function durationT(time){
   let hours ="00";
   let minutes = "00";
   let seconds = "00";
@@ -354,189 +428,222 @@ const listIcon = [
                 "https://yt3.ggpht.com/vhgGxT2ROGSByTxS-lfULhoNWtC_A7ubuMTdchPHAFYx15Ov2FE0sBf94Oo91lNpPxeqKyAf=s88-c-k-c0x00ffffff-no-rj",  // 0
                 "https://yt3.ggpht.com/7q9hOlgVOLGGMGNDnAokhFo7vECpLIyKCOj3xLKwBqPvQuu2-kkLS9E3kkNd-rrfdK0GKepd4w=s88-c-k-c0x00ffffff-no-rj",  // 1
                 "https://yt3.ggpht.com/Rln7rmZcpjY0mIPPfF0BXCA4SLtEPo04b1QJuldTkrOMx03pwEv54f97SXd3cazOqGuylwQN=s88-c-k-c0x00ffffff-no-rj",  // 2
-                "https://yt3.ggpht.com/gkzCvdPGfZP2BsRS2zhCwR46bKGGxwweXWRtYzgPw2rtE4P9RvKX4QRJ6vbABLijOiOxQksSWbk=s88-c-k-c0x00ffffff-no-rj",  // 3
+                "https://yt3.ggpht.com/TzUlifrsuAA0gTLWJ6plT3976Ufa2Zz0oekFcs-bQQazV9FBoNnzO8kgXs8TXOCvywdLUQ3kWg=s88-c-k-c0x00ffffff-no-rj",  // 3
                 "https://yt3.ggpht.com/BBywT_hHFYqk_AvQ7xbd-l1in8838u3kVUqZmZFBuWsN2E2EJ4iS6BCBtFZ89wtJAnmmUZw_qBY=s88-c-k-c0x00ffffff-no-rj",  // 4
                 "https://yt3.ggpht.com/8zlUH6WXzKYQfAC-yDr8-Ok8oPYueyOsIL980DUniGMbaN5LgoRN3bwEFmel30BjQkGPf4_EoA=s88-c-k-c0x00ffffff-no-rj",  // 5
-                "https://yt3.ggpht.com/nftD5_O_9HQxYdWXZa_TyAFIFEzuwmQzqM6y3eIm6eT7TU7aomDGmjFKYLVDVXeZOi0qqL1p=s88-c-k-c0x00ffffff-no-rj",  // 6
+                "https://yt3.ggpht.com/rDPUButr-meqQs4Xg19o4HNJzh-87OeCBAabQtxQeKJhAOcscfHTJQOetW5iCzYJdZjwnJY8=s88-c-k-c0x00ffffff-no-rj",  // 6
                 "https://yt3.ggpht.com/LEaZ41BdwqwGJlFvh0WbnCGC92TFZAZA8LjHH57dwbCcI0F4lMbpKbe0BiS-zdH3ojL6rvVf=s88-c-k-c0x00ffffff-no-rj",  // 7
                 "https://yt3.ggpht.com/Ci7w0_WSSRoufmr6XjDuL1gPhurSxf5gNsH12Un47QThvZOSfpYPFKCONSYfoIigjOOG13oJCQ=s88-c-k-c0x00ffffff-no-rj", //dtto.
                 "https://yt3.ggpht.com/6KMuVacpS3PI5EActjjbZdF6Hf7inmXWZPy-6RzihoCgjTP3Od9pJFKXMRXgLj0dT5MGFF2S=s88-c-k-c0x00ffffff-no-rj",  // 9
                 "https://yt3.ggpht.com/9gzgLqsMb2ae5pX1wSECz2PE-CJkfqyQIBgl1juUx-7PZ-ANcBskninPxtbyMmx2mBdZXFC02w=s88-c-k-c0x00ffffff-no-rj",  // 10
-                "https://yt3.ggpht.com/Thx0qvLt-sUaiFwCRF5_YNr-mzfVk4d0XqfJCI-ME0i21_Yl0w0FFl11yaYCDBICYGX3fQD_NA=s88-c-k-c0x00ffffff-no-rj", //あまつかうと
+                "https://yt3.ggpht.com/hMt_AOTFLBsLqkB4NdCUyyf41vW0PvIehlXpGY3ylR7yOSREBGDPcgpDtx5cgxzrb2K5gq_hUTk=s88-c-k-c0x00ffffff-no-rj", //UzuMe
                 "https://yt3.ggpht.com/eqK_S6SXxSh--EU_EPMLytHKEvh9J9Hw5oLGbG-CCTAMAgkWRUn2ndT9mdyeehcBcqQeTZZs=s88-c-k-c0x00ffffff-no-rj",  // 12
                 "https://yt3.ggpht.com/5NhP3kywPqOLzW587NNkK52wI3gE0FoeUQSxAsjVF6XJaFZ-0_bUDsTqxTUtNCW_ZrThwBtL3K0=s88-c-k-c0x00ffffff-no-rj",  // 13
                 "https://yt3.ggpht.com/N1qK9ca7VuCEMeep1XTgpKMKfTVcWUGLwzH8KuDbUjf6OmsW7xj2SpphHDfbP_Kx2mmBHGEwxg=s88-c-k-c0x00ffffff-no-rj",  // 14
-                "https://yt3.ggpht.com/gkCaF4FvG0JhBaYnqEPaXXgdxzm6SUbKb3hVR4AhtPvGiGCfxGNqroDS_ShhKnOjVxT1xSeeow=s88-c-k-c0x00ffffff-no-rj",  // 15
+                "https://yt3.ggpht.com/DH0xmYuaBYmlketm5X347i842HdiGhRfXpS1CoYxq746DiI6trD0_BSy0VCPeztDNa5WvA4nu4Q=s88-c-k-c0x00ffffff-no-rj",  // 15
                 "https://yt3.ggpht.com/1oE4luB-7eOFSQ2Rdn6fVt3FCzmRJyuOMbGVFoddRm9jl6GjJU7InpjxKzV65JUTGjvYIbKBQQ=s88-c-k-c0x00ffffff-no-rj",  // 16
-                "https://yt3.ggpht.com/eJumgdOJUO9AYc6HsEwUGiZqjeu3fm3awR1NDUnSfmoM6w_ZWLEE7z4ww3epxEve2aJx5QhozA=s88-c-k-c0x00ffffff-no-rj",  // 17
+                "https://yt3.ggpht.com/npsCS9U31MozM97qRX_jt2s7bEogLudOjuMUtAoGAPF6T6ykQcC_JqwmeAagMnUwU6ZSYjP8yA=s88-c-k-c0x00ffffff-no-rj",  // 17
                 "https://yt3.ggpht.com/XcZWuahAYyqFeXXM_VuJvf2ElEzFYz3gwCq1aoUSGwlQ4rJlrO1WI2vavl0rc3VNkI4GLat20u0=s88-c-k-c0x00ffffff-no-rj",  // 18
-                "https://yt3.ggpht.com/hEpcefCY9Jp-KzuH2hWrDgyfvNFxMjuK0xbzHaG2UkjWXeFsu8xlMfJcZWrSuBGRMHN9KIArc8Q=s88-c-k-c0x00ffffff-no-rj",  // 19
+                "https://yt3.ggpht.com/ITG3xSmoZdnJK1oL7g9examb8HJERnL4Fh__g0oFVAYdfo-zCslkv1cynHRlElYQSuaikPqFKQ=s88-c-k-c0x00ffffff-no-rj",  // 19
+                "https://yt3.ggpht.com/an4gKWBF0a4Ej8-t_zLGWSl2RRh7yxp_VzaYnBEiVpMXXXADX0f4I7myww_T6iI0jxmRYKMJQH8=s88-c-k-c0x00ffffff-no-rj",  //20
+                "https://yt3.ggpht.com/TaO37-7yms0nX1RngZdq2MzE6yDvF1PrHZg73SZVF8fY9knycYQEIcDnmz9kSj3WJwuxDILG=s88-c-k-c0x00ffffff-no-rj",  //21
+                "https://yt3.ggpht.com/84FGz7WPqMUcEVP9vpxThoFT1KZW8ZhHxUlpXa723uACP-zsBEB7vYOZSWw6so8wo_3gdjJV-g=s88-c-k-c0x00ffffff-no-rj",  //22
                ];
+const listIconV = [ 
+                    "https://yt3.ggpht.com/6ayZYf-Kmu0aHBh_YZW2uWrYoKRUczpejSYt5Z-sCLfouDaB1QuK21UCCwX4NAsCl-uNSvzL5Q=s88-c-k-c0x00ffffff-no-rj", // 0
+                    "https://yt3.ggpht.com/XNONLe0k_EPGtP51xAOJoxG836MaIf3l8i81vyLVzxXpPTFhCcz5YPpOukHWOZvaGtX0bEmmnA=s88-c-k-c0x00ffffff-no-rj", // 1
+                    "https://yt3.ggpht.com/LP_ZcxLFk5jP1Kpw7VU44YpUohl4DxYZTB644Ch3E_9Uow98RJwfAVoedDDgOZL624syN5D2-Q=s88-c-k-c0x00ffffff-no-rj", // 2
+                    "https://yt3.ggpht.com/QosaSc_PBOCF20CH5I0QPVZIFiSS8IGmVEyHrP-WUKS1YcmQXGgqosJQg2Q2LO-7r0xUeiTc-A=s88-c-k-c0x00ffffff-no-rj", // 3
+                    "https://yt3.ggpht.com/Tyqa0ohmBAkSoTvt4JZU8-QJVYCFvy15hZ1kS13gJ7ISRzfhyDLKMpsazfrqlYW883fX5Pmkqx0=s88-c-k-c0x00ffffff-no-nd-rj", // 4
+                    "https://yt3.ggpht.com/qOXB_PweIVd_HqugqgNrCxRSjoV3wHpKtYHUjnVkUtxP3qAbcT0msj178SetksB8bB94TNId=s88-c-k-c0x00ffffff-no-nd-rj", // 5
+                  ];
 
-function collaboration(element, listIcon, icon1, icon2){
-  switch(element.snippet.channelId){
-    case "UCXWiGKfAXjHUsxa_GNLgv-A":
-      icon1.push(listIcon[0]);
+function collaboration(cJson){
+  let icon1 = "";
+  const icon2 = new Array();
+  switch(cJson.snippet.channelId){
+    case Official.getCI():
+      icon1 = listIcon[0];
       break;
-    case "UCAUicVZlApAIhcdL9df3gWw":
-      icon1.push(listIcon[1]);
+    case Ruki.getCI():
+      icon1 = listIcon[1];
       break;
-    case "UCf57-IJn5mUJDyqd9uNEmrg":
-      icon1.push(listIcon[2]);
+    case Ringo.getCI():
+      icon1 = listIcon[2];
       break;
-    case "UCQLyq7TDKHlmp2Ufd5Z2qMw":
-      icon1.push(listIcon[3]);
+    case Kohaku.getCI():
+      icon1 = listIcon[3];
       break;
-    case "UCUdlDvZJGGP78zvta3swIhw":
-      icon1.push(listIcon[4]);
+    case Tulsi.getCI():
+      icon1 = listIcon[4];
       break;
-    case "UCJGQPbaqTY91JhVzD8gIZyw":
-      icon1.push(listIcon[5]);
+    case Airu.getCI():
+      icon1 = listIcon[5];
       break;
-    case "UCFkHpBGMeNSQW-j9-F0nxnQ":
-      icon1.push(listIcon[6]);
+    case Mina.getCI():
+      icon1 = listIcon[6];
       break;
-    case "UCzv_W7v9ix39tFPDB-TV0Vg":
-      icon1.push(listIcon[7]);
+    case Ito.getCI():
+      icon1 = listIcon[7];
       break;
-    case "UCnBOUGfsfcD6nUbpdDAwMfw":
-      icon1.push(listIcon[9]);
+    case Chihiyo.getCI():
+      icon1 = listIcon[9];
       break;
-    case "UC7FUtGR0AsvwzXrEmdUBAFw":
-      icon1.push(listIcon[10]);
+    case Mew.getCI():
+      icon1 = listIcon[10];
       break;
-    case "UCWhFUlcawiD78qAD7zzS6Bw":
-      icon1.push(listIcon[12]);
+    case Yozuri.getCI():
+      icon1 = listIcon[12];
       break;
-    case "UCQfp96ujs7PXiUG6ov29RKg":
-      icon1.push(listIcon[13]);
+    case Uparu.getCI():
+      icon1 = listIcon[13];
       break;
-    case "UCJpsYQtNyVDc023clkqMhTQ":
-      icon1.push(listIcon[14]);
+    case Uriyone.getCI():
+      icon1 = listIcon[14];
       break;
-    case "UCOd-qYH_8e-tgxpPIcqwenA":
-      icon1.push(listIcon[15]);
+    case Cotonoha.getCI():
+      icon1 = listIcon[15];
       break;
-    case "UC02dJeNmcQLqENdHFG1svJw":
-      icon1.push(listIcon[16]);
+    case Luminous.getCI():
+      icon1 = listIcon[16];
       break;
-    case "UC6b4Ta_J0wbylnPu1auaQiA":
-      icon1.push(listIcon[17]);
+    case Amae.getCI():
+      icon1 = listIcon[17];
       break;
-    case "UCEoAD_2jSLoYQd2MJZxWuxQ":
-      icon1.push(listIcon[18]);
+    case Kakapo.getCI():
+      icon1 = listIcon[18];
       break;
-    case "UCngFYCS8p8PX9wf4V8kLVgw":
-      icon1.push(listIcon[19]);
+    case Yun.getCI():
+      icon1 = listIcon[19];
+      break;
+    case Yae.getCI():
+      icon1 = listIcon[20];
+      break;
+    case Lui.getCI():
+      icon1 = listIcon[21];
+      break;
+    case Lira.getCI():
+      icon1 = listIcon[22];
       break;
     default:
-      icon1.push("/images/shakeHands.jpg");
+      icon1 = shakeHands;
       break;
   }
-  const text = element.snippet.description;
-  const title = element.snippet.title;
-  if(/Ruki Otokado 音門るき \[VEE\]/.test(text) || (/音門るき|音門\s+るき/.test(text) && (/\/channel\/UCAUicVZlApAIhcdL9df3gWw/.test(text) || /\/c\/OtokadoDeviRuki/i.test(text))) || /@Otokado_Ruki/i.test(text) || /音門るき|音門\s+るき/.test(title)){
+  const text = cJson.snippet.description;
+  const title = cJson.snippet.title;
+  if(new RegExp(Ruki.getCN()).test(text) || (/音門(\s+)?るき/.test(text) && (new RegExp(`/channel/${Ruki.getCI()}`).test(text) || /\/c\/OtokadoDeviRuki/i.test(text))) || /@Otokado_Ruki/i.test(text) || /音門(\s+)?るき/.test(title)){
     icon2.push(listIcon[1]);
   }
-  if(/九条 林檎【Kujo Ringo Official】/.test(text) || (/九条林檎|九条\s+林檎/.test(text) && (/\/channel\/UCf57-IJn5mUJDyqd9uNEmrg/.test(text) || /\/c\/KujoRingo/i.test(text))) || /@KujoRingo/i.test(text) || /九条林檎|九条\s+林檎/.test(title)){
+  const rTI = new RegExp(Ringo.getTwitterId());
+  if(new RegExp(Ringo.getCN()).test(text) || (/九条(\s+)?林檎/.test(text) && (new RegExp(`/channel/${Ringo.getCI()}`).test(text) || /\/c\/KujoRingo/i.test(text) || rTI.test(text))) || /@KujoRingo/i.test(text) || /九条(\s+)?林檎/.test(title)){
     icon2.push(listIcon[2]);
   }
-  if(/Syusetu kohaku\/秋雪こはく/.test(text) || (/秋雪こはく|秋雪\s+こはく/.test(text) && (/\/channel\/UCQLyq7TDKHlmp2Ufd5Z2qMw/.test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text))) || /@Syusetu_kohaku/i.test(text) || /秋雪こはく|秋雪\s+こはく/.test(title)){
+  if(new RegExp(Kohaku.getCN()).test(text) || (/秋雪(\s+)?こはく/.test(text) && (new RegExp(`/channel/${Kohaku.getCI()}`).test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text))) || /@Syusetu_kohaku/i.test(text) || /秋雪(\s+)?こはく/.test(title)){
     icon2.push(listIcon[3]);
   }
-  if(/魔王トゥルシー \/ Tulsi-Nightmare Madness IV/.test(text) || (/魔王トゥルシー|魔王\s+トゥルシー/.test(text) && /\/channel\/UCUdlDvZJGGP78zvta3swIhw/.test(text)) || /@Tulsi_Nightmare/i.test(text) || /魔王トゥルシー|魔王\s+トゥルシー/.test(title)){
+  if(new RegExp(Tulsi.getCN()).test(text) || (/魔王(\s+)?トゥルシー/.test(text) && new RegExp(`/channel/${Tulsi.getCI()}`).test(text)) || /@Tulsi_Nightmare/i.test(text) || /魔王(\s+)?トゥルシー/.test(title)){
     icon2.push(listIcon[4]);
   }
-  if(/雛星あいる Hinahoshi Airu/.test(text) || (/雛星あいる|雛星\s+あいる/.test(text) && /\/channel\/UCJGQPbaqTY91JhVzD8gIZyw/.test(text)) || /@Hinahoshi_Airu/i.test(text) || /雛星あいる|雛星\s+あいる/.test(title)){
+  if(new RegExp(Airu.getCN()).test(text) || (/雛星(\s+)?あいる/.test(text) && new RegExp(`/channel/${Airu.getCI()}`).test(text)) || /@Hinahoshi_Airu/i.test(text) || /雛星(\s+)?あいる/.test(title)){
     icon2.push(listIcon[5]);
   }
-  if(/桜鳥ミーナ \/ Audrey Mina/.test(text) || (/桜鳥ミーナ|桜鳥\s+ミーナ/.test(text) && /\/channel\/UCFkHpBGMeNSQW-j9-F0nxnQ/.test(text)) || /@MinaAudrey/i.test(text) || /桜鳥ミーナ|桜鳥\s+ミーナ/.test(title)){
+  if(new RegExp(Mina.getCN()).test(text) || (/桜鳥(\s+)?ミーナ/.test(text) && new RegExp(`/channel/${Mina.getCI()}`).test(text)) || /@MinaAudrey/i.test(text) || /桜鳥(\s+)?ミーナ/.test(title)){
     icon2.push(listIcon[6]);
   }
-  if(/白粉いと \/ Oshiro Ito/.test(text) || (/白粉いと|白粉\s+いと/.test(text) && (/\/channel\/UCzv_W7v9ix39tFPDB-TV0Vg/.test(text) || /\/c\/OshiroIto/i.test(text))) || /@oshiroito/i.test(text) || /白粉いと|白粉\s+いと/.test(title)){
+  if(new RegExp(Ito.getCN()).test(text) || (/白粉(\s+)?いと/.test(text) && (new RegExp(`/channel/${Ito.getCI()}`).test(text) || /\/c\/OshiroIto/i.test(text))) || /@oshiroito/i.test(text) || /白粉(\s+)?いと/.test(title)){
     icon2.push(listIcon[7]);
   }
-  if(/日和ちひよ \/ Hiyori Chihiyo/.test(text) || (/日和ちひよ|日和\s+ちひよ/.test(text) && /\/channel\/UCnBOUGfsfcD6nUbpdDAwMfw/.test(text)) || /@HiyoriChihiyo/i.test(text) || /日和ちひよ|日和\s+ちひよ/.test(title)){
+  if(new RegExp(Chihiyo.getCN()).test(text) || (/日和(\s+)?ちひよ/.test(text) && new RegExp(`/channel/${Chihiyo.getCI()}`).test(text)) || /@HiyoriChihiyo/i.test(text) || /日和(\s+)?ちひよ/.test(title)){
     icon2.push(listIcon[9]);
   }
-  if(/Mew Garcia \/ ミュウ・ガルシア/.test(text) || (/ミュウ・ガルシア/.test(text) && /\/channel\/UC7FUtGR0AsvwzXrEmdUBAFw/.test(text)) || /@MewGarcia/i.test(text) || /ミュウ・ガルシア/.test(title)){
+  if(new RegExp(Mew.getCN()).test(text) || (/ミュウ・ガルシア/.test(text) && new RegExp(`/channel/${Mew.getCI()}`).test(text)) || /@MewGarcia/i.test(text) || /ミュウ・ガルシア/.test(title)){
     icon2.push(listIcon[10]);
   }
-  if(/Aomiya Yozuri Ch\. 蒼宮よづり/.test(text) || (/蒼宮よづり|蒼宮\s+よづり/.test(text) && /\/channel\/UCWhFUlcawiD78qAD7zzS6Bw/.test(text)) || /@AomiyaYozuri/i.test(text) || /蒼宮よづり|蒼宮\s+よづり/.test(title)){
+  if(new RegExp(Yozuri.getCN()).test(text) || (/蒼宮(\s+)?よづり/.test(text) && new RegExp(`/channel/${Yozuri.getCI()}`).test(text)) || /@AomiyaYozuri/i.test(text) || /蒼宮(\s+)?よづり/.test(title)){
     icon2.push(listIcon[12]);
   }
-  if(/亞生うぱる【VEE】/.test(text) || (/亞生うぱる|亞生\s+うぱる/.test(text) && /\/channel\/UCQfp96ujs7PXiUG6ov29RKg/.test(text)) || /@AnewUparu/i.test(text) || /亞生うぱる|亞生\s+うぱる/.test(title)){
+  if(new RegExp(Uparu.getCN()).test(text) || (/亞生(\s+)?うぱる/.test(text) && new RegExp(`/channel/${Uparu.getCI()}`).test(text)) || /@AnewUparu/i.test(text) || /亞生(\s+)?うぱる/.test(title)){
     icon2.push(listIcon[13]);
   }
-  if(/糶 \/ URIYONE/.test(text) || (/糶/.test(text) && /\/channel\/UCJpsYQtNyVDc023clkqMhTQ/.test(text)) || /@URIYONE/i.test(text) || /糶/.test(title)){
+  if(new RegExp(Uriyone.getCN()).test(text) || (/糶/.test(text) && new RegExp(`/channel/${Uriyone.getCI()}`).test(text)) || /@URIYONE/i.test(text) || /糶/.test(title)){
     icon2.push(listIcon[14]);
   }
-  if(/言のハ-Cotonoha-/.test(text) || (/言のハ/.test(text) && /\/channel\/UCOd-qYH_8e-tgxpPIcqwenA/.test(text)) || /@Cotonoha/i.test(text) || /言のハ/.test(title)){
+  if(new RegExp(Cotonoha.getCN()).test(text) || (/言のハ/.test(text) && new RegExp(`/channel/${Cotonoha.getCI()}`).test(text)) || /@Cotonoha/i.test(text) || /言のハ/.test(title)){
     icon2.push(listIcon[15]);
   }
-  if(/るみなす・すいーと【LUMINOUS Ch】/.test(text) || (/るみなす・すいーと/.test(text) && /\/channel\/UC02dJeNmcQLqENdHFG1svJw/.test(text)) || /@Luminous_Sweet/i.test(text) || /るみなす・すいーと/.test(title)){
+  if(new RegExp(Luminous.getCN()).test(text) || (/るみなす・すいーと/.test(text) && new RegExp(`/channel/${Luminous.getCI()}`).test(text)) || /@Luminous_Sweet/i.test(text) || /るみなす・すいーと/.test(title)){
     icon2.push(listIcon[16]);
   }
-  if(/偉雷アマエ \/ Erai Amae/.test(text) || (/偉雷アマエ|偉雷\s+アマエ/.test(text) && /\/channel\/UC6b4Ta_J0wbylnPu1auaQiA/.test(text)) || /@EraiAmae/i.test(text) || /偉雷アマエ|偉雷\s+アマエ/.test(title)){
+  if(new RegExp(Amae.getCN()).test(text) || (/偉雷(\s+)?アマエ/.test(text) && new RegExp(`/channel/${Amae.getCI()}`).test(text)) || /@EraiAmae/i.test(text) || /偉雷(\s+)?アマエ/.test(title)){
     icon2.push(listIcon[17]);
   }
-  if(/北白川かかぽ \/ Kakapo Kitashirakawa/.test(text) || (/北白川かかぽ|北白川\s+かかぽ/.test(text) && (/\/channel\/UCEoAD_2jSLoYQd2MJZxWuxQ/.test(text) || /\/c\/kakaporesearch/i.test(text))) || /@kakapo_research/i.test(text) || /北白川かかぽ|北白川\s+かかぽ/.test(title)){
+  if(new RegExp(Kakapo.getCN()).test(text) || (/北白川(\s+)?かかぽ/.test(text) && (new RegExp(`/channel/${Kakapo.getCI()}`).test(text) || /\/c\/kakaporesearch/i.test(text))) || /@kakapo_research/i.test(text) || /北白川(\s+)?かかぽ/.test(title)){
     icon2.push(listIcon[18]);
   }
-  if(/ゆりかわゆん YURIKAWA YUN/.test(text) || (/ゆりかわゆん|ゆりかわ\s+ゆん/.test(text) && /\/channel\/UCngFYCS8p8PX9wf4V8kLVgw/.test(text)) || /@yurikawayun/i.test(text) || /ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
+  if(new RegExp(Yun.getCN()).test(text) || (/ゆりかわ(\s+)?ゆん/.test(text) && new RegExp(`/channel/${Yun.getCI()}`).test(text)) || /@yurikawayun/i.test(text) || /ゆりかわ(\s+)?ゆん/.test(title)){
     icon2.push(listIcon[19]);
+  }
+  if(new RegExp(Yae.getCN()).test(text) || (/雨庭(\s+)?やえ/.test(text) && new RegExp(`/channel/${Yae.getCI()}`).test(text)) || /@AMENIWA_YAE/i.test(text) || /雨庭(\s+)?やえ/.test(title)){
+    icon2.push(listIcon[20]);
+  }
+  if(new RegExp(Lui.getCN()).test(text) || (/月白(\s+)?累/.test(text) && new RegExp(`/channel/${Lui.getCI()}`).test(text)) || /@Geppaku_Lui/i.test(text) || /月白(\s+)?累/.test(title)){
+    icon2.push(listIcon[21]);
+  }
+  if(new RegExp(Lira.getCN()).test(text) || (/黒燿(\s+)?リラ/.test(text) && new RegExp(`/channel/${Lira.getCI()}`).test(text)) || /@KOKUYOU_LIRA/i.test(text) || /黒燿(\s+)?リラ/.test(title)){
+    icon2.push(listIcon[22]);
   }
   if(/華灯/.test(text) && /hanavee_pr/.test(text)){
     icon2.push("/images/Hanavee.jpg");
   }
 
-  if(element.id === "Z6ZzCxjGUCg" && icon2.length === 0){
+  if(cJson.id === "Z6ZzCxjGUCg" && icon2.length === 0){
     icon2.push(listIcon[2]);
   }
 
-  if(icon1[0]!=="/images/shakeHands.jpg" && icon2.length>0){
-    const indexNumber = icon2.findIndex((element)=>{
-      return element === icon1[0];
+  if(icon1!==shakeHands && icon2.length>0){
+    const indexNumber = icon2.findIndex((icon)=>{
+      return icon === icon1;
     });
     if(indexNumber!==-1){
       icon2.splice(indexNumber, 1);
     }
-  }  
+  }
+  return {icon1:icon1, icon2:icon2};
 }
 
 function collaborationReturn(title, userId){
   const listC = new Array();
-  if(/音門るき|音門\s+るき/.test(title)){
+  if(/音門(\s+)?るき|@ruki_otokado_666/i.test(title)){
     listC.push(listIcon[1]);
   }
-  if(/九条林檎|九条\s+林檎/.test(title)){
+  if(/九条(\s+)?林檎/.test(title)){
     listC.push(listIcon[2]);
   }
-  if(/秋雪こはく|秋雪\s+こはく/.test(title)){
+  if(/秋雪(\s+)?こはく|@syusetu_kohaku/i.test(title)){
     listC.push(listIcon[3]);
   }
-  if(/魔王トゥルシー|魔王\s+トゥルシー/.test(title)){
+  if(/魔王(\s+)?トゥルシー/.test(title)){
     listC.push(listIcon[4]);
   }
-  if(/雛星あいる|雛星\s+あいる/.test(title)){
+  if(/雛星(\s+)?あいる/.test(title)){
     listC.push(listIcon[5]);
   }
-  if(/桜鳥ミーナ|桜鳥\s+ミーナ/.test(title)){
+  if(/桜鳥(\s+)?ミーナ/.test(title)){
     listC.push(listIcon[6]);
   }
-  if(/白粉いと|白粉\s+いと/.test(title)){
+  if(/白粉(\s+)?いと/.test(title)){
     listC.push(listIcon[7]);
   }
-  if(/日和ちひよ|日和\s+ちひよ/.test(title)){
+  if(/日和(\s+)?ちひよ/.test(title)){
     listC.push(listIcon[9]);
   }
   if(/ミュウ・ガルシア/.test(title)){
     listC.push(listIcon[10]);
   }
-  if(/蒼宮よづり|蒼宮\s+よづり/.test(title)){
+  if(/蒼宮(\s+)?よづり|@aomiyayozuri_ch/i.test(title)){
     listC.push(listIcon[12]);
   }
-  if(/亞生うぱる|亞生\s+うぱる/.test(title)){
+  if(/亞生(\s+)?うぱる/.test(title)){
     listC.push(listIcon[13]);
   }
   if(/糶/.test(title)){
@@ -548,19 +655,28 @@ function collaborationReturn(title, userId){
   if(/るみなす・すいーと/.test(title)){
     listC.push(listIcon[16]);
   }
-  if(/偉雷アマエ|偉雷\s+アマエ/.test(title)){
+  if(/偉雷(\s+)?アマエ/.test(title)){
     listC.push(listIcon[17]);
   }
-  if(/北白川かかぽ|北白川\s+かかぽ/.test(title)){
+  if(/北白川(\s+)?かかぽ/.test(title)){
     listC.push(listIcon[18]);
   }
-  if(/ゆりかわゆん|ゆりかわ\s+ゆん/.test(title)){
+  if(/ゆりかわ(\s+)?ゆん|@yun_yurikawa/i.test(title)){
     listC.push(listIcon[19]);
+  }
+  if(/雨庭(\s+)?やえ|@ameniwa_yae/i.test(title)){
+    listC.push(listIcon[20]);
+  }
+  if(/月白(\s+)?累/.test(title)){
+    listC.push(listIcon[21]);
+  }
+  if(/黒燿(\s+)?リラ/.test(title)){
+    listC.push(listIcon[22]);
   }
   if(/華灯/.test(title)){
     listC.push("/images/Hanavee.jpg");
   }
-  if(/dtto\./.test(title)){
+  if(/dtto(\.)?|@dttodot/i.test(title)){
     listC.push(listIcon[8]);
   }
   const indexNumber = listC.findIndex((icon)=>{
@@ -573,21 +689,14 @@ function collaborationReturn(title, userId){
 }
 
 class VEE{
-  constructor(number, name, channelId, twitterId, listURL, listNG, twitchUserId){
+  constructor(number, channelName, channelId, twitterId, listURL, listNG, twitchUserId){
     this.number = number;
-    this.name = name;
+    this.channelName = channelName;
     this.channelId = channelId;
     this.twitterId = twitterId;
     this.listURL = listURL;
     this.listNG = listNG;
     this.twitchUserId = twitchUserId;
-  }
-  api0Return(daysAgo){
-    return `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.channelId}&type=video&maxResults=10&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
-  }
-  
-  api1Return(daysAgo){
-    return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.name} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
   }
   
   async api2(key2){
@@ -599,8 +708,33 @@ class VEE{
       const json = await response.json();
       listIcon.splice(this.number, 1, json.items[0].snippet.thumbnails.default.url);
     }catch(error){
-      console.error(`api2エラー: ${this.name}`, error);
+      console.error(`api2エラー: ${this.channelName}`, error);
     }
+  }
+
+  async api3(key2){
+    try{
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${this.channelId}&key=${key2}`);
+      if(!response.ok){
+        throw new Error(response.statusText);
+      }
+      const json = await response.json();
+      millionProgressMina.splice(0, 1, json.items[0].statistics.subscriberCount);
+    }catch(error){
+      console.error(`api3エラー: ${this.channelName}`, error);
+    }
+  }
+
+  getCN0(){
+    return this.channelName;
+  }
+
+  getCN(){
+    return this.channelName.slice(1, this.channelName.length-1);
+  }
+
+  getCI(){
+    return this.channelId;
   }
 
   getTUI(){
@@ -608,12 +742,79 @@ class VEE{
   }
 }
 
+function api0Return(daysAgo){
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.channelId}&type=video&maxResults=10&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+}
+
+function api1Return(daysAgo){
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+}
+
+function api1ReturnRingo(daysAgo){
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} OR "${this.twitterId}" ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+}
+
+const liveAdjustList = [];
+async function liveAdjust(){
+  try{
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${URLW(listChannelName)}&eventType=live&type=video&maxResults=50&key=${key}`);
+    if(!response.ok){
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+    liveAdjustList.splice(0, liveAdjustList.length);
+    json.items.forEach((element)=>{                                      
+      liveAdjustList.push(element.id.videoId);
+    });
+  }catch(error){
+    console.error("liveAdjustListエラー:", error);
+  }
+}
+
+const upcomingAdjustList = [];
+async function upcomingAdjust(){
+  try{
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${URLW(listChannelName)}&eventType=upcoming&type=video&maxResults=50&key=${key}`);
+    if(!response.ok){
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+    upcomingAdjustList.splice(0, upcomingAdjustList.length);
+    json.items.forEach((element)=>{                                      
+      upcomingAdjustList.push(element.id.videoId);
+    });
+  }catch(error){
+    console.error("upcomingAdjustListエラー:", error);
+  }
+}
+
+class VEER extends VEE{
+  getTwitterId(){
+    return this.twitterId;
+  }
+}
+
+class VERSEN extends VEE{
+  async api2(key2){
+    try{
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${this.channelId}&key=${key2}`);
+      if(!response.ok){
+        throw new Error(response.statusText);
+      }
+      const json = await response.json();
+      listIconV.splice(this.number, 1, json.items[0].snippet.thumbnails.default.url);
+    }catch(error){
+      console.error(`api2エラー: ${this.channelName}`, error);
+    }
+  }
+}
+
 //Dev-a
-const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", '"Ruki_vita_666"', ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"', '"달땡(Moon 00)"'], '806658817');
-const Ringo = new VEE(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", '"ringo_0_0_5"', ['"/c/KujoRingo"', '"KujoRingo"'], ['"VEE切り抜きおきば"'], '');
-const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", '"Syusetu_kohaku"', ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '582501849');
-const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", '"IDmadeMiruna"', ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '');
-const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", '"airu_Lv115"', ['"Hinahoshi_Airu"'], [], '');
+const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", "Ruki_vita_666", ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"', '"달땡(Moon 00)"'], '806658817');
+const Ringo = new VEER(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", "ringo_0_0_5", ['"/c/KujoRingo"', '"KujoRingo"'], ['"VEE切り抜きおきば"'], '');
+const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", "Syusetu_kohaku", ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '582501849');
+const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", "IDmadeMiruna", ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '');
+const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", "airu_Lv115", ['"Hinahoshi_Airu"'], [], '838127333');
 function devA2(){
   Ruki.api2(key2);
   Ringo.api2(key2);
@@ -623,28 +824,28 @@ function devA2(){
 }
 
 //Dev-b
-const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", '"mina0x0audrey"', ['"MinaAudrey"'], ['"달땡(Moon 00)"'], '');
-const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", '"oshiroito"', ['"/c/OshiroIto"', '"oshiroito"'], ['"woni_clip"', '"시번 sibun"', '"BubblesClip"'], '');
-const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", '"hiyohiyovee"', ['"HiyoriChihiyo"'], ['"달땡(Moon 00)"'], '');
-const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", '"MewGarcia_king"', ['"MewGarcia"'], [], '');
-const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", '"_vee_official_"', ['"/c/VEE_official_ch"', '"VEE_official"', '"ぷみぷみVEE"'], [], '');
-const Dtto = new VEE(8, '"dtto."', "UCWNVjAzZmYUni8YBXYiy01w", '"_dtto"', ['"dttodot"'], [], '715990491');
-const Uto = new VEE(11, '"Uto Ch. 天使うと"', "UCdYR5Oyz8Q4g0ZmB4PkTD7g", '"amatsukauto"', ['"utoch.6000"'], [], '');
+const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", "mina0x0audrey", ['"MinaAudrey"'], ['"달땡(Moon 00)"'], '891899629');
+const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", "oshiroito", ['"/c/OshiroIto"', '"oshiroito"'], ['"woni_clip"', '"시번 sibun"', '"BubblesClip"'], '');
+const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", "hiyohiyovee", ['"HiyoriChihiyo"'], ['"달땡(Moon 00)"'], '');
+const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", "MewGarcia_king", ['"MewGarcia"'], [], '');
+const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", "_vee_official_", ['"/c/VEE_official_ch"', '"VEE_official"', '"ぷみぷみVEE"'], [], '');
+const Dtto = new VEE(8, '"dtto."', "UCWNVjAzZmYUni8YBXYiy01w", "_dtto", ['"dttodot"'], [], '715990491');
+const Uzume = new VEE(11, '"UzuMe"', "UCAsgKcP47dPWFBhiio_M7yg", "UzuMe_Vtuber", ['"/c/UzuMe"', '"UzuMe"'], [], '');
 function devB2(){
   Mina.api2(key2);
   Ito.api2(key2);
   Chihiyo.api2(key2);
   Mew.api2(key2);
   Dtto.api2(key2);
-  Uto.api2(key2);
+  //Uzume.api2(key2);
 }
 
 //Dev-c
-const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", '"aomiyayozuri"', ['"AomiyaYozuri"'], ['"成田という男(切り抜き製作所)"'], '886124634');
-const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", '"UPARU_JP"', ['"AnewUparu"'], [], '');
-const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", '"URIYONEE"', ['"URIYONE"'], [], '');
-const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", '"TwiCoto"', ['"Cotonoha"'], ['"太田圭亮のViolinトーク"', '"cotonoha sketch"'], '');
-const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", '"luminous_amaama"', ['"Luminous_Sweet"'], [], '');
+const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", "aomiyayozuri", ['"AomiyaYozuri"'], ['"成田という男(切り抜き製作所)"'], '886124634');
+const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", "UPARU_JP", ['"AnewUparu"'], [], '');
+const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", "URIYONEE", ['"URIYONE"'], [], '');
+const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", "TwiCoto", ['"Cotonoha"'], ['"太田圭亮のViolinトーク"', '"cotonoha sketch"'], '895225764');
+const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", "luminous_amaama", ['"Luminous_Sweet"'], [], '');
 function devC2(){
   Yozuri.api2(key2);
   Uparu.api2(key2);
@@ -654,56 +855,107 @@ function devC2(){
 }
 
 //Dev-d
-const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", '"EraiAmae"', ['"EraiAmae"'], ['"元動画はこちら"'], '');
-const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", '"kakapo_research"', ['"/c/kakaporesearch"', '"kakapo_research"'], [], '');
-const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", '"yun_yurikawa"', ['"yurikawayun"'], [], '879316180');
+const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", "EraiAmae", ['"EraiAmae"'], ['"元動画はこちら"'], '');
+const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", "kakapo_research", ['"/c/kakaporesearch"', '"kakapo_research"'], [], '');
+const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", "yun_yurikawa", ['"yurikawayun"'], [], '879316180');
 function devD2(){
   Amae.api2(key2);
   Kakapo.api2(key2);
   Yun.api2(key2);
 }
 
+//Dev-e
+const Yae = new VEE(20, '"雨庭やえ / AMENIWA YAE"', "UCMPKmFrLWgZyCGOw0QAEiIQ", "AMENIWA_YAE", ['"AMENIWA_YAE"'], [], '901350011');
+const Lui = new VEE(21, '"月白 累 / Geppaku Lui"', "UCpFAeyYSv4-7R1rC91c6DuA", "Geppaku_Lui", ['"Geppaku_Lui"'], [], '');
+const Lira = new VEE(22, '"黒燿リラ / KOKUYOU LIRA"', "UC_mc5xvNyQ-2W0UHgTA1mMg", "KOKUYOU_LIRA", ['"KOKUYOU_LIRA"'], [], '');
+function devE2(){
+  Yae.api2(key2);
+  Lui.api2(key2);
+  Lira.api2(key2);
+}
+
 const listApi = [
-  Official.api0Return.bind(Official, 8),
+  api0Return.bind(Official, 11),
 
-  Ruki.api1Return.bind(Ruki, 6),
-  Ringo.api1Return.bind(Ringo, 15),
-  Kohaku.api1Return.bind(Kohaku, 6),
-  Tulsi.api1Return.bind(Tulsi, 8),
-  Airu.api1Return.bind(Airu, 8),
+  api1Return.bind(Ruki, 8),
+  api1ReturnRingo.bind(Ringo, 15),
+  api1Return.bind(Kohaku, 6),
+  api1Return.bind(Tulsi, 8),
+  api1Return.bind(Airu, 8),
 
-  Mina.api1Return.bind(Mina, 8),
-  Ito.api1Return.bind(Ito, 8),
-  Chihiyo.api1Return.bind(Chihiyo, 8),
-  Mew.api1Return.bind(Mew, 8),
+  api1Return.bind(Mina, 11),
+  api1Return.bind(Ito, 8),
+  api1Return.bind(Chihiyo, 8),
+  api1Return.bind(Mew, 8),
 
-  Yozuri.api1Return.bind(Yozuri, 16),
-  Uparu.api1Return.bind(Uparu, 8),
-  Uriyone.api1Return.bind(Uriyone, 11),
-  Cotonoha.api1Return.bind(Cotonoha, 8),
-  Luminous.api1Return.bind(Luminous, 11),
+  api1Return.bind(Yozuri, 16),
+  api1Return.bind(Uparu, 8),
+  api1Return.bind(Uriyone, 11),
+  api1Return.bind(Cotonoha, 8),
+  api1Return.bind(Luminous, 11),
 
-  Amae.api1Return.bind(Amae, 6),
-  Kakapo.api1Return.bind(Kakapo, 8),
-  Yun.api1Return.bind(Yun, 8),
+  api1Return.bind(Amae, 6),
+  api1Return.bind(Kakapo, 11),
+  api1Return.bind(Yun, 8),
+
+  api1Return.bind(Yae, 8),
+  api1Return.bind(Lui, 8),
+  api1Return.bind(Lira, 8),
+];
+
+const listChannelName = [
+  //Ruki.getCN0(),
+  //Ringo.getCN0(),
+  Kohaku.getCN0(),
+  Tulsi.getCN0(),
+  //Airu.getCN0(),
+
+  //Mina.getCN0(),
+  //Ito.getCN0(),
+  //Chihiyo.getCN0(),
+  Mew.getCN0(),
+
+  //Yozuri.getCN0(),
+  //Uparu.getCN0(),
+  //Uriyone.getCN0(),
+  //Cotonoha.getCN0(),
+  //Luminous.getCN0(),
+
+  Amae.getCN0(),
+  //Kakapo.getCN0(),
+  //Yun.getCN0(),
+
+  //Yae.getCN0(),
+  //Lui.getCN0(),
+  //Lira.getCN0(),
 ];
 
 const listTwitch = [
   Dtto.getTUI(),
+
   Ruki.getTUI(),
   Kohaku.getTUI(),
+  Airu.getTUI(),
+  Mina.getTUI(),
   Yozuri.getTUI(),
+  Cotonoha.getTUI(),
   Yun.getTUI(),
+  Yae.getTUI(),
 ];
 
+const channelIdCheck = new RegExp(`${Dtto.getCI()}|${Official.getCI()}|${Ruki.getCI()}|${Ringo.getCI()}|${Kohaku.getCI()}|${Tulsi.getCI()}|${Airu.getCI()}|${Mina.getCI()}|${Ito.getCI()}|${Chihiyo.getCI()}|${Mew.getCI()}|${Yozuri.getCI()}|${Uparu.getCI()}|${Uriyone.getCI()}|${Cotonoha.getCI()}|${Luminous.getCI()}|${Amae.getCI()}|${Kakapo.getCI()}|${Yun.getCI()}|${Yae.getCI()}|${Lui.getCI()}|${Lira.getCI()}`);
+const loginNameCheck = new RegExp("dttodot|ruki_otokado_666|syusetu_kohaku|hinahoshi_airu|minaaudrey_vee|aomiyayozuri_ch|ctnh_jp|yun_yurikawa");
+const twitchUserIdCheck = new RegExp(reTUI(listTwitch));
 
-const ObjectData = [[], [], [], ["", []], listIcon];
+const ObjectData = [[], [], [], [false, []], {videoId:"h2w26fm1ApA", progress:undefined}, listIcon];
 const printTLN = [];
+const listTLNC = [];
 const printTA = [];
+const printSRLN = [];
 function process2(printLN, printUC, printA, printP, ObjectData){
   
   let printUC2 = printUC.filter((element)=>{        
-    return element.time < dayjs().utc().add(1, "y").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");         
+    return element.time < dayjs().utc().add(6, "M").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");         
   });
   
   const printOldUC = new Array();
@@ -720,7 +972,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
 
   for(let i=0; i<printUC2.length; i++){    
     const pUC2 = printUC2[i];
-    if(listOldData.find((element)=>{if(pUC2.videoId===element.videoId){return true}})){
+    if(videoIdCheck(listOldData, pUC2)){
         continue;
     }
     pUC2.timeBase = standardTime(pUC2.time);
@@ -740,7 +992,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
   })
   for(let i=0; i<printLN.length; i++){    
     const pLN = printLN[i];
-    if(listOldData.find((element)=>{if(pLN.videoId===element.videoId){return true}})){
+    if(videoIdCheck(listOldData, pLN)){
         continue;
     }
     pLN.timeBase = standardTime(pLN.timeBase);
@@ -756,7 +1008,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
   })
   for(let i=0; i<printA.length; i++){
     const pA = printA[i];
-    if(listOldData.find((element)=>{if(pA.videoId===element.videoId){return true}})){
+    if(videoIdCheck(listOldData, pA)){
         continue;
     }
     pA.time = JST(pA.time);
@@ -775,7 +1027,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
 
   for(let i=0; i<printP.length; i++){    
     const pP = printP[i];
-    if(printP2.find((element)=>{if(pP.videoId===element.videoId){return true}})){
+    if(videoIdCheck(printP2, pP)){
         continue;
     }
     pP.time = JST(pP.time);
@@ -795,7 +1047,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
 }
 
 async function apis(){
-  const listAll = ["na3B296TI_I"];
+  const listAll = ["4-SwtK9xlPA", "iDJw_aXZaoc", "R-xzxgxRPjc"];
   await Promise.all(listApi.map(async (URL, index)=>{
     try{
       const response = await fetch(URL());
@@ -825,16 +1077,14 @@ async function apis(){
       const json = await response.json();
       for(let i=0; i<json.items.length; i++){
         const cJson = json.items[i];
-        const icon1 = new Array();
-        const icon2 = new Array();
-        collaboration(cJson, listIcon, icon1, icon2);
-        if(icon1[0]==="/images/shakeHands.jpg" && icon2.length===0){
+        const {icon1, icon2} = collaboration(cJson);
+        if(icon1===shakeHands && icon2.length===0){
           continue;
         }
-        const checkName = /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん)/;
-        if(cJson.snippet.channelId ==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
+        const checkName = /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん|雨庭やえ|月白(\s+)?累|黒燿リラ)/;
+        if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
           continue;
-        }else if(cJson.snippet.channelId ==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && checkName.test(cJson.snippet.description)){
+        }else if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && checkName.test(cJson.snippet.description)){
           const indexNumber = icon2.findIndex((element)=>{
             return element === listIcon[3];
           });
@@ -842,7 +1092,7 @@ async function apis(){
             icon2.splice(indexNumber, 1);
           }
         }
-        if(cJson.snippet.channelId ==="UCLJ7sTH2gc9ElQl2tVJXYUA" && /【Rust】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
+        if(cJson.snippet.channelId==="UCLJ7sTH2gc9ElQl2tVJXYUA" && /【Rust】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
           continue;
         } 
 
@@ -856,9 +1106,12 @@ async function apis(){
         // UCOg01LJmZF9UnwFbly73CVw は マル・ナナモナのチャンネルID
         // UCYcnLc0n1ryBDZeGWQTVJ_g は カシ・オトハ のチャンネルID
         // UCmKfT7daL3aOt9o-PBJzOug は ダンジョンズ&ドラゴンズのチャンネルID
-        const checkID = /(UCWNVjAzZmYUni8YBXYiy01w|UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|UCXWiGKfAXjHUsxa_GNLgv-A|UCAUicVZlApAIhcdL9df3gWw|UCf57-IJn5mUJDyqd9uNEmrg|UCQLyq7TDKHlmp2Ufd5Z2qMw|UCUdlDvZJGGP78zvta3swIhw|UCJGQPbaqTY91JhVzD8gIZyw|UCFkHpBGMeNSQW-j9-F0nxnQ|UCzv_W7v9ix39tFPDB-TV0Vg|UCnBOUGfsfcD6nUbpdDAwMfw|UC7FUtGR0AsvwzXrEmdUBAFw|UCWhFUlcawiD78qAD7zzS6Bw|UCQfp96ujs7PXiUG6ov29RKg|UCJpsYQtNyVDc023clkqMhTQ|UCOd-qYH_8e-tgxpPIcqwenA|UC02dJeNmcQLqENdHFG1svJw|UC6b4Ta_J0wbylnPu1auaQiA|UCEoAD_2jSLoYQd2MJZxWuxQ|UCngFYCS8p8PX9wf4V8kLVgw)/;
-        if(cJson.snippet.liveBroadcastContent==="live"){
+        const checkID = new RegExp(`${Dtto.getCI()}|UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|${Official.getCI()}|${Ruki.getCI()}|${Ringo.getCI()}|${Kohaku.getCI()}|${Tulsi.getCI()}|${Airu.getCI()}|${Mina.getCI()}|${Ito.getCI()}|${Chihiyo.getCI()}|${Mew.getCI()}|${Yozuri.getCI()}|${Uparu.getCI()}|${Uriyone.getCI()}|${Cotonoha.getCI()}|${Luminous.getCI()}|${Amae.getCI()}|${Kakapo.getCI()}|${Yun.getCI()}|${Yae.getCI()}|${Lui.getCI()}|${Lira.getCI()}`);
+        if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined)){
           if(cJson.status.uploadStatus==="processed" && !checkID.test(cJson.snippet.channelId)){
+            continue;
+          }
+          if(cJson.id === "h2w26fm1ApA"){
             continue;
           }
           printLN.push(rOLN(cJson, icon1, icon2));
@@ -867,7 +1120,7 @@ async function apis(){
             continue;
           }
           printUC.push(rOUC(cJson, icon1, icon2));
-        }else if(cJson.snippet.liveBroadcastContent==="none"){
+        }else if(cJson.snippet.liveBroadcastContent==="none" || (cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration!=="P0D")){
           if(cJson.liveStreamingDetails===undefined){
             if(checkID.test(cJson.snippet.channelId)){
               printP.push(rOP(cJson, icon1, icon2));
@@ -894,15 +1147,14 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
   const printUC = new Array();
   const printA = new Array();
   const printP = new Array();
+  const listT = new Array();
   for(let i=0; i<listAll3.length; i++){
     const cJson = listAll3[i];
-    const icon1 = new Array();
-    const icon2 = new Array();
-    collaboration(cJson, listIcon, icon1, icon2);
-    if(icon1[0]==="/images/shakeHands.jpg" && icon2.length===0){
+    const {icon1, icon2} = collaboration(cJson);
+    if(icon1===shakeHands && icon2.length===0){
       continue;
     }
-    if(cJson.snippet.channelId ==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん)/.test(cJson.snippet.description)){
+    if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん)/.test(cJson.snippet.description)){
       const indexNumber = icon2.findIndex((element)=>{
         return element === listIcon[3];
       });
@@ -910,16 +1162,31 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
         icon2.splice(indexNumber, 1);
       }
     }
-    if(cJson.snippet.liveBroadcastContent==="live"){
+    if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined && cJson.liveStreamingDetails.actualEndTime ===undefined)){
+      if(cJson.id === "h2w26fm1ApA"){
+        ObjectData.splice(4, 1, rOMP(cJson, icon1, icon2));
+        continue;
+      }
       const newObjectLN = rOLN(cJson, icon1, icon2);
       newObjectLN.timeBase = standardTime(newObjectLN.timeBase);
       printLN.push(newObjectLN);
+      const listLoginNames = cJson.snippet.description.match(/(?<=twitch\.tv\/)\w+/g);
+      if(listLoginNames!==null && channelIdCheck.test(cJson.snippet.channelId)){
+        listLoginNames.forEach((loginName)=>{
+          if(!loginNameCheck.test(loginName)){
+            listT.push(loginName);
+          }
+        })
+      }
     }else if(cJson.snippet.liveBroadcastContent==="upcoming"){
       const newObjectUC = rOUC(cJson, icon1, icon2);
+      if(newObjectUC.time > dayjs().utc().add(6, "M").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+        continue;
+      }
       newObjectUC.timeBase = standardTime(newObjectUC.time);
       newObjectUC.time = JST(newObjectUC.time);
       printUC.push(newObjectUC);
-    }else if(cJson.snippet.liveBroadcastContent==="none"){
+    }else if(cJson.snippet.liveBroadcastContent==="none" || (cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration!=="P0D")){
       if(cJson.liveStreamingDetails!==undefined){
         const newObjectA = rOA(cJson, icon1, icon2);
         newObjectA.time = JST(newObjectA.time);
@@ -942,6 +1209,9 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
   printTLN.forEach((object)=>{
     printLN.push(object);
   });
+  printSRLN.forEach((object)=>{
+    printLN.push(object);
+  });
   printLN.sort(sortDate);
 
   printUC.sort(sortDate);
@@ -956,6 +1226,18 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
   const printNewP = [cPV(printP), printP];
       
   ObjectData.splice(0, 4, printLN, printNewUC, printA, printNewP);
+
+  const listNewT = listT.filter((loginName, index)=>{
+    if(listT.indexOf(loginName)===index){
+      return loginName;
+    }
+  });
+  for(let i=0; i<listNewT.length; i++){
+    if(listTLNC.find((loginName)=>{if(loginName===listNewT[i]){return true}})){
+      continue;
+    }
+    listTLNC.push(listNewT[i]);
+  }
 }
 
 async function adjust01s(){
@@ -980,6 +1262,21 @@ async function adjust01s(){
   ObjectData[3][1].forEach((element)=>{
     listAll2.push(element.videoId);
   });
+  listAll2.push(ObjectData[4].videoId);
+  for(let i=0; i<liveAdjustList.length; i++){
+    const videoId = liveAdjustList[i];
+    if(videoIdCheckA(listAll2, videoId)){
+      continue;
+    }
+    listAll2.push(videoId);
+  }
+  for(let i=0; i<upcomingAdjustList.length; i++){
+    const videoId = upcomingAdjustList[i];
+    if(videoIdCheckA(listAll2, videoId)){
+      continue;
+    }
+    listAll2.push(videoId);
+  }
   const listAll3 = new Array();
 
   let flag = false;
@@ -1013,7 +1310,10 @@ async function getTwitchAuthorization() {
       throw new Error(response.statusText);
     }
     const json = await response.json();
-    return json;
+    const accessToken = json.access_token;
+    //token_type first letter must be uppercase
+    const tokenType = json.token_type.slice(0, 1).toUpperCase() + json.token_type.slice(1, json.token_type.length);
+    return `${tokenType} ${accessToken}`;
   }catch(error){
     console.error("getTwitchAuthorizationエラー:", error);
     return false;
@@ -1022,21 +1322,12 @@ async function getTwitchAuthorization() {
 
 async function getStreams() {
   const minutes = dayjs().utc().minute();
-  const endpoint = `https://api.twitch.tv/helix/streams?${userIdsReturn(listTwitch)}&type=live`;
+  const endpoint = `https://api.twitch.tv/helix/streams?${userIdsReturn(listTwitch)}${loginNamesReturn(listTLNC)}&type=live`;
 
-  let authorizationObject = await getTwitchAuthorization();
-  if(!authorizationObject){
+  const authorization = await getTwitchAuthorization();
+  if(!authorization){
     return;
   }
-
-  let { access_token, expires_in, token_type } = authorizationObject;
-
-  //token_type first letter must be uppercase    
-  token_type =
-  token_type.slice(0, 1).toUpperCase() +
-  token_type.slice(1, token_type.length);
-
-  const authorization = `${token_type} ${access_token}`;
 
   const headers = {
   authorization,
@@ -1049,10 +1340,40 @@ async function getStreams() {
       throw new Error(response.statusText);
     }
     const json = await response.json();
+
+    const listC = new Array();
     printTLN.splice(0, printTLN.length);
     json.data.forEach((element)=>{
       printTLN.push(rOLNT(element));
+      const listLoginNames = element.title.match(/(?<=@)\w+/g);
+      if(listLoginNames!==null && twitchUserIdCheck.test(element.user_id)){
+        listLoginNames.forEach((loginName)=>{
+          if(!loginNameCheck.test(loginName)){
+            listC.push(loginName);
+          }
+        })
+      }
     });
+    const listT = printTLN.filter((object)=>{
+      if(!loginNameCheck.test(object.loginName)){
+        return object;
+      }
+    });
+    listTLNC.splice(0, listTLNC.length);
+    listT.forEach((object)=>{
+      listTLNC.push(object.loginName);
+    });
+    const listNewC = listC.filter((loginName, index)=>{
+      if(listC.indexOf(loginName)===index){
+        return loginName;
+      }
+    });
+    for(let i=0; i<listNewC.length; i++){
+      if(listTLNC.find((loginName)=>{if(loginName===listNewC[i]){return true}})){
+        continue;
+      }
+      listTLNC.push(listNewC[i]);
+    }
   }catch(error){
     console.error("getTwitchStreamsエラー:", error);
   }
@@ -1066,20 +1387,12 @@ async function getArchives(listTwitch){
   const listTOD = new Array();
   let flag = false;
   await Promise.all(listTwitch.map(async (userId, index)=>{
-    const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userId}&type=archive&first=3`;
+    const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userId}&type=archive&first=5`;
 
-    let authorizationObject = await getTwitchAuthorization();
-    if(!authorizationObject){
+    const authorization = await getTwitchAuthorization();
+    if(!authorization){
       return;
     }
-
-    let { access_token, expires_in, token_type } = authorizationObject;
-   
-    token_type =
-    token_type.slice(0, 1).toUpperCase() +
-    token_type.slice(1, token_type.length);
-
-    const authorization = `${token_type} ${access_token}`;
 
     const headers = {
     authorization,
@@ -1115,12 +1428,36 @@ async function getArchives(listTwitch){
     printTA.push(tOD);
   }
 }
+
+async function getShowRoom(){
+  try{
+    const response = await fetch("https://www.showroom-live.com/api/room/status?room_url_key=ringo-005");
+    if(!response.ok){
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+    printSRLN.splice(0, printSRLN.length);
+    if(json.is_live){
+      printSRLN.push(rOLNSR(json));
+    }
+  }catch(error){
+    console.error("getShowRoomエラー:", error);
+  } 
+}
+
   
-cron.schedule('0 15,45 * * * *', () => {
+cron.schedule('0 20,50 * * * *', () => {
   apis();
   console.log(key);
   console.log('30分経過だよ');
-  
+});
+
+cron.schedule('0 5,35 * * * *', () => {
+  liveAdjust();
+});
+
+cron.schedule('10 5,35 * * * *', () => {
+  upcomingAdjust();
 });
 
 cron.schedule('20 * * * * *', () => {
@@ -1131,14 +1468,30 @@ cron.schedule('30 * * * * *', () => {
   getStreams();
 });
 
+cron.schedule('40 * * * * *', () => {
+  getShowRoom();
+});
+
 cron.schedule('0 0 * * * *', () => {
   Official.api2(key2);
   devA2();
   devB2();
   devC2();
   devD2();
+  devE2();
   console.log("1時間経過");
 });
+Official.api2(key2);
+devA2();
+devB2();
+devC2();
+devD2();
+devE2();
+
+cron.schedule('0 59 * * * *', () => {
+  Mina.api3(key2);
+});
+Mina.api3(key2);
 
 app.get('/', (req, res) => {
   res.render('hello.ejs', {ObjectData:ObjectData});
