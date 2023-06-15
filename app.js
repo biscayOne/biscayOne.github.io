@@ -83,7 +83,7 @@ const shakeHands = "/images/shakeHands.jpg";
 function NGW(listNG){  
   let NGWords = "";
   listNG.forEach((NGWord)=>{
-    NGWords += `-${NGWord}- `;
+    NGWords += `-${NGWord} `;
   });
   return NGWords.slice(0, NGWords.length-1);
 }
@@ -147,7 +147,9 @@ function replaceAll(string){
           .replace(/】(?=[^【])/g, "】<br>")
           .replace(/(?<=[^】》])【/g, "<br>【")
           .replace(/》\s+|》(?=[^！])/, "》<br>")
-          .replace(/￤\s+|￤/, "￤<br>");
+          .replace(/￤\s*/, "￤<br>")
+          .replace(/(?<=\])(\s\-\s|\s)(?=[^\s])/, "<br>")
+          .replace(/(?<=\s)］(?=#)/, "］<br>");
 }
 
 function millionProgress(number){
@@ -199,6 +201,8 @@ function channelIconReturn(userId){
       return listIcon[1];
     case Kohaku.getTUI():
       return listIcon[3];
+    case Airu.getTUI():
+      return listIcon[5];
     case Mina.getTUI():
       return listIcon[6];
     case Yozuri.getTUI():
@@ -239,7 +243,7 @@ function rOAT(cJson){
 }
 
 function rOP(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.snippet.publishedAt, time2:cJson.contentDetails.duration, timeBase:cJson.snippet.publishedAt, icon:icon1, icon2:icon2};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.snippet.publishedAt, time2:cJson.contentDetails.duration, timeBase:cJson.snippet.publishedAt, icon:icon1, icon2:icon2, platform:"youtube"};
 }
 
 const millionProgressMina = ["13900"];
@@ -458,6 +462,18 @@ const listIconV = [
                     "https://yt3.ggpht.com/qOXB_PweIVd_HqugqgNrCxRSjoV3wHpKtYHUjnVkUtxP3qAbcT0msj178SetksB8bB94TNId=s88-c-k-c0x00ffffff-no-nd-rj", // 5
                   ];
 
+function collaborationCheck(classVEE, text, title, twitterId=""){
+  return new RegExp(`${classVEE.getCN()}|${classVEE.getHN()}`, "i").test(text) || (new RegExp(classVEE.getTN()).test(text) && new RegExp(`/channel/${classVEE.getCI()}${classVEE.getCustomName()}${twitterId}`, "i").test(text)) || new RegExp(`${classVEE.getTN()}|${classVEE.getHN()}`, "i").test(title);
+}
+
+function collaborationCheckT(classVEE, title){
+  if(classVEE.getTLN()!==""){
+    return new RegExp(`${classVEE.getTN()}|@${classVEE.getTLN()}`, "i").test(title);
+  }else{
+    return new RegExp(classVEE.getTN()).test(title);
+  }
+}
+
 function collaboration(cJson){
   let icon1 = "";
   const icon2 = new Array();
@@ -531,65 +547,65 @@ function collaboration(cJson){
   }
   const text = cJson.snippet.description;
   const title = cJson.snippet.title;
-  if(new RegExp(Ruki.getCN()).test(text) || (/音門(\s+)?るき/.test(text) && (new RegExp(`/channel/${Ruki.getCI()}`).test(text) || /\/c\/OtokadoDeviRuki/i.test(text))) || /@Otokado_Ruki/i.test(text) || /音門(\s+)?るき/.test(title)){
+  if(collaborationCheck(Ruki, text, title)){
     icon2.push(listIcon[1]);
   }
-  const rTI = new RegExp(Ringo.getTwitterId());
-  if(new RegExp(Ringo.getCN()).test(text) || (/九条(\s+)?林檎/.test(text) && (new RegExp(`/channel/${Ringo.getCI()}`).test(text) || /\/c\/KujoRingo/i.test(text) || rTI.test(text))) || /@KujoRingo/i.test(text) || /九条(\s+)?林檎/.test(title)){
+  const rTI = Ringo.getTwitterId();
+  if(collaborationCheck(Ringo, text, title, `|${rTI}`)){
     icon2.push(listIcon[2]);
   }
-  if(new RegExp(Kohaku.getCN()).test(text) || (/秋雪(\s+)?こはく/.test(text) && (new RegExp(`/channel/${Kohaku.getCI()}`).test(text) || /\/c\/Syusetukohaku秋雪こはく/i.test(text))) || /@Syusetu_kohaku/i.test(text) || /秋雪(\s+)?こはく/.test(title)){
+  if(collaborationCheck(Kohaku, text, title)){
     icon2.push(listIcon[3]);
   }
-  if(new RegExp(Tulsi.getCN()).test(text) || (/魔王(\s+)?トゥルシー/.test(text) && new RegExp(`/channel/${Tulsi.getCI()}`).test(text)) || /@Tulsi_Nightmare/i.test(text) || /魔王(\s+)?トゥルシー/.test(title)){
+  if(collaborationCheck(Tulsi, text, title)){
     icon2.push(listIcon[4]);
   }
-  if(new RegExp(Airu.getCN()).test(text) || (/雛星(\s+)?あいる/.test(text) && new RegExp(`/channel/${Airu.getCI()}`).test(text)) || /@Hinahoshi_Airu/i.test(text) || /雛星(\s+)?あいる/.test(title)){
+  if(collaborationCheck(Airu, text, title)){
     icon2.push(listIcon[5]);
   }
-  if(new RegExp(Mina.getCN()).test(text) || (/桜鳥(\s+)?ミーナ/.test(text) && new RegExp(`/channel/${Mina.getCI()}`).test(text)) || /@MinaAudrey/i.test(text) || /桜鳥(\s+)?ミーナ/.test(title)){
+  if(collaborationCheck(Mina, text, title)){
     icon2.push(listIcon[6]);
   }
-  if(new RegExp(Ito.getCN()).test(text) || (/白粉(\s+)?いと/.test(text) && (new RegExp(`/channel/${Ito.getCI()}`).test(text) || /\/c\/OshiroIto/i.test(text))) || /@oshiroito/i.test(text) || /白粉(\s+)?いと/.test(title)){
+  if(collaborationCheck(Ito, text, title)){
     icon2.push(listIcon[7]);
   }
-  if(new RegExp(Chihiyo.getCN()).test(text) || (/日和(\s+)?ちひよ/.test(text) && new RegExp(`/channel/${Chihiyo.getCI()}`).test(text)) || /@HiyoriChihiyo/i.test(text) || /日和(\s+)?ちひよ/.test(title)){
+  if(collaborationCheck(Chihiyo, text, title)){
     icon2.push(listIcon[9]);
   }
-  if(new RegExp(Mew.getCN()).test(text) || (/ミュウ・ガルシア/.test(text) && new RegExp(`/channel/${Mew.getCI()}`).test(text)) || /@MewGarcia/i.test(text) || /ミュウ・ガルシア/.test(title)){
+  if(collaborationCheck(Mew, text, title)){
     icon2.push(listIcon[10]);
   }
-  if(new RegExp(Yozuri.getCN()).test(text) || (/蒼宮(\s+)?よづり/.test(text) && new RegExp(`/channel/${Yozuri.getCI()}`).test(text)) || /@AomiyaYozuri/i.test(text) || /蒼宮(\s+)?よづり/.test(title)){
+  if(collaborationCheck(Yozuri, text, title)){
     icon2.push(listIcon[12]);
   }
-  if(new RegExp(Uparu.getCN()).test(text) || (/亞生(\s+)?うぱる/.test(text) && new RegExp(`/channel/${Uparu.getCI()}`).test(text)) || /@AnewUparu/i.test(text) || /亞生(\s+)?うぱる/.test(title)){
+  if(collaborationCheck(Uparu, text, title)){
     icon2.push(listIcon[13]);
   }
-  if(new RegExp(Uriyone.getCN()).test(text) || (/糶/.test(text) && new RegExp(`/channel/${Uriyone.getCI()}`).test(text)) || /@URIYONE/i.test(text) || /糶/.test(title)){
+  if(collaborationCheck(Uriyone, text, title)){
     icon2.push(listIcon[14]);
   }
-  if(new RegExp(Cotonoha.getCN()).test(text) || (/言のハ/.test(text) && new RegExp(`/channel/${Cotonoha.getCI()}`).test(text)) || /@Cotonoha/i.test(text) || /言のハ/.test(title)){
+  if(collaborationCheck(Cotonoha, text, title)){
     icon2.push(listIcon[15]);
   }
-  if(new RegExp(Luminous.getCN()).test(text) || (/るみなす・すいーと/.test(text) && new RegExp(`/channel/${Luminous.getCI()}`).test(text)) || /@Luminous_Sweet/i.test(text) || /るみなす・すいーと/.test(title)){
+  if(collaborationCheck(Luminous, text, title)){
     icon2.push(listIcon[16]);
   }
-  if(new RegExp(Amae.getCN()).test(text) || (/偉雷(\s+)?アマエ/.test(text) && new RegExp(`/channel/${Amae.getCI()}`).test(text)) || /@EraiAmae/i.test(text) || /偉雷(\s+)?アマエ/.test(title)){
+  if(collaborationCheck(Amae, text, title)){
     icon2.push(listIcon[17]);
   }
-  if(new RegExp(Kakapo.getCN()).test(text) || (/北白川(\s+)?かかぽ/.test(text) && (new RegExp(`/channel/${Kakapo.getCI()}`).test(text) || /\/c\/kakaporesearch/i.test(text))) || /@kakapo_research/i.test(text) || /北白川(\s+)?かかぽ/.test(title)){
+  if(collaborationCheck(Kakapo, text, title)){
     icon2.push(listIcon[18]);
   }
-  if(new RegExp(Yun.getCN()).test(text) || (/ゆりかわ(\s+)?ゆん/.test(text) && new RegExp(`/channel/${Yun.getCI()}`).test(text)) || /@yurikawayun/i.test(text) || /ゆりかわ(\s+)?ゆん/.test(title)){
+  if(collaborationCheck(Yun, text, title)){
     icon2.push(listIcon[19]);
   }
-  if(new RegExp(Yae.getCN()).test(text) || (/雨庭(\s+)?やえ/.test(text) && new RegExp(`/channel/${Yae.getCI()}`).test(text)) || /@AMENIWA_YAE/i.test(text) || /雨庭(\s+)?やえ/.test(title)){
+  if(collaborationCheck(Yae, text, title)){
     icon2.push(listIcon[20]);
   }
-  if(new RegExp(Lui.getCN()).test(text) || (/月白(\s+)?累/.test(text) && new RegExp(`/channel/${Lui.getCI()}`).test(text)) || /@Geppaku_Lui/i.test(text) || /月白(\s+)?累/.test(title)){
+  if(collaborationCheck(Lui, text, title)){
     icon2.push(listIcon[21]);
   }
-  if(new RegExp(Lira.getCN()).test(text) || (/黒燿(\s+)?リラ/.test(text) && new RegExp(`/channel/${Lira.getCI()}`).test(text)) || /@KOKUYOU_LIRA/i.test(text) || /黒燿(\s+)?リラ/.test(title)){
+  if(collaborationCheck(Lira, text, title)){
     icon2.push(listIcon[22]);
   }
   if(/華灯/.test(text) && /hanavee_pr/.test(text)){
@@ -613,70 +629,70 @@ function collaboration(cJson){
 
 function collaborationReturn(title, userId){
   const listC = new Array();
-  if(/音門(\s+)?るき|@ruki_otokado_666/i.test(title)){
+  if(collaborationCheckT(Ruki, title)){
     listC.push(listIcon[1]);
   }
-  if(/九条(\s+)?林檎/.test(title)){
+  if(collaborationCheckT(Ringo, title)){
     listC.push(listIcon[2]);
   }
-  if(/秋雪(\s+)?こはく|@syusetu_kohaku/i.test(title)){
+  if(collaborationCheckT(Kohaku, title)){
     listC.push(listIcon[3]);
   }
-  if(/魔王(\s+)?トゥルシー/.test(title)){
+  if(collaborationCheckT(Tulsi, title)){
     listC.push(listIcon[4]);
   }
-  if(/雛星(\s+)?あいる/.test(title)){
+  if(collaborationCheckT(Airu, title)){
     listC.push(listIcon[5]);
   }
-  if(/桜鳥(\s+)?ミーナ/.test(title)){
+  if(collaborationCheckT(Mina, title)){
     listC.push(listIcon[6]);
   }
-  if(/白粉(\s+)?いと/.test(title)){
+  if(collaborationCheckT(Ito, title)){
     listC.push(listIcon[7]);
   }
-  if(/日和(\s+)?ちひよ/.test(title)){
+  if(collaborationCheckT(Chihiyo, title)){
     listC.push(listIcon[9]);
   }
-  if(/ミュウ・ガルシア/.test(title)){
+  if(collaborationCheckT(Mew, title)){
     listC.push(listIcon[10]);
   }
-  if(/蒼宮(\s+)?よづり|@aomiyayozuri_ch/i.test(title)){
+  if(collaborationCheckT(Yozuri, title)){
     listC.push(listIcon[12]);
   }
-  if(/亞生(\s+)?うぱる/.test(title)){
+  if(collaborationCheckT(Uparu, title)){
     listC.push(listIcon[13]);
   }
-  if(/糶/.test(title)){
+  if(collaborationCheckT(Uriyone, title)){
     listC.push(listIcon[14]);
   }
-  if(/言のハ/.test(title)){
+  if(collaborationCheckT(Cotonoha, title)){
     listC.push(listIcon[15]);
   }
-  if(/るみなす・すいーと/.test(title)){
+  if(collaborationCheckT(Luminous, title)){
     listC.push(listIcon[16]);
   }
-  if(/偉雷(\s+)?アマエ/.test(title)){
+  if(collaborationCheckT(Amae, title)){
     listC.push(listIcon[17]);
   }
-  if(/北白川(\s+)?かかぽ/.test(title)){
+  if(collaborationCheckT(Kakapo, title)){
     listC.push(listIcon[18]);
   }
-  if(/ゆりかわ(\s+)?ゆん|@yun_yurikawa/i.test(title)){
+  if(collaborationCheckT(Yun, title)){
     listC.push(listIcon[19]);
   }
-  if(/雨庭(\s+)?やえ|@ameniwa_yae/i.test(title)){
+  if(collaborationCheckT(Yae, title)){
     listC.push(listIcon[20]);
   }
-  if(/月白(\s+)?累/.test(title)){
+  if(collaborationCheckT(Lui, title)){
     listC.push(listIcon[21]);
   }
-  if(/黒燿(\s+)?リラ/.test(title)){
+  if(collaborationCheckT(Lira, title)){
     listC.push(listIcon[22]);
   }
   if(/華灯/.test(title)){
     listC.push("/images/Hanavee.jpg");
   }
-  if(/dtto(\.)?|@dttodot/i.test(title)){
+  if(collaborationCheckT(Dtto, title)){
     listC.push(listIcon[8]);
   }
   const indexNumber = listC.findIndex((icon)=>{
@@ -689,14 +705,16 @@ function collaborationReturn(title, userId){
 }
 
 class VEE{
-  constructor(number, channelName, channelId, twitterId, listURL, listNG, twitchUserId){
+  constructor(number, talentName, channelName, channelId, twitterId, listURL, listNG, twitchUserId='', twitchLoginName=""){
     this.number = number;
+    this.talentName = talentName;
     this.channelName = channelName;
     this.channelId = channelId;
     this.twitterId = twitterId;
     this.listURL = listURL;
     this.listNG = listNG;
     this.twitchUserId = twitchUserId;
+    this.twitchLoginName = twitchLoginName;
   }
   
   async api2(key2){
@@ -725,6 +743,10 @@ class VEE{
     }
   }
 
+  getTN(){
+    return this.talentName;
+  }
+
   getCN0(){
     return this.channelName;
   }
@@ -737,16 +759,32 @@ class VEE{
     return this.channelId;
   }
 
+  getHN(){
+    return `@${this.listURL[0].slice(1, this.listURL[0].length-1)}`;
+  }
+
+  getCustomName(){
+    if(this.listURL[1] === undefined){
+      return "";
+    }else{
+      return `|${this.listURL[1].slice(1, this.listURL[1].length-1)}`;
+    }
+  }
+
   getTUI(){
     return this.twitchUserId;
   }
+
+  getTLN(){
+    return this.twitchLoginName;
+  }
 }
 
-function api0Return(daysAgo){
+function api0Return(daysAgo = 8){
   return `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.channelId}&type=video&maxResults=10&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
 }
 
-function api1Return(daysAgo){
+function api1Return(daysAgo = 8){
   return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
 }
 
@@ -810,11 +848,11 @@ class VERSEN extends VEE{
 }
 
 //Dev-a
-const Ruki = new VEE(1, '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", "Ruki_vita_666", ['"/c/OtokadoDeviRuki"', '"Otokado_Ruki"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"', '"달땡(Moon 00)"'], '806658817');
-const Ringo = new VEER(2, '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", "ringo_0_0_5", ['"/c/KujoRingo"', '"KujoRingo"'], ['"VEE切り抜きおきば"'], '');
-const Kohaku = new VEE(3, '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", "Syusetu_kohaku", ['"/c/Syusetukohaku秋雪こはく"', '"Syusetu_kohaku"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '582501849');
-const Tulsi = new VEE(4, '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", "IDmadeMiruna", ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '');
-const Airu = new VEE(5, '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", "airu_Lv115", ['"Hinahoshi_Airu"'], [], '838127333');
+const Ruki = new VEE(1, "音門\\s*るき", '"Ruki Otokado 音門るき [VEE]"', "UCAUicVZlApAIhcdL9df3gWw", "Ruki_vita_666", ['"Otokado_Ruki"', '"/c/OtokadoDeviRuki"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"', '"달땡(Moon 00)"'], '806658817', "ruki_otokado_666");
+const Ringo = new VEER(2, "九条\\s*林檎", '"九条 林檎【Kujo Ringo Official】"', "UCf57-IJn5mUJDyqd9uNEmrg", "ringo_0_0_5", ['"KujoRingo"', '"/c/KujoRingo"'], ['"VEE切り抜きおきば"']);
+const Kohaku = new VEE(3, "秋雪\\s*こはく", '"Syusetu kohaku/秋雪こはく"', "UCQLyq7TDKHlmp2Ufd5Z2qMw", "Syusetu_kohaku", ['"Syusetu_kohaku"', '"/c/Syusetukohaku秋雪こはく"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"'], '582501849', "syusetu_kohaku");
+const Tulsi = new VEE(4, "魔王\\s*トゥルシー", '"魔王トゥルシー / Tulsi-Nightmare Madness IV"', "UCUdlDvZJGGP78zvta3swIhw", "IDmadeMiruna", ['"Tulsi_Nightmare"'], ['"แมวพิมพ์ [ Vtuber แปลไทย ]"']);
+const Airu = new VEE(5, "雛星\\s*あいる", '"雛星あいる Hinahoshi Airu"', "UCJGQPbaqTY91JhVzD8gIZyw", "airu_Lv115", ['"Hinahoshi_Airu"'], [], '838127333', "hinahoshi_airu");
 function devA2(){
   Ruki.api2(key2);
   Ringo.api2(key2);
@@ -824,13 +862,13 @@ function devA2(){
 }
 
 //Dev-b
-const Mina = new VEE(6, '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", "mina0x0audrey", ['"MinaAudrey"'], ['"달땡(Moon 00)"'], '891899629');
-const Ito = new VEE(7, '"白粉いと / Oshiro Ito"', "UCzv_W7v9ix39tFPDB-TV0Vg", "oshiroito", ['"/c/OshiroIto"', '"oshiroito"'], ['"woni_clip"', '"시번 sibun"', '"BubblesClip"'], '');
-const Chihiyo = new VEE(9, '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", "hiyohiyovee", ['"HiyoriChihiyo"'], ['"달땡(Moon 00)"'], '');
-const Mew = new VEE(10, '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", "MewGarcia_king", ['"MewGarcia"'], [], '');
-const Official = new VEE(0, '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", "_vee_official_", ['"/c/VEE_official_ch"', '"VEE_official"', '"ぷみぷみVEE"'], [], '');
-const Dtto = new VEE(8, '"dtto."', "UCWNVjAzZmYUni8YBXYiy01w", "_dtto", ['"dttodot"'], [], '715990491');
-const Uzume = new VEE(11, '"UzuMe"', "UCAsgKcP47dPWFBhiio_M7yg", "UzuMe_Vtuber", ['"/c/UzuMe"', '"UzuMe"'], [], '');
+const Mina = new VEE(6, "桜鳥\\s*ミーナ", '"桜鳥ミーナ / Audrey Mina"', "UCFkHpBGMeNSQW-j9-F0nxnQ", "mina0x0audrey", ['"MinaAudrey"'], ['"달땡(Moon 00)"'], '891899629', "minaaudrey_vee");
+const Ito = new VEE(7, "白粉\\s*いと", '"おしろいと"', "UCzv_W7v9ix39tFPDB-TV0Vg", "oshiroito", ['"oshiroito"', '"/c/OshiroIto"'], ['"woni_clip"', '"시번 sibun"', '"노아ノア"', '"鈴木店長の美容チャンネル"']);
+const Chihiyo = new VEE(9, "日和\\s*ちひよ", '"日和ちひよ / Hiyori Chihiyo"', "UCnBOUGfsfcD6nUbpdDAwMfw", "hiyohiyovee", ['"HiyoriChihiyo"'], ['"달땡(Moon 00)"']);
+const Mew = new VEE(10, "ミュウ・ガルシア", '"Mew Garcia / ミュウ・ガルシア"', "UC7FUtGR0AsvwzXrEmdUBAFw", "MewGarcia_king", ['"MewGarcia"'], []);
+const Official = new VEE(0, "VEE\\s*official\\s*channel", '"VEE official channel"', "UCXWiGKfAXjHUsxa_GNLgv-A", "_vee_official_", ['"VEE_official"', '"/c/VEE_official_ch"', '"ぷみぷみVEE"'], []);
+const Dtto = new VEE(8, "dtto(\\.)?", '"dtto."', "UCWNVjAzZmYUni8YBXYiy01w", "_dtto", ['"dttodot"'], [], '715990491', "dttodot");
+const Uzume = new VEE(11, "UzuMe", '"UzuMe"', "UCAsgKcP47dPWFBhiio_M7yg", "UzuMe_Vtuber", ['"UzuMe"', '"/c/UzuMe"'], []);
 function devB2(){
   Mina.api2(key2);
   Ito.api2(key2);
@@ -841,11 +879,11 @@ function devB2(){
 }
 
 //Dev-c
-const Yozuri = new VEE(12, '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", "aomiyayozuri", ['"AomiyaYozuri"'], ['"成田という男(切り抜き製作所)"'], '886124634');
-const Uparu = new VEE(13, '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", "UPARU_JP", ['"AnewUparu"'], [], '');
-const Uriyone = new VEE(14, '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", "URIYONEE", ['"URIYONE"'], [], '');
-const Cotonoha = new VEE(15, '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", "TwiCoto", ['"Cotonoha"'], ['"太田圭亮のViolinトーク"', '"cotonoha sketch"'], '895225764');
-const Luminous = new VEE(16, '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", "luminous_amaama", ['"Luminous_Sweet"'], [], '');
+const Yozuri = new VEE(12, "蒼宮\\s*よづり", '"Aomiya Yozuri Ch. 蒼宮よづり"', "UCWhFUlcawiD78qAD7zzS6Bw", "aomiyayozuri", ['"AomiyaYozuri"'], ['"成田という男(切り抜き製作所)"'], '886124634', "aomiyayozuri_ch");
+const Uparu = new VEE(13, "亞生\\s*うぱる", '"亞生うぱる【VEE】"', "UCQfp96ujs7PXiUG6ov29RKg", "UPARU_JP", ['"AnewUparu"'], []);
+const Uriyone = new VEE(14, "糶", '"糶 / URIYONE"', "UCJpsYQtNyVDc023clkqMhTQ", "URIYONEE", ['"URIYONE"'], []);
+const Cotonoha = new VEE(15, "言のハ", '"言のハ-Cotonoha-"', "UCOd-qYH_8e-tgxpPIcqwenA", "TwiCoto", ['"Cotonoha"'], ['"太田圭亮"', '"cotonoha sketch"'], '895225764', "ctnh_jp");
+const Luminous = new VEE(16, "るみなす・すいーと", '"るみなす・すいーと【LUMINOUS Ch】"', "UC02dJeNmcQLqENdHFG1svJw", "luminous_amaama", ['"Luminous_Sweet"'], []);
 function devC2(){
   Yozuri.api2(key2);
   Uparu.api2(key2);
@@ -855,9 +893,9 @@ function devC2(){
 }
 
 //Dev-d
-const Amae = new VEE(17, '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", "EraiAmae", ['"EraiAmae"'], ['"元動画はこちら"'], '');
-const Kakapo = new VEE(18, '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", "kakapo_research", ['"/c/kakaporesearch"', '"kakapo_research"'], [], '');
-const Yun = new VEE(19, '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", "yun_yurikawa", ['"yurikawayun"'], [], '879316180');
+const Amae = new VEE(17, "偉雷\\s*アマエ", '"偉雷アマエ / Erai Amae"', "UC6b4Ta_J0wbylnPu1auaQiA", "EraiAmae", ['"EraiAmae"'], ['"元動画はこちら"']);
+const Kakapo = new VEE(18, "北白川\\s*かかぽ", '"北白川かかぽ / Kakapo Kitashirakawa"', "UCEoAD_2jSLoYQd2MJZxWuxQ", "kakapo_research", ['"kakapo_research"', '"/c/kakaporesearch"'], []);
+const Yun = new VEE(19, "ゆりかわ\\s*ゆん", '"ゆりかわゆん YURIKAWA YUN"', "UCngFYCS8p8PX9wf4V8kLVgw", "yun_yurikawa", ['"yurikawayun"'], [], '879316180', "yun_yurikawa");
 function devD2(){
   Amae.api2(key2);
   Kakapo.api2(key2);
@@ -865,9 +903,9 @@ function devD2(){
 }
 
 //Dev-e
-const Yae = new VEE(20, '"雨庭やえ / AMENIWA YAE"', "UCMPKmFrLWgZyCGOw0QAEiIQ", "AMENIWA_YAE", ['"AMENIWA_YAE"'], [], '901350011');
-const Lui = new VEE(21, '"月白 累 / Geppaku Lui"', "UCpFAeyYSv4-7R1rC91c6DuA", "Geppaku_Lui", ['"Geppaku_Lui"'], [], '');
-const Lira = new VEE(22, '"黒燿リラ / KOKUYOU LIRA"', "UC_mc5xvNyQ-2W0UHgTA1mMg", "KOKUYOU_LIRA", ['"KOKUYOU_LIRA"'], [], '');
+const Yae = new VEE(20, "雨庭\\s*やえ", '"雨庭やえ / AMENIWA YAE"', "UCMPKmFrLWgZyCGOw0QAEiIQ", "AMENIWA_YAE", ['"AMENIWA_YAE"'], [], '901350011', "ameniwa_yae");
+const Lui = new VEE(21, "月白\\s*累", '"月白 累 / Geppaku Lui"', "UCpFAeyYSv4-7R1rC91c6DuA", "Geppaku_Lui", ['"Geppaku_Lui"'], []);
+const Lira = new VEE(22, "黒燿\\s*リラ", '"黒燿リラ / KOKUYOU LIRA"', "UC_mc5xvNyQ-2W0UHgTA1mMg", "KOKUYOU_LIRA", ['"KOKUYOU_LIRA"'], []);
 function devE2(){
   Yae.api2(key2);
   Lui.api2(key2);
@@ -877,43 +915,43 @@ function devE2(){
 const listApi = [
   api0Return.bind(Official, 11),
 
-  api1Return.bind(Ruki, 8),
+  api1Return.bind(Ruki),
   api1ReturnRingo.bind(Ringo, 15),
   api1Return.bind(Kohaku, 6),
-  api1Return.bind(Tulsi, 8),
-  api1Return.bind(Airu, 8),
+  api1Return.bind(Tulsi),
+  api1Return.bind(Airu),
 
   api1Return.bind(Mina, 11),
-  api1Return.bind(Ito, 8),
-  api1Return.bind(Chihiyo, 8),
-  api1Return.bind(Mew, 8),
+  api1Return.bind(Ito),
+  api1Return.bind(Chihiyo),
+  api1Return.bind(Mew),
 
   api1Return.bind(Yozuri, 16),
-  api1Return.bind(Uparu, 8),
+  api1Return.bind(Uparu),
   api1Return.bind(Uriyone, 11),
-  api1Return.bind(Cotonoha, 8),
+  api1Return.bind(Cotonoha),
   api1Return.bind(Luminous, 11),
 
   api1Return.bind(Amae, 6),
   api1Return.bind(Kakapo, 11),
-  api1Return.bind(Yun, 8),
+  api1Return.bind(Yun),
 
-  api1Return.bind(Yae, 8),
-  api1Return.bind(Lui, 8),
-  api1Return.bind(Lira, 8),
+  api1Return.bind(Yae),
+  api1Return.bind(Lui),
+  api1Return.bind(Lira),
 ];
 
 const listChannelName = [
   //Ruki.getCN0(),
   //Ringo.getCN0(),
   Kohaku.getCN0(),
-  Tulsi.getCN0(),
+  //Tulsi.getCN0(),
   //Airu.getCN0(),
 
   //Mina.getCN0(),
   //Ito.getCN0(),
   //Chihiyo.getCN0(),
-  Mew.getCN0(),
+  //Mew.getCN0(),
 
   //Yozuri.getCN0(),
   //Uparu.getCN0(),
@@ -943,14 +981,29 @@ const listTwitch = [
   Yae.getTUI(),
 ];
 
-const channelIdCheck = new RegExp(`${Dtto.getCI()}|${Official.getCI()}|${Ruki.getCI()}|${Ringo.getCI()}|${Kohaku.getCI()}|${Tulsi.getCI()}|${Airu.getCI()}|${Mina.getCI()}|${Ito.getCI()}|${Chihiyo.getCI()}|${Mew.getCI()}|${Yozuri.getCI()}|${Uparu.getCI()}|${Uriyone.getCI()}|${Cotonoha.getCI()}|${Luminous.getCI()}|${Amae.getCI()}|${Kakapo.getCI()}|${Yun.getCI()}|${Yae.getCI()}|${Lui.getCI()}|${Lira.getCI()}`);
-const loginNameCheck = new RegExp("dttodot|ruki_otokado_666|syusetu_kohaku|hinahoshi_airu|minaaudrey_vee|aomiyayozuri_ch|ctnh_jp|yun_yurikawa");
+const listTwitchLoginName = [
+  Dtto.getTLN(),
+
+  Ruki.getTLN(),
+  Kohaku.getTLN(),
+  Airu.getTLN(),
+  Mina.getTLN(),
+  Yozuri.getTLN(),
+  Cotonoha.getTLN(),
+  Yun.getTLN(),
+  Yae.getTLN(),
+];
+
+const channelIds = [Dtto.getCI(), Official.getCI(), Ruki.getCI(), Ringo.getCI(), Kohaku.getCI(), Tulsi.getCI(), Airu.getCI(), Mina.getCI(), Ito.getCI(), Chihiyo.getCI(), Mew.getCI(), Yozuri.getCI(), Uparu.getCI(), Uriyone.getCI(), Cotonoha.getCI(), Luminous.getCI(), Amae.getCI(), Kakapo.getCI(), Yun.getCI(), Yae.getCI(), Lui.getCI(), Lira.getCI()];
+const channelIdCheck = new RegExp(reTUI(channelIds));
+const loginNameCheck = new RegExp(reTUI(listTwitchLoginName));
 const twitchUserIdCheck = new RegExp(reTUI(listTwitch));
 
-const ObjectData = [[], [], [], [false, []], {videoId:"h2w26fm1ApA", progress:undefined}, listIcon];
+const ObjectData = [[], [], [], [false, []], {videoId:"oOKeXnYFVgA", progress:undefined}, listIcon];
 const printTLN = [];
 const listTLNC = [];
 const printTA = [];
+const printTP = [];
 const printSRLN = [];
 function process2(printLN, printUC, printA, printP, ObjectData){
   
@@ -1047,7 +1100,8 @@ function process2(printLN, printUC, printA, printP, ObjectData){
 }
 
 async function apis(){
-  const listAll = ["4-SwtK9xlPA", "iDJw_aXZaoc", "R-xzxgxRPjc"];
+  // gMyrAOtD-YM 6月30日開始
+  const listAll = ["iDJw_aXZaoc", "Cm_2RoG1ACo", "ku2vGtr1mYg", "xdUpMKGdWWI", "gMyrAOtD-YM"];
   await Promise.all(listApi.map(async (URL, index)=>{
     try{
       const response = await fetch(URL());
@@ -1081,37 +1135,23 @@ async function apis(){
         if(icon1===shakeHands && icon2.length===0){
           continue;
         }
-        const checkName = /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん|雨庭やえ|月白(\s+)?累|黒燿リラ)/;
-        if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
-          continue;
-        }else if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && checkName.test(cJson.snippet.description)){
-          const indexNumber = icon2.findIndex((element)=>{
-            return element === listIcon[3];
-          });
-          if(indexNumber!==-1){
-            icon2.splice(indexNumber, 1);
-          }
-        }
-        if(cJson.snippet.channelId==="UCLJ7sTH2gc9ElQl2tVJXYUA" && /【Rust】/.test(cJson.snippet.title) && !checkName.test(cJson.snippet.description)){
-          continue;
-        } 
 
         // const checkKohaCup = /(UC2hx0xVkMoHGWijwr_lA01w|UCyxtGMdWlURZ30WSnEjDOQw|UCO9rPI15LSo7U40UX4ukUAA|UCrBx2Gy-0PBUWTP_4uGNkZA|UCQz5mRHdiwt7NrS9tc4D1Dg|UCLr0X7ktuRImhXJrkASkSQw|UCjs-5fTyhaRVQVfdEmVyyqw|UC0vzxUUsMHyGnhD9G8k14yg|UCV1xUwfM2v2oBtT3JNvic3w|UCC7rRD6P7RQcx0hKv9RQP4w|UCHjeZylSgXDSnor8wUnwU_g|UCVQROe7sDdROh4x0BpYHP1w|UCdlxcNp-rmCrIfZwORXr0Og|UCFahBR2wixu0xOex84bXFvg|UC01gb86Qdlkh23Nqk3A1OLQ|UCYqTYMZa5rx4S8o1Xlm21YQ|UCAr4bfXugIgm0HicVyvxacg|UCc6hwdN1yu2QT9o4yIHUPnQ|UCnvBsJQ0TztZ4Mq7qDaL_FA|UCpzxZW5kghGnO5TmAFJQAVw|UCwaS8_S7kMiKA3izlTWHbQg|UCKu59gTZ_rdEmerdx5rV4Yg|UCUpysYEAnksyyr1ykN8JBCw|UCP6J6k7n8SgxslDpYVrqwEA|UCdpFSbJeT9_tR5kR75r6DmQ|UCGAtHjeWWgyWboVQ33ZQX6Q|UCWU7kvLd_JBaBqO_ilTYd_A|UCwtyxO7B0xIv3XdtSvdnYgQ|UCyBSz2-Pnec2_HvG09NScIQ|UC1r_ILeKhs2XHyFQ3_oSicA|UCEEar_TJCxAWpQkSlozVBMg|UCH-wVHHDDrpt5W59UUPJvXA|UCjeoRcWBJKGSEoBJ6XH2QPQ|UCytdhnkcqUA1njZqd1U1PUg|UCe33NIg6hC9vNq2NluwFh9g|UCLChoN0emEvVFNU6_kP-YrQ|UCKR_dxrRj5tmyzEPUieFVfA)/;
         // if(checkKohaCup.test(cJson.snippet.channelId)){
           // continue;
         // }
 
-        // UCWNVjAzZmYUni8YBXYiy01w は dtto.のチャンネルID
         // UCXPSFGZZrJ0tQEeP7R2jRqQ は verse_n_projectのチャンネルID
         // UCOg01LJmZF9UnwFbly73CVw は マル・ナナモナのチャンネルID
         // UCYcnLc0n1ryBDZeGWQTVJ_g は カシ・オトハ のチャンネルID
         // UCmKfT7daL3aOt9o-PBJzOug は ダンジョンズ&ドラゴンズのチャンネルID
-        const checkID = new RegExp(`${Dtto.getCI()}|UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|${Official.getCI()}|${Ruki.getCI()}|${Ringo.getCI()}|${Kohaku.getCI()}|${Tulsi.getCI()}|${Airu.getCI()}|${Mina.getCI()}|${Ito.getCI()}|${Chihiyo.getCI()}|${Mew.getCI()}|${Yozuri.getCI()}|${Uparu.getCI()}|${Uriyone.getCI()}|${Cotonoha.getCI()}|${Luminous.getCI()}|${Amae.getCI()}|${Kakapo.getCI()}|${Yun.getCI()}|${Yae.getCI()}|${Lui.getCI()}|${Lira.getCI()}`);
+        // UCg_xsJxJNVmAdMwXIvPNmTA は 甜瓜あんのチャンネルID
+        const checkID = new RegExp(`UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|UCg_xsJxJNVmAdMwXIvPNmTA|${reTUI(channelIds)}`);
         if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined)){
           if(cJson.status.uploadStatus==="processed" && !checkID.test(cJson.snippet.channelId)){
             continue;
           }
-          if(cJson.id === "h2w26fm1ApA"){
+          if(cJson.id === "oOKeXnYFVgA"){
             continue;
           }
           printLN.push(rOLN(cJson, icon1, icon2));
@@ -1142,7 +1182,7 @@ async function apis(){
 }
 
 
-const adjust02 = (listAll3, listIcon, ObjectData)=>{
+const adjust02 = (listAll3, ObjectData)=>{
   const printLN = new Array();
   const printUC = new Array();
   const printA = new Array();
@@ -1154,16 +1194,9 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
     if(icon1===shakeHands && icon2.length===0){
       continue;
     }
-    if(cJson.snippet.channelId==="UCOg01LJmZF9UnwFbly73CVw" && /【RUST】/.test(cJson.snippet.title) && /(音門るき|九条林檎|魔王トゥルシー|雛星あいる|桜鳥ミーナ|白粉いと|日和ちひよ|ミュウ・ガルシア|蒼宮よづり|亞生うぱる|糶|言のハ|るみなす・すいーと|偉雷アマエ|北白川かかぽ|ゆりかわゆん)/.test(cJson.snippet.description)){
-      const indexNumber = icon2.findIndex((element)=>{
-        return element === listIcon[3];
-      });
-      if(indexNumber!==-1){
-        icon2.splice(indexNumber, 1);
-      }
-    }
     if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined && cJson.liveStreamingDetails.actualEndTime ===undefined)){
-      if(cJson.id === "h2w26fm1ApA"){
+      if(cJson.id === "oOKeXnYFVgA"){
+        cJson.liveStreamingDetails.actualStartTime = "2023-04-14T14:02:07Z";
         ObjectData.splice(4, 1, rOMP(cJson, icon1, icon2));
         continue;
       }
@@ -1222,6 +1255,9 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
   });
   printA.sort(sortDate);
 
+  printTP.forEach((object)=>{
+    printP.push(object);
+  })
   printP.sort(sortDateReverse);
   const printNewP = [cPV(printP), printP];
       
@@ -1233,7 +1269,7 @@ const adjust02 = (listAll3, listIcon, ObjectData)=>{
     }
   });
   for(let i=0; i<listNewT.length; i++){
-    if(listTLNC.find((loginName)=>{if(loginName===listNewT[i]){return true}})){
+    if(listTLNC.includes(listNewT[i])){
       continue;
     }
     listTLNC.push(listNewT[i]);
@@ -1265,14 +1301,14 @@ async function adjust01s(){
   listAll2.push(ObjectData[4].videoId);
   for(let i=0; i<liveAdjustList.length; i++){
     const videoId = liveAdjustList[i];
-    if(videoIdCheckA(listAll2, videoId)){
+    if(listAll2.includes(videoId)){
       continue;
     }
     listAll2.push(videoId);
   }
   for(let i=0; i<upcomingAdjustList.length; i++){
     const videoId = upcomingAdjustList[i];
-    if(videoIdCheckA(listAll2, videoId)){
+    if(listAll2.includes(videoId)){
       continue;
     }
     listAll2.push(videoId);
@@ -1299,7 +1335,7 @@ async function adjust01s(){
   if(flag){
     return;
   }
-  adjust02(listAll3, listIcon, ObjectData);
+  adjust02(listAll3, ObjectData);
 }
 
 async function getTwitchAuthorization() {
@@ -1369,7 +1405,7 @@ async function getStreams() {
       }
     });
     for(let i=0; i<listNewC.length; i++){
-      if(listTLNC.find((loginName)=>{if(loginName===listNewC[i]){return true}})){
+      if(listTLNC.includes(listNewC[i])){
         continue;
       }
       listTLNC.push(listNewC[i]);
@@ -1384,10 +1420,11 @@ async function getStreams() {
 }
 
 async function getArchives(listTwitch){
-  const listTOD = new Array();
+  const listTODA = new Array();
+  const listTODP = new Array();
   let flag = false;
   await Promise.all(listTwitch.map(async (userId, index)=>{
-    const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userId}&type=archive&first=5`;
+    const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userId}&type=all&first=5`;
 
     const authorization = await getTwitchAuthorization();
     if(!authorization){
@@ -1406,7 +1443,11 @@ async function getArchives(listTwitch){
       }
       const json = await response.json();
       json.data.forEach((element)=>{
-        listTOD.push(rOAT(element));
+        if(element.type==="archive"){
+          listTODA.push(rOAT(element));
+        }else{
+          listTODP.push(rOAT(element));
+        }  
       });      
     }catch(error){
       flag = true;
@@ -1416,17 +1457,24 @@ async function getArchives(listTwitch){
   if(flag){
     return;
   }
-  const listTOD2 = listTOD.filter((object)=>{
+  const listTODA2 = listTODA.filter((object)=>{
     return object.timeBase > dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");
   });
   printTA.splice(0, printTA.length);
-  for(let i=0; i<listTOD2.length; i++){    
-    const tOD = listTOD2[i];
+  for(let i=0; i<listTODA2.length; i++){    
+    const tOD = listTODA2[i];
     if(printTLN.find((object)=>{if(tOD.streamId===object.streamId){return true}})){
         continue;
     }
     printTA.push(tOD);
   }
+
+  printTP.splice(0, printTP.length);
+  listTODP.forEach((object)=>{
+    if(object.timeBase > dayjs().utc().subtract(3, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+      printTP.push(object);
+    }
+  });
 }
 
 async function getShowRoom(){
