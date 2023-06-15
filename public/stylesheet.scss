@@ -6,6 +6,8 @@
 
 body{
   margin-top: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 
 img {
@@ -207,20 +209,21 @@ header {
   #birthdayImage{
     // background-color: #FFFAEF;
     //background-color: #ffdbed;
-    background-color: #ffc136;
+    //background-color: #ffc136;
+    background-color: #A0CEA8;
   }
 
   #birthdayString{
     top: 50%;
   
-    color: #fff;
+    color: #86b81b;
     font-size: 22px;
     text-shadow: 0.6px 0.6px 0px #333, -0.6px 0.6px 0px #333, 0.6px -0.6px 0px #333, -0.6px -0.6px 0px #333;
 
     transform: translate(0%,-50%);
 
     #underLine{
-      color: #fff;
+      color: #86b81b;
       //text-decoration: underline;
     
       cursor: pointer;
@@ -231,7 +234,7 @@ header {
     right: 3px;
     bottom: 0px;
 
-    color: #000;
+    color: #fff;
   }
   
   #birthdayIcon{
@@ -327,6 +330,202 @@ header {
 
       width: 100%;
       height: 100%;
+
+      #kiwiParent{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+  
+        width: 50%;
+  
+        transform: translate(-50%, -50%);
+
+        #kiwiImage{
+          width: 100%;
+
+          opacity: 0;
+        }
+
+        .kiwiImageResearching{
+          animation: kiwiImageResearching 10s linear forwards;
+        }
+
+        @keyframes kiwiImageResearching {
+          0%{
+            opacity: 0;
+          }
+          100%{
+            opacity: 1;
+          }
+        }
+
+        #kiwiCover{
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          width: 100%;
+          height: 100%;
+
+          background-color: #333;
+
+          #kiwiResearch{
+            position: absolute;
+            top: 0;
+            left: 0%;
+
+            width: 100%;
+            height: 0px;
+
+            background-color: #00ffff;
+            box-shadow: 0px 0px 10px 5px #00ffff;
+
+            transform: scale(0%, 100%);
+
+            animation: researchStart 0.8s linear 0.5s forwards;
+
+            display: none;
+          }
+
+          @keyframes researchStart {
+            0%{
+              transform: scale(0%, 100%);
+            }
+            100%{
+              transform: scale(100%, 100%);
+            }
+          }
+        }
+
+        .researching{
+          animation: researching 10s linear forwards;
+        }
+
+        @keyframes researching {
+          0%{
+            transform: translateY(0%);
+          }
+          100%{
+            transform: translateY(100%);
+          }
+        }
+      }
+
+      #researchData{
+        position: absolute;
+        top: 10%;
+        left: 10%;
+  
+        width: 20%;
+
+        border-radius: 3px;
+        outline: 3px solid #807e83;
+        opacity: 0;
+  
+        transform: scale(60%);
+  
+        animation: popUp 0.32s linear 3.5s forwards;
+
+        display: none;
+      }
+
+      #nZ{
+        position: absolute;
+        right: 5%;
+        bottom: 10%;
+  
+        width: 25%;
+
+        background-color: #9fcff7;
+        border-radius: 3px;
+        outline: 3px solid #807e83;
+        opacity: 0;
+  
+        transform: scale(60%);
+  
+        animation: popUp 0.32s linear 7.0s forwards;
+
+        display: none;
+      }
+
+      #nZF{
+        position: absolute;
+        right: 3%;
+        bottom: 30%;
+  
+        width: 10%;
+
+        border-radius: 3px;
+        outline: 3px solid #807e83;
+        opacity: 0;
+  
+        transform: scale(60%);
+
+        animation: popUp 0.32s linear 7.5s forwards;
+  
+        display: none;
+      }
+
+      #researchCompletedParent{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+  
+        background-color: #333;
+        border-radius: 5px;
+        outline: 5px solid #807e83;
+        opacity: 0;
+
+        padding: 5px 10px 5px 10px;
+  
+        transform: translate(-50%, -50%) scale(60%);
+  
+        animation: popUpC 0.32s linear forwards;
+
+        display: none;
+
+        #researchCompleted{
+          color: #333;
+          font-size: 22px;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+
+        .completedNotice{
+          animation: completedNotice 1s linear 0.3s 3 forwards;
+        }
+
+        @keyframes completedNotice {
+          0%, 50%{
+            color: #333;
+          }
+          51%, 100%{
+            color: #00ffff;
+          }
+        }
+      }
+
+      @keyframes popUp {
+        0%{
+          opacity: 0;
+          transform: scale(60%);
+        }
+        100%{
+          opacity: 1;
+          transform: scale(100%);
+        }
+      }
+
+      @keyframes popUpC {
+        0%{
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(60%);
+        }
+        100%{
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(100%);
+        }
+      }
 
       .littleStar{
         position: absolute;
@@ -760,7 +959,7 @@ header {
   }
 
   .bICPSlide{
-    animation: bICPS 1.5s forwards;
+    animation: bICPS 1.5s ease forwards;
   }
 
   @keyframes bICPS {
@@ -840,15 +1039,21 @@ header {
 
   display: block;
 
+  #noneCaption{
+    position: relative;
+  }
+
   #noneImage{
     background-color: #9fcff7;
   }
 
   #noneString{
-    top: 88.8px;
+    top: 50%;
     
     font-size: 24px;
     font-weight: bold;
+
+    transform: translateY(-50%);
 
     #btnOpen{
       width: 113.63px;
@@ -873,8 +1078,8 @@ header {
   }
     
   #noneImageCredit{
-    top: 341.2px;
     right: 5px;
+    bottom: 2px;
   }
 
   #recommendedTalent{
@@ -977,6 +1182,7 @@ header {
     margin: 0px !important;
   }
 }
+
 
 .headlineParent{
   text-align: center;
@@ -1128,7 +1334,10 @@ header {
   
         .videoThumbnail{    
           width: 100%;
-        
+          aspect-ratio: 16/9;
+          object-fit: cover;
+
+          color: #807e83;
           border-bottom: 0.8px solid #807e83;
         }
   
@@ -1420,14 +1629,25 @@ header {
     }
   
     .nicoSchedule{
+      position: relative;
+
       text-align: center;
 
       width: 40%;
       height: 72.3px;
 
       font-size: 18px;
-      line-height: 67.5px;
+      //line-height: 67.5px;
       border-top: 4.8px solid #777;
+      span{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        white-space: nowrap;
+
+        transform: translate(-50%, -50%);
+      }
     }
   
     .nicoCollaboration{
@@ -1448,6 +1668,22 @@ header {
         padding: 6px;
       }
     }
+  }
+}
+
+#containerFirework{
+  padding-top: 36px;
+  padding-bottom: 36px;
+
+  display: none;
+
+  #fireworkProcessing{
+    margin: 0 auto;
+  
+    width: 480px;
+    height: 360px;
+  
+    display: block;
   }
 }
 
@@ -1736,6 +1972,11 @@ header {
     padding-top: 34.8px;
     padding-bottom: 34.8px;
   }
+
+  #containerFirework{
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
   
   #contactStringParent{
     width: 1103px;
@@ -1998,6 +2239,40 @@ header {
       }
 
       .birthdayImageCoverChild{
+        #kiwiParent{
+          #kiwiCover{
+            #kiwiResearch{
+              box-shadow: 0px 0px 6px 3px #00ffff;
+            }
+          }
+        }
+
+        #researchData{
+          border-radius: 1.8px;
+          outline: 1.8px solid #807e83;
+        }
+
+        #nZ{
+          border-radius: 1.8px;
+          outline: 1.8px solid #807e83;
+        }
+
+        #nZF{
+          border-radius: 1.8px;
+          outline: 1.8px solid #807e83;
+        }
+
+        #researchCompletedParent{
+          border-radius: 3px;
+          outline: 3px solid #807e83;
+
+          padding: 3px 6px 3px 6px;
+
+          #researchCompleted{
+            font-size: 16px;
+          }
+        }
+
         #shootingStarParent{  
           height: 320px;
   
@@ -2140,9 +2415,7 @@ header {
 
     margin-bottom: 6px;
 
-    #noneString{
-      top: 58.8px;
-    
+    #noneString{    
       font-size: 16px;
 
       #btnOpen{
@@ -2161,7 +2434,7 @@ header {
         
     #noneImageCredit{
       right: 3px;
-      top: 226.2px;
+      bottom: 1px;
     }
 
     #recommendedTalent{
@@ -2310,7 +2583,7 @@ header {
         height: 48.2px;
   
         font-size: 13px;
-        line-height: 45px;
+        //line-height: 45px;
         border-top: 3.2px solid #777;
       }
     
@@ -2329,6 +2602,16 @@ header {
           padding: 4px;
         }
       }
+    }
+  }
+
+  #containerFirework{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  
+    #fireworkProcessing{
+      width: 360px;
+      height: 270px;
     }
   }
  
