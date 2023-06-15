@@ -25,6 +25,9 @@ $(function() {
     rV(videoId){
       return {talentName: this.talentName, channelIcon: this.channelIcon, videoId: videoId};
     }
+    getTN(){
+      return this.talentName;
+    }
   }
 
   const Official = new VEE("VEE", "VEE official channel", "UCXWiGKfAXjHUsxa_GNLgv-A", listIcon[0]);
@@ -36,7 +39,7 @@ $(function() {
   const Airu = new VEE("雛星 あいる", "雛星あいる Hinahoshi Airu", "UCJGQPbaqTY91JhVzD8gIZyw", listIcon[5]);
 
   const Mina = new VEE("桜鳥 ミーナ", "桜鳥ミーナ / Audrey Mina", "UCFkHpBGMeNSQW-j9-F0nxnQ", listIcon[6]);
-  const Ito = new VEE("白粉 いと", "白粉いと / Oshiro Ito", "UCzv_W7v9ix39tFPDB-TV0Vg", listIcon[7]);
+  const Ito = new VEE("白粉 いと", "おしろいと", "UCzv_W7v9ix39tFPDB-TV0Vg", listIcon[7]);
   const Chihiyo = new VEE("日和 ちひよ", "日和ちひよ / Hiyori Chihiyo", "UCnBOUGfsfcD6nUbpdDAwMfw", listIcon[9]);
   const Mew = new VEE("ミュウ・ガルシア", "Mew Garcia / ミュウ・ガルシア", "UC7FUtGR0AsvwzXrEmdUBAFw", listIcon[10]);
 
@@ -71,6 +74,51 @@ $(function() {
     $("#minutes").text(displayRight);
   }
 
+  function returnMonth(month){
+    switch(month){
+      case "Jan":
+        return "1";
+      case "Feb":
+        return "2";
+      case "Mar":
+        return "3";
+      case "Apr":
+        return "4";
+      case "May":
+        return "5";
+      case "Jun":
+        return "6";
+      case "Jul":
+        return "7";
+      case "Aug":
+        return "8";
+      case "Sep":
+        return "9";
+      case "Oct":
+        return "10";
+      case "Nov":
+        return "11";
+      case "Dec":
+        return "12";
+    }
+  }
+
+  const nicoMonth = returnMonth($(".nicoSchedule span").text().match(/(?<=\s)[A-Z][a-z]{2}(?=\s)/)[0]);
+  const nicoDate =  $(".nicoSchedule span").text().match(/(?<=\s)\d{2}(?=,)/)[0];
+
+  const nicoCollaborationList = [Mew.rV(""),
+                                 Kohaku.rV(""),
+                                 Yozuri.rV(""),
+                                ];
+
+  function nicoCollaboration(nCL){
+    const elementList = new Array();
+    nCL.forEach((object)=>{
+      elementList.push(`<img class="nicoIcon" src="${object.channelIcon}" title="${object.talentName}" alt="アイコン画像">`);
+    });
+    $(".nicoCollaboration").append(elementList);
+  }
+
   let flagAko = false;
   let numAko = 0;
   const $lS = $(".littleStar");
@@ -96,6 +144,12 @@ $(function() {
     const Day = JST.getUTCDate();  
     const HBD = Month + '月' + Day + '日';
 
+    switch(HBD){      
+      case `${nicoMonth}月${nicoDate}日`:
+        $("#containerNico").css("display", "block");
+        break;
+    }
+
     function birthdayCard(name, twitterID, twitterIcon, imageColor, birthdayImage, imageCredit, imageCreditId, imageCover){
       $("#birthdayParentFrame").css("display", "block");
       $("#birthdayString").html(`Happy Birthday!<br><br><span style="font-family: serif">本日${HBD}は…</span><br><a id="underLine" href=https://twitter.com/${twitterID} target="_blank" rel="noopener noreferrer">${name}</a><span style="font-family: serif"> の誕生日！</span>`);
@@ -108,16 +162,16 @@ $(function() {
 
     switch(HBD){      
       case "1月10日":
-        birthdayCard("白粉 いと", "oshiroito", "Ito", "#f0f0f0", "shortCake.png", "こびとイエロー", "23436669", "cuteGhost.jpg");
+        birthdayCard(Ito.getTN(), "oshiroito", "Ito", "#f0f0f0", "shortCake.png", "こびとイエロー", "23436669", "cuteGhost.jpg");
         break;
       case "1月18日":
-        birthdayCard("雨庭 やえ", "AMENIWA_YAE", "Yae");
+        birthdayCard(Yae.getTN(), "AMENIWA_YAE", "Yae");
         break;
       case "1月21日":
-        birthdayCard("るみなす・すいーと", "luminous_amaama", "Luminous", "#0bf4f3", "sweetsFrame.jpeg", "ノゾミ", "Lq7CAcAX", "cyberSpace.jpg");
+        birthdayCard(Luminous.getTN(), "luminous_amaama", "Luminous", "#0bf4f3", "sweetsFrame.jpeg", "ノゾミ", "Lq7CAcAX", "cyberSpace.jpg");
         break;
       case "2月7日":
-        birthdayCard("ミュウ・ガルシア", "MewGarcia_king", "Mew", "#cb8bff", "champagneFrame.png", "Oyu", "rcfTi1QV", "purpleChair.jpeg");
+        birthdayCard(Mew.getTN(), "MewGarcia_king", "Mew", "#cb8bff", "champagneFrame.png", "Oyu", "rcfTi1QV", "purpleChair.jpeg");
         break;
       case "2月17日":
         //birthdayCard("神童児 丫子", "Ako_shindouji", "Ako");
@@ -125,56 +179,60 @@ $(function() {
         numAko = -1;
         break;
       case "3月1日":
-        birthdayCard("日和 ちひよ", "hiyohiyovee", "Chihiyo", "#ffc40c", "hiyokoFrame.png", "kaka", "tpHK7Ug2");
+        birthdayCard(Chihiyo.getTN(), "hiyohiyovee", "Chihiyo", "#ffc40c", "hiyokoFrame.png", "kaka", "tpHK7Ug2");
         break;
       case "3月17日":
-        birthdayCard("桜鳥 ミーナ", "mina0x0audrey", "Mina", "#ff9ee0", "beerFrame.png", "あまど", "4owBPL7y");
+        birthdayCard(Mina.getTN(), "mina0x0audrey", "Mina", "#ff9ee0", "beerFrame.png", "あまど", "4owBPL7y");
         break;
       case "4月7日":
-        birthdayCard("糶(うりよね)", "URIYONEE", "Uriyone", "#ff8c00", "orangeParfait.jpg", "miyukiii", "Wa9SYnhs");
+        birthdayCard(Uriyone.getTN(), "URIYONEE", "Uriyone", "#ff8c00", "orangeParfait.jpg", "miyukiii", "Wa9SYnhs");
         break;
       case "4月20日":
-        birthdayCard("亞生 うぱる", "UPARU_JP", "Uparu", "#fffef6", "youTubeFrame.jpg", "お絵かきオニ", "rFWFLAaV");
+        birthdayCard(Uparu.getTN(), "UPARU_JP", "Uparu", "#fffef6", "youTubeFrame.jpg", "お絵かきオニ", "rFWFLAaV");
         break;
       case "4月26日":
-        birthdayCard("偉雷 アマエ", "EraiAmae", "Amae", "#f18d00", "thunderFrame.png", "ろる", "meRujaLy");
+        birthdayCard(Amae.getTN(), "EraiAmae", "Amae", "#f18d00", "thunderFrame.png", "ろる", "meRujaLy");
         break;
       //case "4月27日":
         //birthdayCard("漣 とあ", "toatoaman", "Toa");
         //break;
       case "5月1日":
-        birthdayCard("言のハ", "TwiCoto", "Cotonoha", "#82a9da", "lilyOfTheValley.jpg", "ami", "T6HJmUe3");
+        birthdayCard(Cotonoha.getTN(), "TwiCoto", "Cotonoha", "#82a9da", "lilyOfTheValley.jpg", "ami", "T6HJmUe3");
         starrySky();
         break;
+      case "5月23日":
+      case "6月27日":
+        $("#containerFirework").css("display", "block");
+        break;
       case "6月15日":
-        birthdayCard("北白川 かかぽ", "kakapo_research", "Kakapo");
+        birthdayCard(Kakapo.getTN(), "kakapo_research", "Kakapo", "#86b81b", "researchFrame.png", "よねぼー", "jtdGQmIO");
         break;
       case "6月22日":
-        birthdayCard("ゆりかわ ゆん", "yun_yurikawa", "Yun");
+        birthdayCard(Yun.getTN(), "yun_yurikawa", "Yun");
         break;
       case "8月3日":
-        birthdayCard("音門 るき", "Ruki_vita_666", "Ruki");
+        birthdayCard(Ruki.getTN(), "Ruki_vita_666", "Ruki");
         break;
       case "9月16日":
-        birthdayCard("雛星 あいる", "airu_Lv115", "Airu");
+        birthdayCard(Airu.getTN(), "airu_Lv115", "Airu");
         break;
       case "10月1日":
-        birthdayCard("秋雪 こはく", "Syusetu_kohaku", "Kohaku");
+        birthdayCard(Kohaku.getTN(), "Syusetu_kohaku", "Kohaku");
         break;
       case "11月3日":
-        birthdayCard("蒼宮 よづり", "aomiyayozuri", "Yozuri", "#414fa3");
+        birthdayCard(Yozuri.getTN(), "aomiyayozuri", "Yozuri", "#414fa3");
         break;
       case "11月7日":
-        birthdayCard("黒燿リラ", "KOKUYOU_LIRA", "Lira");
+        birthdayCard(Lira.getTN(), "KOKUYOU_LIRA", "Lira");
         break;
       case "11月24日":
-        birthdayCard("魔王 トゥルシー", "IDmadeMiruna", "Tulsi", "#d72d6d");
+        birthdayCard(Tulsi.getTN(), "IDmadeMiruna", "Tulsi", "#d72d6d");
         break;
       case "12月10日":
-        birthdayCard("月白 累", "Geppaku_Lui", "Lui");
+        birthdayCard(Lui.getTN(), "Geppaku_Lui", "Lui");
         break;
       case "12月30日":
-        birthdayCard("九条 林檎", "ringo_0_0_5", "Ringo", "#A50000", "birthdayCake.png", "たののすけ", "2T5D2rg6", "vampireCastle.jpg");
+        birthdayCard(Ringo.getTN(), "ringo_0_0_5", "Ringo", "#A50000", "birthdayCake.png", "たののすけ", "2T5D2rg6", "vampireCastle.jpg");
         break;
     }
   }
@@ -288,6 +346,8 @@ $(function() {
   showClock();
   setInterval(showClock,1000);
 
+  nicoCollaboration(nicoCollaborationList);
+
   birthdayMessage();
   //const soundEffect = new Audio("/musics/lightning-strike-2.mp3");
   //soundEffect.volume = 0.2;
@@ -295,25 +355,32 @@ $(function() {
   $("#bICP").click(function(e){
     if(flag){
       flag = false;
-      $("#touchHere").css("color", "#333");
-      $(".littleStar").addClass("twinkle").on("animationstart", function(){
+      $("#touchHere").css("color", "transparent");
+      $("#kiwiResearch").css("display","block").on("animationend", function(){
         setTimeout(function(){
-          for(let i=0; i<50; i++){
-            $lS.eq(i).animate({"width":`${listStarSize[i]}px`, "height":`${listStarSize[i]}px`}, 1500);
-          }
-          $("#shootingStar").addClass("shootingStarGo").on("animationend", function(){
-            setTimeout(function(){
-              $("#bICP").css("transform", "scale(2.0)").fadeOut(3000);
-            }, 2500);
+          $("#researchData").css("display", "inline");
+          $("#nZ").css("display", "inline");
+          $("#nZF").css("display", "inline");
+          $("#kiwiImage").addClass("kiwiImageResearching");
+          $("#kiwiCover").addClass("researching").on("animationend", function(){
+            $.when($("#kiwiResearch").fadeOut(1200)).done(function(){
+              $("#researchCompletedParent").css("display", "block").on("animationend", function(){
+                $("#researchCompleted").addClass("completedNotice").on("animationend", function(){
+                  setTimeout(function(){
+                    $("#bICP").addClass("bICPSlide");
+                  }, 800);
+                });
+              });
+            });
           });
-        }, 4500);
+        }, 800);
       });  
     }
   });
 
   $("#btnOpen").click(function(){
     const $this = $(this);
-    const listTalent = [
+    const listTalent0 = [
       Tulsi.rM("1Qb1WszxuRw", [506,934,1244,1560]),
       Mina.rM("7Q8qQTQNnlA", [233,680,1180,1676]),
       Chihiyo.rM("fzrwbfi-zFg", [59,494,975]),
@@ -325,38 +392,47 @@ $(function() {
       Yae.rM("56_69b1gVeI", [725,1244,1724,2219,2704,3051,3322]),
       Lui.rM("IkcKyPIrfAQ", [80,393,648,1091,1490]),
     ]
-    const listTalent1 = [
+    const listTalent = [
                         Official.rM("DTrfSlMN8Sc", [0]),
                         Official.rM("tFKkfeLcqx0", [0]),
-                        Ruki.rM("lT8wNIdZoyc", [433,991,1723,2329,2804,3444,3950,4682,5217,5840,6404,6820,7440,7935]),
+                        Ruki.rM("xKUcwNgQ7u8", [94,933,1354,1779,2399,2818,3328,3776,4279] ),
                         //Ruki.rM("OXJqcRFVjn4", [500,920,1628,2313,2808,3329,3678,4126,4614]),
                         Ringo.rM("RnVG5yE4aUM", [0]),
-                        Tulsi.rM("r8i4yLILtLg", [2655,3330,3611,4293,4523,4730,7332,7762,8286,9539,9810,10459,10749,11142,11521,11784,12100]),
+                        Tulsi.rM("ZeWpeownlF8", [654,1202,1713,2211,2820,3476,4060]),
+                        //Tulsi.rM("r8i4yLILtLg", [2655,3330,3611,4293,4523,4730,7332,7762,8286,9539,9810,10459,10749,11142,11521,11784,12100]),
                         //Tulsi.rM("381MzILfQBc", [329,562,889,1314,1715,2036,2210]),
-                        //Airu.rM("D8IAro9f7eA", [0]),
-                        Airu.rM("Jva1xZW5TzY", [407, 800, 1198, 1506, 1712, 2312, 2663, 3136, 3643]),
+                        Airu.rM("DLfPNU4TdJ0", [0]),
+                        //Airu.rM("Jva1xZW5TzY", [407, 800, 1198, 1506, 1712, 2312, 2663, 3136, 3643]),
                         // {channelName:Mina.channelName, videoId:"G153NwRgQcI", setList:["83", "498", "1008"], channelURL:Mina.channelURL, channelIcon:Mina.channelIcon},
-                        Mina.rM("9xZtONzq9b0", [383,1042,2412,2743,2986,3382,3728]),
+                        Mina.rM("a8IBgxIyQWI", [1424,1506,1705,2194,2400,2675,2981,3294]),
+                        //Mina.rM("9xZtONzq9b0", [383,1042,2412,2743,2986,3382,3728]),
                         //Mina.rM("ZQPj-CbqfHw", [5080,8702,11865,12565,13027,13542,14464,14971,15051,15160,15250,15331,15492,15626,17156,18522,19053,19890,22040,23222,23985,24460,26201,26766,27314,27753,27888,28075,28263,28574,28660,28759,29017,29098,29201,29479,29605,29696,31082,31681,31906,32431,32692,32843,33470,33602,33746,33862,33971,34180,34342,34473,34526,34701,34815,34925,35310,35276,35567,35709,35862,35994,36238,36563,36732,36890,37081,37200,37357,37487,37664,37807,37920,38181,38296,38618,38741,38895,39956,40405,40544,40902,41118,41289,41405,41860,42249]),
                         Ito.rM("Q25tRiC4fuE", [0]),
-                        Chihiyo.rM("UePKwZvYVI4", [68,556,817,1405,1964,2308,2679,3259]),
-                        Mew.rM("Q-fOq_rjI2U", [0]),
+                        Chihiyo.rM("6iNBueUOvg8", [99,673,944,1640,2114,2319,2730,3000,3446,3884]),
+                        //Chihiyo.rM("UePKwZvYVI4", [68,556,817,1405,1964,2308,2679,3259]),
+                        //Mew.rM("Q-fOq_rjI2U", [0]),
                         //Mew.rM("NJdwrHS3HA4", [1358, 1777, 2683, 3345, 3934, 5108, 5665, 6318, 6778]),
+                        Mew.rM("60VQWKcqWSQ", [904, 1444, 1974, 2661, 3323, 3881, 4300, 4768, 5161]),
                         //Mew.rM("J_9d34xpeR0", [2411,3416,4026,4547,5067,5576,6042,6524,7036,7642]),
-                        Yozuri.rM("L7VxBS-_ZJc", [0]),
+                        Yozuri.rM("xI4u98QYO7Q", [621,1441,2248,3173,3992,4776,5207]),
                         //Yozuri.rM("URLXA_tV78s", [677,1356,2326,3186,3964]),
                         // {channelName:Cotonoha.channelName, videoId:"KhLySKBaoEs", setList:["446", "924", "1607", "2033", "3078"], channelURL:Cotonoha.channelURL, channelIcon:Cotonoha.channelIcon},
                         Uparu.rM("ZV3IRccjik0", [150,590,1229,1947,2232,3030,3833,4412,5155]),
-                        Cotonoha.rM("tiFj_9YMbTs", [0]),
+                        Uriyone.rM("FtkLnvyscds", [0]),
+                        Cotonoha.rM("lwmSmcYoNYM", [379,809,1142,1515,2221,2831,3105,3407,3834,4469,4872,5374,5627,5974,6611,7025,7388]),
                         //Cotonoha.rM("wiDOarSl_z8", [477,1437,1896,2616,3034,3369,4243,4709,5131,5543,5963,6446,6565]),
-                        Luminous.rM("mwdAeZ337Fs", [290,704,1066,1436,1909,2254,2642,3088,3488,3841,4419,4634,4979,5420,5718,6112,6422,6708,7018,7239,7434,7736,8005,8326,8545,8810]),
+                        Luminous.rM("Btf6qUEkzEk", [697,1163,1710,2506,2978,3444,3846,4705,5926,6280,6663]),
+                        //Luminous.rM("mwdAeZ337Fs", [290,704,1066,1436,1909,2254,2642,3088,3488,3841,4419,4634,4979,5420,5718,6112,6422,6708,7018,7239,7434,7736,8005,8326,8545,8810]),
                         //Luminous.rM("heIZdB-8hCs", [1017,1498,2009,2520,2877,3337,4085,4603,5468,6232,7045,7605,7955,8688,9151,9704,10614,10995,11845,12356,12934,13406,14337,14693,15254,15636,16430,17071,17387,17995]),
-                        Amae.rM("YyrR7wX1k5I", [242, 1123, 1481, 2111, 2495, 2820, 3070, 3769, 4222]),
+                        Amae.rM("E09pGpjuDIA", [276,891,1055,1399,1862,2700,3300,3652,4153]),
+                        //Amae.rM("5KsrdXXR64U", [365,901,1180,1537,2220,2553,2852]),
+                        //Amae.rM("YyrR7wX1k5I", [242, 1123, 1481, 2111, 2495, 2820, 3070, 3769, 4222]),
                         //Amae.rM("KmYh1T2JImg", [426,916,1309,1659,1940,2246,2512,2929]),
                         Kakapo.rM("Se7Nd_UwMjE", [0]),
                         Yun.rM("XX8a2I9mZEA", [216, 491, 797, 1270]),
-                        Yae.rM("W8PwaXY5r1M", [898,1364,1833,2228,2634,3092,3574,3886,4200]),
-                        Lui.rM("bJxpBb1OsHI", [0]),
+                        Yae.rM("bVyVcTnDI5E", [1833,2426,3189,3577,4121,4462]),
+                        //Yae.rM("W8PwaXY5r1M", [898,1364,1833,2228,2634,3092,3574,3886,4200]),
+                        Lui.rM("EfXUvZm-z-0", [126,723,1320,1890,2440,3010,3505]),
                        ];
     const num = Math.floor(Math.random() * (listTalent.length));
     const num2 = Math.floor(Math.random() * (listTalent[num].setList.length));
@@ -417,19 +493,23 @@ $(function() {
     const videoIds = [];
     list.forEach((element)=>{
       channelIcons.push(`<div class="channelIconButtonParent"><button class="channelIconButton"><img src="${element.channelIcon}" alt="チャンネルアイコン" title="${element.talentName}"></button></div>`);
-      videoIds.push(`<a class="slide" href="https://www.youtube.com/watch?v=${element.videoId}" target="_blank" rel="noopener noreferrer"><img src="https://i.ytimg.com/vi/${element.videoId}/maxresdefault.jpg" alt="シアター用サムネイル画像"></a>`);
+      if(element.videoId==="uBVrXgo6Sog"){
+        videoIds.push(`<a class="slide" href="https://www.youtube.com/watch?v=${element.videoId}&t=844s" target="_blank" rel="noopener noreferrer"><img src="https://i.ytimg.com/vi/${element.videoId}/maxresdefault.jpg" alt="シアター用サムネイル画像"></a>`);
+      }else{
+        videoIds.push(`<a class="slide" href="https://www.youtube.com/watch?v=${element.videoId}" target="_blank" rel="noopener noreferrer"><img src="https://i.ytimg.com/vi/${element.videoId}/maxresdefault.jpg" alt="シアター用サムネイル画像"></a>`);
+      }
     });
     return {channelIcons:channelIcons, videoIds:videoIds};
   }
   const listRecommendedVideos = [
-                                 Airu.rV("DLfPNU4TdJ0"),
-                                 Mina.rV("MAxwrWnUcmQ"),
-                                 Chihiyo.rV("o_Xd5Uy7hfE"),
-                                 Uparu.rV("WLDNmLPvJug"),
-                                 Cotonoha.rV("77q_NT6HM50"),                                                                 
-                                 Yae.rV("Agq4H5sDvOw"),
-                                 Official.rV("a5TboXMLs14"),
-                                 {talentName:"コラボ", channelIcon: "images/shakeHands.jpg", videoId: "P9SCQDf9Fys"},
+                                 Ruki.rV("EZegy2e1eBo"),
+                                 Airu.rV("acVJ7JS5F1k"),
+                                 Chihiyo.rV("KBliERREfpk"),
+                                 Luminous.rV("DPeeR6gbWKE"),
+                                 Yae.rV("a96XCjXQjys"),                                                               
+                                 Lui.rV("ShcUKzHQf-4"),
+                                 Official.rV("wi1VCBEmfjM"),
+                                 {talentName:"コラボ", channelIcon: "images/shakeHands.jpg", videoId: "ku2vGtr1mYg"},
                                 ];
   if(true){
     // listRecommendedVideos.push({channelIcon: "images/shakehands.jpg", videoId: "YMELU-8Y5V8"});
@@ -518,27 +598,39 @@ $(function() {
       }
     }
   }
+  let cookieShakeHands = "display";
+  if(document.cookie.match(/(?<=biscayzeroShakeHands=)[^;]+/) !== null){
+    cookieShakeHands = document.cookie.match(/(?<=biscayzeroShakeHands=)[^;]+/)[0];
+  }
+  if(cookieShakeHands === "none"){
+    $(".flagDisplay").css("display", "none");
+    emergencyMode2("none");
+    $("#shakeHandsIcon").css("opacity", "0.8");
+    $sHD.addClass("displayNone");
+  }
   $sHD.click(function(){
     if($sHD.hasClass("displayNone")){
       $(".flagDisplay").fadeIn(500);
       emergencyMode2("flex");
       $("#shakeHandsIcon").css("opacity", "1.0");
       $sHD.removeClass("displayNone");
+      document.cookie = "biscayzeroShakeHands=display; SameSite=lax";
     }else{
       $(".flagDisplay").fadeOut(500);
       emergencyMode2("none");
       $("#shakeHandsIcon").css("opacity", "0.8");
       $sHD.addClass("displayNone");
+      document.cookie = "biscayzeroShakeHands=none; SameSite=lax";
     }
   });
   
-  // for(let i=0; i<$(".videoUC").length; i++){
-    // const checkURL = $(".videoUC").eq(i).find(".videoThumbnail").attr("src");
-    // if(checkURL === "https://i.ytimg.com/vi/CQskq5RiGrU/mqdefault.jpg"){
-      // $(".videoUC").eq(i).find(".videoThumbnail").attr("src", "/images/cancel.jpg");
-      // return;
-    // }
-  // } 
+  //for(let i=0; i<$(".videoLN").length; i++){
+    //const checkURL = $(".videoLN").eq(i).find(".videoThumbnail").attr("src");
+    //if(checkURL === "https://static-cdn.jtvnw.net/previews-ttv/live_user_kohanalam_game-320x180.jpg"){
+      //$(".videoLN").eq(i).parent(".videoParent").css("display", "none");
+      //return;
+    //}
+  //} 
 
   
   let IMG = $(".kou").prop('naturalWidth');
