@@ -42,7 +42,9 @@
         <% if(ObjectData[3][1].length>0){ %>
         <li><button id="btnP" class="btn"><i class="fa-fw fa-solid fa-bolt <% if(ObjectData[3][0]){ %>faa-float animated<% } %> fa faHeader"></i><span class="string">動画投稿</span></button></li>
         <% } %>
+        <% if(ObjectData[4].live){ %>
         <li><button id="btnMP" class="btn"><i class="fa-fw fa-solid fa-shield-heart fa faHeader"></i><span class="string">耐久配信</span></button></li>
+        <% } %>
       </ul>
     </nav> 
     <div id="clock"><div id="showClock"><span id="hours"></span><span id="blinking">:</span><span id="minutes"></span><span> (JST)</span></div></div>      
@@ -57,7 +59,7 @@
     <div id="noneParent" class="optionParent">
       <div id="noneCaption">
         <img id="noneImage" class="optionImage" src="/images/noneImage.png" alt="たこウインナーくん">
-        <div id="noneString" class="optionString">Sorry!<br>No Live Streams at This Time.<br><br>Today's Recommended Music 🎶<br><button id="btnOpen"><span>OPEN</span></button></div>
+        <div id="noneString" class="optionString">Sorry!<br>No Live Streams at This Time.<br><br>Today's Recommended Music 🍉<br><button id="btnOpen"><span>OPEN</span></button></div>
         <a id="noneImageCredit" class="optionImageCredit" href="https://www.ac-illust.com/main/profile.php?id=i8j0Pxzf" target="_blank" rel="noopener noreferrer">イラストAC / ななか</a>
       </div>
       <div id="recommendedTalent">
@@ -97,9 +99,9 @@
   <div id="containerNico" class="container">
     <div id="nicoParent">
       <div id="nicoVideoFrame">
-        <iframe id="nicoVideo" width="312" height="176" src="https://live.nicovideo.jp/embed/lv341719927" scrolling="no" frameborder="0" loading="lazy"></iframe>
+        <iframe id="nicoVideo" width="312" height="176" src="https://live.nicovideo.jp/embed/lv342330742" scrolling="no" frameborder="0" loading="lazy"></iframe>
       </div>
-      <div class="nicoSchedule"><span>Thu Jun 22,<br>21:00 (JST)</span></div><div class="nicoCollaboration"></div>
+      <div class="nicoSchedule"><span>Tue Aug 08,<br>21:00 (JST)</span></div><div class="nicoCollaboration"></div>
     </div>
   </div>
   <% } %>
@@ -109,13 +111,9 @@
   <div class="subtitleParent"><h2 id="subtitleEA" class="subtitle">Notice</h2></div>
 
   <div class="container">
-    <div id="notice"><blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">【サイトの更新のお知らせ】<br>配信中（Live now）の一覧にツイッチの動画が表示されるようアップデートしました👍<br><br>しかし急ごしらえで追加したこともあり、まだ十分なテストを行えていません。<br>不具合が発生する可能性は否めないため、注意深く観察しながら機能を拡充していきたいと考えています🔧</p>&mdash; りっぱくり0号 (@rippakuriZero) <a href="https://twitter.com/rippakuriZero/status/1634953942856773632?ref_src=twsrc%5Etfw">March 12, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
-  </div>
-  <% } %>
-
-  <% if(false){ %>
-  <div id="containerFirework" class="container">
-    <iframe id="fireworkProcessing" src="/firework.html" frameborder="0" scrolling="no"></iframe>
+    <div id="notice">
+      <blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">【サイトの更新のお知らせ】<br>配信中（Live now）の一覧にツイッチの動画が表示されるようアップデートしました👍<br><br>しかし急ごしらえで追加したこともあり、まだ十分なテストを行えていません。<br>不具合が発生する可能性は否めないため、注意深く観察しながら機能を拡充していきたいと考えています🔧</p>&mdash; りっぱくり0号 (@rippakuriZero) <a href="https://twitter.com/rippakuriZero/status/1634953942856773632?ref_src=twsrc%5Etfw">March 12, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
   </div>
   <% } %>
   
@@ -125,25 +123,19 @@
   <div id="birthdayParentFrame" class="optionParentFrame">
     <div class="optionParent">
       <img id="birthdayImage" class="optionImage" src="" alt="バースデー画像">
+      <!-- <div id="whiteBoard"></div> -->
       <h2 id="birthdayString" class="optionString"></h2>
       <a id="birthdayImageCredit" class="optionImageCredit" href="" target="_blank" rel="noopener noreferrer"></a>
       <a id="birthdayIconParent" href="" target="_blank" rel="noopener noreferrer"><img id="birthdayIcon" src="" alt="Twitterアイコン"></a>
-      <div id="bICP" class="birthdayImageCoverParent">
-        <div class="birthdayImageCoverChild">
-          <div id="kiwiParent">
-            <img id="kiwiImage" src="/images/kiwiImage.jpg" alt="キーウィ">
-            <div id="kiwiCover"><div id="kiwiResearch"></div></div>
-          </div>
-          <img id="researchData" src="/images/researchData.jpg" alt="グラフ画像">
-          <img id="nZ" src="/images/nZ.png" alt="ニュージーランド地図">
-          <img id="nZF" src="/images/nZF.jpg" alt="ニュージーランド国旗">
-          <div id="researchCompletedParent"><span id="researchCompleted">Research Completed</span></div>
-        </div>
-        <span id="touchHere">Touch Here</span>
-        <img id="invisibleCover" src="/images/invisible.png" alt="">
-      </div>
+
     </div>
   </div>
+
+  <% if(false){ %>
+    <div id="fireworkParent">
+      <iframe id="fireworkProcessing" src="/firework.html" frameborder="0" scrolling="no"></iframe>
+    </div>
+  <% } %>
   
   <div class="container">
 
@@ -189,9 +181,10 @@
   <div class="headlineParent"><h1 id="headlineA" class="headline">配信終了</h1></div>
   <div class="subtitleParent"><h2 class="subtitle">Video Archives</h2></div>
   
-  <div class="container">
-    
-    <% ObjectData[2].forEach((element)=>{ %>
+  <div id="containerA" class="container">
+    <% ObjectData[2].forEach((element0)=>{ %>
+      <div class="scheduleDateParent videoArchivesCustom">
+      <% element0.forEach((element)=>{ %>
     <div class="videoParent <% if(element.icon==="/images/shakeHands.jpg"){ %>flagDisplay<% } %>">
       <div class="video">
         <a href="https://www.<% if(element.platform==="youtube"){ %>youtube.com/watch?v=<%= element.videoId %><% }else if(element.platform==="twitch"){ %>twitch.tv/videos/<%= element.videoIdT %><% } %>" target="_blank" rel="noopener noreferrer">
@@ -211,6 +204,8 @@
         </a>
       </div>
     </div>
+    <% }) %>
+  </div>
     <% }) %>
 
   </div>
@@ -248,7 +243,7 @@
   <% } %>
 
 
-  <% if(ObjectData[4].progress !== undefined){ %>
+  <% if(ObjectData[4].live){ %>
     <div class="headlineParent"><h1 id="headlineMP" class="headline">耐久配信</h1></div>
     <div class="subtitleParent"><h2 class="subtitle">1 Million Endurance Stream</h2></div>
   
@@ -282,12 +277,26 @@
     <p id="contactStringJapanese" class="contactString">ウェブサイトに問題がある場合は、<br>こちらのTwitterアカウントまでご連絡ください</p>
     <p id="contactStringEnglish" class="contactString">If there's a problem with the website,<br>Please contact this Twitter account.</p>
     <div id="twitterAccountParent"><a id="twitterAccountLink" href="https://twitter.com/rippakuriZero/status/1586990214601666560" target="_blank" rel="noopener noreferrer"><i class="fa-fw fa-brands fa-square-twitter fa faAccount"></i><span id="twitterAccount" optionData="<%= ObjectData[5] %>">@rippakuriZero</span></a></div>
-    <!-- <div id="shakeHandsDisplayParent"><button id="shakeHandsDisplay"><img id="shakeHandsIcon" src="/images/shakeHands.jpg"></button></div> -->
-    <div id="topScrollParent"><button id="topScroll"><i class="fa-fw fa-solid fa-angles-up fa faScroll"></i></button></div>
+    <!-- <div id="shakeHandsDisplayParent" class="buttonBasedParent"><button id="shakeHandsDisplay" class="buttonBased"><img id="shakeHandsIcon" src="/images/shakeHands.jpg"></button></div> -->
+    <!-- <div id="topScrollParent" class="buttonBasedParent"><button id="topScroll" class="buttonBased"><i class="fa-fw fa-solid fa-angles-up fa faScroll"></i></button></div> -->
+    <!-- <iframe width="100%" height="100%" src="https://vee.memo.wiki/" frameborder="0" scrolling="no" style="display: none;"></iframe> -->
+    <div id="wikipediaCallParent" class="buttonBasedParent"><button class="wikipediaCall buttonBased"><i class="fa-fw fa-solid fa-book-open fa faScroll"></i></button></div>
   </div>
 
 
+  <nav id="wikipediaNavi">
+    <iframe id="wikipediaView" width="100%" height="100%" src="https://vee.memo.wiki/" frameborder="0" scrolling="no"></iframe>
+    <img class="invisibleCover" src="/images/invisible.png" alt="">
+    <div id="wikipediaParentFrame" class="optionParentFrame">
+      <div class="optionParent">
+        <img class="optionImage" src="/images/library.jpg" alt="図書館の画像">
+        <a id="bookTitle" href="https://vee.memo.wiki/" target="_blank" rel="noopener noreferrer">VEE 非公式Wiki</a>
+      </div>
+    </div>
+  </nav>
+
+
   </div>
-  <script src="JQuery.js"></script>
+  <script defer src="JQuery.js"></script>
 </body>
 </html>
