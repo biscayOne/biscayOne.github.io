@@ -38,40 +38,40 @@ if(nowHour<2){
 }else if(nowHour<24){
   key = "AIzaSyDoqa0Z7dE2CpGwLi90w-KOV65rx6WdUAU";
 }
-cron.schedule('0 0,1,2,3,4 0 * * *', () => {
+cron.schedule('0 0,1,2,3,4 0 * * *', ()=>{
   key = "AIzaSyC5AqocsQC83pRCKcXEa9zoUiHLgMECwj0";
 });
-cron.schedule('0 0,1,2,3,4 2 * * *', () => {
+cron.schedule('0 0,1,2,3,4 2 * * *', ()=>{
   key = "AIzaSyBDOlCzTCfxtpe9Lk7OT60v0VfRIn_RSrA";
 });
-cron.schedule('0 0,1,2,3,4 4 * * *', () => {
+cron.schedule('0 0,1,2,3,4 4 * * *', ()=>{
   key = "AIzaSyARAMAEiJna6Tr5yf8SAulL7TZ1w0w7R5k";
 });
-cron.schedule('0 0,1,2,3,4 6 * * *', () => {
+cron.schedule('0 0,1,2,3,4 6 * * *', ()=>{
   key = "AIzaSyCiqUsLRH44u9UcwZQRL7_dIMljqMIf4JI";
 });
-cron.schedule('0 0,1,2,3,4 8 * * *', () => {
+cron.schedule('0 0,1,2,3,4 8 * * *', ()=>{
   key = "AIzaSyDb94UH4XZWe-OlMcWBSLwVcJrCYye8dUU";
 });
-cron.schedule('0 0,1,2,3,4 10 * * *', () => {
+cron.schedule('0 0,1,2,3,4 10 * * *', ()=>{
   key = "AIzaSyCd7IonmJLfHH_5V8CrKv3kg6w1VCSPV1Q";
 });
-cron.schedule('0 0,1,2,3,4 12 * * *', () => {
+cron.schedule('0 0,1,2,3,4 12 * * *', ()=>{
   key = "AIzaSyAc0ECaEi65tna4h1hb7NMbsnnmavn3K0Q";
 });
-cron.schedule('0 0,1,2,3,4 14 * * *', () => {
+cron.schedule('0 0,1,2,3,4 14 * * *', ()=>{
   key = "AIzaSyAk5iMZRi4a0UmcvEc3C9rUno2o2fu9fzQ";
 });
-cron.schedule('0 0,1,2,3,4 16 * * *', () => {
+cron.schedule('0 0,1,2,3,4 16 * * *', ()=>{
   key = "AIzaSyAP-A7RSKhcI2n-PpuhiLg9fJgYoJMoH-E";
 });
-cron.schedule('0 0,1,2,3,4 18 * * *', () => {
+cron.schedule('0 0,1,2,3,4 18 * * *', ()=>{
   key = "AIzaSyCluyrETb8amHgNVArDqFzeJz07QJ7Vr7c";
 });
-cron.schedule('0 0,1,2,3,4 20 * * *', () => {
+cron.schedule('0 0,1,2,3,4 20 * * *', ()=>{
   key = "AIzaSyDYc1BNMUNQwT-cWriHaKb_NTPL7YTI3gc";
 });
-cron.schedule('0 0,1,2,3,4 22 * * *', () => {
+cron.schedule('0 0,1,2,3,4 22 * * *', ()=>{
   key = "AIzaSyDoqa0Z7dE2CpGwLi90w-KOV65rx6WdUAU";
 });
 
@@ -79,6 +79,10 @@ const clinetId = "w7c3ie7lvr4c75vegdd9u80e0aicwc";
 const clinetSecret = "ns28cq05ja4vfsyv23fm612dzemq3w";
 
 const shakeHands = "/images/shakeHands.jpg";
+
+function daysUTCAdjust(adjust, number, timeFrame){
+  return dayjs().utc()[adjust](number, timeFrame).format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");
+}
 
 function NGW(listNG){  
   let NGWords = "";
@@ -90,35 +94,25 @@ function NGW(listNG){
 
 function URLW(listURL){
   if(listURL.length > 0){
-    return listURL.reduce(function(URLWords, URLWord){
-      return `${URLWords} OR ${URLWord}`;
-    });
+    return listURL.join(" OR ");
   }else if(listURL.length === 0){
     return "";
   }
 }
 
 function userIdsReturn(listTwitch){
-  let userIds = "";
-  listTwitch.forEach((userId)=>{
-    userIds += `&user_id=${userId}`
-  });
-  return userIds.slice(1, userIds.length);
+  return `user_id=${listTwitch.join("&user_id=")}`;
 }
 
 function loginNamesReturn(listLN){
-  let loginNames = "";
-  listLN.forEach((loginName)=>{
-    loginNames += `&user_login=${loginName}`
-  });
-  return loginNames;
+  return listLN.map((loginName)=>{
+    return `&user_login=${loginName}`;
+  }).join("");
 }
 
 function reTUI(listTwitch){
   if(listTwitch.length > 0){
-    return listTwitch.reduce(function(TUIs, TUI){
-      return `${TUIs}|${TUI}`;
-    });
+    return listTwitch.join("|");
   }else{
     return "";
   }
@@ -131,12 +125,14 @@ function divisor50(array){
   });
 }
 
+function deDuplication(list){
+  return list.filter((element,index)=>{
+      return list.indexOf(element)===index;
+  });
+}
+
 function divisor(listAll){
-  const listAllNew = listAll.filter((element,index)=>{
-                       if(listAll.indexOf(element)===index){
-                         return element;
-                       }
-                     });  
+  const listAllNew = deDuplication(listAll); 
   return divisor50(listAllNew);
 }
 
@@ -171,15 +167,26 @@ function titleAdjustLN(title, cJson){
   if(!/^【/.test(titleAdjust)){
     titleAdjust = `【${cJson.game_name}】<br>${titleAdjust}`;
   }
-  if(!/】$/.test(titleAdjust)){
-    titleAdjust = `${titleAdjust}<br>【${cJson.user_name}】`
-  }
-  return titleAdjust;
+  return titleAdjustA(titleAdjust, cJson);
 }
 
 function titleAdjustA(title, cJson){
   let titleAdjust = title;
   if(!/】$/.test(titleAdjust)){
+    switch(cJson.user_name){
+      case "syusetu_kohaku":
+        cJson.user_name = "Syusetu kohaku/秋雪こはく";
+        break;
+      case "Aomiyayozuri_ch":
+        cJson.user_name = "蒼宮よづり(Aomiya Yozuri)";
+        break;
+      case "ctnh_jp":
+        cJson.user_name = "言のハ-Cotonoha-";
+        break;
+      case "dttodot":
+        cJson.user_name = "dtto. (でぃっと)";
+        break;
+    }
     titleAdjust = `${titleAdjust}<br>【${cJson.user_name}】`
   }
   return titleAdjust;
@@ -219,7 +226,7 @@ function channelIconReturn(userId){
 }
 
 function rOLN(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:cJson.liveStreamingDetails.actualStartTime, icon:icon1, icon2:icon2, platform:"youtube"};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:standardTime(cJson.liveStreamingDetails.actualStartTime), icon:icon1, icon2:icon2, platform:"youtube"};
 }
 
 function rOLNT(cJson){
@@ -246,15 +253,16 @@ function rOP(cJson, icon1, icon2){
   return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), time:cJson.snippet.publishedAt, time2:cJson.contentDetails.duration, timeBase:cJson.snippet.publishedAt, icon:icon1, icon2:icon2, platform:"youtube"};
 }
 
-const millionProgressMina = ["13900"];
+const millionProgressTalent = {Mina:"13900"};
+const millionEnduranceVideoId = "oOKeXnYFVgA";
 function rOMP(cJson, icon1, icon2){
-  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:standardTime(cJson.liveStreamingDetails.actualStartTime), progress:millionProgress(millionProgressMina[0]), icon:icon1, icon2:icon2};
+  return {videoId:cJson.id, videoTitle:replaceAll(cJson.snippet.title), videoThumbnail:replaceThumbnailURL(cJson.snippet.thumbnails.medium.url), timeBase:standardTime(cJson.liveStreamingDetails.actualStartTime), progress:millionProgress(millionProgressTalent.Mina), live:true, icon:icon1, icon2:icon2};
 }
 
-function videoIdCheck(list, object){
+function videoIdCheck(list, object, key){
   let boolean = false;
   for(let i=0; i<list.length; i++){
-    if(list[i].videoId === object.videoId){
+    if(list[i][key] === object[key]){
       boolean = true;
       break;
     }
@@ -284,13 +292,7 @@ function sortDate(first, second){
 }
 
 function sortDateReverse(first, second){
-  if(first.timeBase>second.timeBase){
-    return -1;
-  }else if(first.timeBase<second.timeBase){
-    return 1;
-  }else{
-    return 0;
-  }
+  return sortDate(second, first);
 }
 
 function set0(num){
@@ -298,21 +300,14 @@ function set0(num){
 }
 
 function duration(time){
-  let hours ="00";
-  let minutes = "00";
-  let seconds = "00";
-  const hoursArray = time.match(/[0-9]{1,2}(?=[Hh])/);
-  const minutesArray = time.match(/[0-9]{1,2}(?=[Mm])/);
-  const secondsArray = time.match(/[0-9]{1,2}(?=[Ss])/);
-  if(hoursArray!==null){
-    hours = set0(hoursArray[0]);
-  }
-  if(minutesArray!==null){
-    minutes = set0(minutesArray[0]);
-  }
-  if(secondsArray!==null){
-    seconds = set0(secondsArray[0]);
-  }
+  const hoursArray = time.match(/\d{1,2}(?=[Hh])/);
+  const minutesArray = time.match(/\d{1,2}(?=[Mm])/);
+  const secondsArray = time.match(/\d{1,2}(?=[Ss])/);
+
+  const hours = hoursArray!==null ? set0(hoursArray[0]) : "00";
+  const minutes = minutesArray!==null ? set0(minutesArray[0]) : "00";
+  const seconds = secondsArray!==null ? set0(secondsArray[0]) : "00";
+
   return hours+":"+minutes+":"+seconds;
 }
 
@@ -367,12 +362,10 @@ function returnMonth(month){
 function dateList(list){
   const dateList = new Array();
   while(list.length>0){
-    const month = list[0].time.match(/(?<=\s)[A-Z][a-z]{2}(?=\s)/);
-    const date = list[0].time.match(/[0-9]{2}/);
-    const dw = list[0].time.match(/^[A-Z][a-z]{2}/);
+    const [allMatch, dw, month, date] = list[0].time.match(/([A-Z][a-z]{2})\s([A-Z][a-z]{2})\s(\d{2})/);
     const sameDate = new Array();
     let indexNumber = list.findIndex((element)=>{
-      return element.time.match(/[0-9]+/)[0] !== date[0];
+      return element.time.match(/\d{2}/)[0] !== date;
     });
     if(indexNumber === (-1)){
       indexNumber = list.length;
@@ -396,8 +389,8 @@ function dateList(list){
       sameDateNew.push(sameTime);
       sameDate.splice(0, sameTime.length);
     }
-    sameDateNew.forEach((element)=>{
-      element.sort(function(first, second){
+    sameDateNew.forEach((sameTime)=>{
+      sameTime.sort(function(first, second){
         if(first.icon2.length<second.icon2.length){
           return 1;
         }else if(first.icon2.length>second.icon2.length){
@@ -407,14 +400,67 @@ function dateList(list){
         }
       });
     });
-    dateList.push([`${returnMonth(month[0])} 月 ${date[0]} 日 (${dW(dw[0])})`, sameDateNew.flat()]);
+    dateList.push([`${returnMonth(month)} 月 ${date} 日 (${dW(dw)})`, sameDateNew.flat()]);
     list.splice(0, length);
   }
   return dateList;
 }
 
+function returnFromToAdjust(maxTime, videoStartHours, videoStartMinutes){
+  if(videoStartHours===maxTime && 54<videoStartMinutes){
+    return false;
+  }
+  return true;
+}
+
+function fromToCheck(capturedHours, capturedMinutes, from, to, adjust){
+  return (from<=capturedHours && capturedHours<=to && returnFromToAdjust(to, capturedHours, capturedMinutes)) || (capturedHours===adjust && 54<capturedMinutes);
+}
+
+function returnFromTo(capturedHours, capturedMinutes){
+  if(fromToCheck(capturedHours, capturedMinutes, 0, 5, 23)){
+    return {from:0, to:5, adjust:23};
+  }else if(fromToCheck(capturedHours, capturedMinutes, 6, 11, 5)){
+    return {from:6, to:11, adjust:5};
+  }else if(fromToCheck(capturedHours, capturedMinutes, 12, 17, 11)){
+    return {from:12, to:17, adjust:11};
+  }else if(fromToCheck(capturedHours, capturedMinutes, 18, 23, 17)){
+    return {from:18, to:23, adjust:17};
+  }
+}
+
+function timeFrame(listVideo){
+  const listTimeFrame = new Array();
+  while(listVideo.length>0){
+    const [capturedAll, capturedHours0, capturedMinutes0] = listVideo[0].time.match(/(\d{2}):(\d{2})/);
+    const [capturedHours, capturedMinutes] = [Number(capturedHours0), Number(capturedMinutes0)];
+    const {from, to, adjust} = returnFromTo(capturedHours, capturedMinutes);
+    let indexNumber = listVideo.findIndex((video)=>{
+      const [videoStartAll, videoStartHours0, videoStartMinutes0] = video.time.match(/(\d{2}):(\d{2})/);
+      const [videoStartHours, videoStartMinutes] = [Number(videoStartHours0), Number(videoStartMinutes0)]
+      return !(fromToCheck(videoStartHours, videoStartMinutes, from, to, adjust));
+    });
+    
+    if(indexNumber === (-1)){
+      indexNumber = listVideo.length;
+    }
+    if(from===18){
+      const dateCheck = listVideo[0].time.match(/\d{2}/)[0];
+      const dateCheckIN = listVideo.findIndex((video)=>{
+        return video.time.match(/\d{2}/)[0] !== dateCheck;
+      });
+      if(dateCheckIN!==(-1) && dateCheck<indexNumber){
+        indexNumber = dateCheckIN;
+      }
+    }
+    listTimeFrame.push(listVideo.slice(0, indexNumber));
+    listVideo = listVideo.slice(indexNumber, listVideo.length);
+  }
+  return listTimeFrame;
+}
+
 function cPV(list){
-  if(list.length>0 && list[0].timeBase>dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+  if(list.length>0 && list[0].timeBase>daysUTCAdjust("subtract", 1, "d")){
     return true;
   }
   return false;
@@ -462,11 +508,17 @@ const listIconV = [
                     "https://yt3.ggpht.com/qOXB_PweIVd_HqugqgNrCxRSjoV3wHpKtYHUjnVkUtxP3qAbcT0msj178SetksB8bB94TNId=s88-c-k-c0x00ffffff-no-nd-rj", // 5
                   ];
 
-function collaborationCheck(classVEE, text, title, twitterId=""){
+function collaborationCheck(classVEE, text, title, channelId, twitterId=""){
+  if(channelId === classVEE.getCI()){
+    return false;
+  }
   return new RegExp(`${classVEE.getCN()}|${classVEE.getHN()}`, "i").test(text) || (new RegExp(classVEE.getTN()).test(text) && new RegExp(`/channel/${classVEE.getCI()}${classVEE.getCustomName()}${twitterId}`, "i").test(text)) || new RegExp(`${classVEE.getTN()}|${classVEE.getHN()}`, "i").test(title);
 }
 
-function collaborationCheckT(classVEE, title){
+function collaborationCheckT(classVEE, title, userId){
+  if(userId === classVEE.getTUI()){
+    return false;
+  }
   if(classVEE.getTLN()!==""){
     return new RegExp(`${classVEE.getTN()}|@${classVEE.getTLN()}`, "i").test(title);
   }else{
@@ -547,160 +599,151 @@ function collaboration(cJson){
   }
   const text = cJson.snippet.description;
   const title = cJson.snippet.title;
-  if(collaborationCheck(Ruki, text, title)){
+  const channelId = cJson.snippet.channelId;
+  if(collaborationCheck(Ruki, text, title, channelId)){
     icon2.push(listIcon[1]);
   }
   const rTI = Ringo.getTwitterId();
-  if(collaborationCheck(Ringo, text, title, `|${rTI}`)){
+  if(collaborationCheck(Ringo, text, title, channelId, `|${rTI}`)){
     icon2.push(listIcon[2]);
   }
-  if(collaborationCheck(Kohaku, text, title)){
+  if(collaborationCheck(Kohaku, text, title, channelId)){
     icon2.push(listIcon[3]);
   }
-  if(collaborationCheck(Tulsi, text, title)){
+  if(collaborationCheck(Tulsi, text, title, channelId)){
     icon2.push(listIcon[4]);
   }
-  if(collaborationCheck(Airu, text, title)){
+  if(collaborationCheck(Airu, text, title, channelId)){
     icon2.push(listIcon[5]);
   }
-  if(collaborationCheck(Mina, text, title)){
+  if(collaborationCheck(Mina, text, title, channelId)){
     icon2.push(listIcon[6]);
   }
-  if(collaborationCheck(Ito, text, title)){
+  if(collaborationCheck(Ito, text, title, channelId)){
     icon2.push(listIcon[7]);
   }
-  if(collaborationCheck(Chihiyo, text, title)){
+  if(collaborationCheck(Chihiyo, text, title, channelId)){
     icon2.push(listIcon[9]);
   }
-  if(collaborationCheck(Mew, text, title)){
+  if(collaborationCheck(Mew, text, title, channelId)){
     icon2.push(listIcon[10]);
   }
-  if(collaborationCheck(Yozuri, text, title)){
+  if(collaborationCheck(Yozuri, text, title, channelId)){
     icon2.push(listIcon[12]);
   }
-  if(collaborationCheck(Uparu, text, title)){
+  if(collaborationCheck(Uparu, text, title, channelId)){
     icon2.push(listIcon[13]);
   }
-  if(collaborationCheck(Uriyone, text, title)){
+  if(collaborationCheck(Uriyone, text, title, channelId)){
     icon2.push(listIcon[14]);
   }
-  if(collaborationCheck(Cotonoha, text, title)){
+  if(collaborationCheck(Cotonoha, text, title, channelId)){
     icon2.push(listIcon[15]);
   }
-  if(collaborationCheck(Luminous, text, title)){
+  if(collaborationCheck(Luminous, text, title, channelId)){
     icon2.push(listIcon[16]);
   }
-  if(collaborationCheck(Amae, text, title)){
+  if(collaborationCheck(Amae, text, title, channelId)){
     icon2.push(listIcon[17]);
   }
-  if(collaborationCheck(Kakapo, text, title)){
+  if(collaborationCheck(Kakapo, text, title, channelId)){
     icon2.push(listIcon[18]);
   }
-  if(collaborationCheck(Yun, text, title)){
+  if(collaborationCheck(Yun, text, title, channelId)){
     icon2.push(listIcon[19]);
   }
-  if(collaborationCheck(Yae, text, title)){
+  if(collaborationCheck(Yae, text, title, channelId)){
     icon2.push(listIcon[20]);
   }
-  if(collaborationCheck(Lui, text, title)){
+  if(collaborationCheck(Lui, text, title, channelId)){
     icon2.push(listIcon[21]);
   }
-  if(collaborationCheck(Lira, text, title)){
+  if(collaborationCheck(Lira, text, title, channelId)){
     icon2.push(listIcon[22]);
   }
   if(/華灯/.test(text) && /hanavee_pr/.test(text)){
     icon2.push("/images/Hanavee.jpg");
+  }
+  if(collaborationCheck(Dtto, text, title, channelId)){
+    icon2.push(listIcon[8]);
   }
 
   if(cJson.id === "Z6ZzCxjGUCg" && icon2.length === 0){
     icon2.push(listIcon[2]);
   }
 
-  if(icon1!==shakeHands && icon2.length>0){
-    const indexNumber = icon2.findIndex((icon)=>{
-      return icon === icon1;
-    });
-    if(indexNumber!==-1){
-      icon2.splice(indexNumber, 1);
-    }
-  }
   return {icon1:icon1, icon2:icon2};
 }
 
 function collaborationReturn(title, userId){
   const listC = new Array();
-  if(collaborationCheckT(Ruki, title)){
+  if(collaborationCheckT(Ruki, title, userId)){
     listC.push(listIcon[1]);
   }
-  if(collaborationCheckT(Ringo, title)){
+  if(collaborationCheckT(Ringo, title, userId)){
     listC.push(listIcon[2]);
   }
-  if(collaborationCheckT(Kohaku, title)){
+  if(collaborationCheckT(Kohaku, title, userId)){
     listC.push(listIcon[3]);
   }
-  if(collaborationCheckT(Tulsi, title)){
+  if(collaborationCheckT(Tulsi, title, userId)){
     listC.push(listIcon[4]);
   }
-  if(collaborationCheckT(Airu, title)){
+  if(collaborationCheckT(Airu, title, userId)){
     listC.push(listIcon[5]);
   }
-  if(collaborationCheckT(Mina, title)){
+  if(collaborationCheckT(Mina, title, userId)){
     listC.push(listIcon[6]);
   }
-  if(collaborationCheckT(Ito, title)){
+  if(collaborationCheckT(Ito, title, userId)){
     listC.push(listIcon[7]);
   }
-  if(collaborationCheckT(Chihiyo, title)){
+  if(collaborationCheckT(Chihiyo, title, userId)){
     listC.push(listIcon[9]);
   }
-  if(collaborationCheckT(Mew, title)){
+  if(collaborationCheckT(Mew, title, userId)){
     listC.push(listIcon[10]);
   }
-  if(collaborationCheckT(Yozuri, title)){
+  if(collaborationCheckT(Yozuri, title, userId)){
     listC.push(listIcon[12]);
   }
-  if(collaborationCheckT(Uparu, title)){
+  if(collaborationCheckT(Uparu, title, userId)){
     listC.push(listIcon[13]);
   }
-  if(collaborationCheckT(Uriyone, title)){
+  if(collaborationCheckT(Uriyone, title, userId)){
     listC.push(listIcon[14]);
   }
-  if(collaborationCheckT(Cotonoha, title)){
+  if(collaborationCheckT(Cotonoha, title, userId)){
     listC.push(listIcon[15]);
   }
-  if(collaborationCheckT(Luminous, title)){
+  if(collaborationCheckT(Luminous, title, userId)){
     listC.push(listIcon[16]);
   }
-  if(collaborationCheckT(Amae, title)){
+  if(collaborationCheckT(Amae, title, userId)){
     listC.push(listIcon[17]);
   }
-  if(collaborationCheckT(Kakapo, title)){
+  if(collaborationCheckT(Kakapo, title, userId)){
     listC.push(listIcon[18]);
   }
-  if(collaborationCheckT(Yun, title)){
+  if(collaborationCheckT(Yun, title, userId)){
     listC.push(listIcon[19]);
   }
-  if(collaborationCheckT(Yae, title)){
+  if(collaborationCheckT(Yae, title, userId)){
     listC.push(listIcon[20]);
   }
-  if(collaborationCheckT(Lui, title)){
+  if(collaborationCheckT(Lui, title, userId)){
     listC.push(listIcon[21]);
   }
-  if(collaborationCheckT(Lira, title)){
+  if(collaborationCheckT(Lira, title, userId)){
     listC.push(listIcon[22]);
   }
   if(/華灯/.test(title)){
     listC.push("/images/Hanavee.jpg");
   }
-  if(collaborationCheckT(Dtto, title)){
+  if(collaborationCheckT(Dtto, title, userId)){
     listC.push(listIcon[8]);
   }
-  const indexNumber = listC.findIndex((icon)=>{
-    return icon === channelIconReturn(userId);
-  });
-  if(indexNumber!==-1){
-    listC.splice(indexNumber, 1);
-  }
+
   return listC;
 }
 
@@ -737,7 +780,7 @@ class VEE{
         throw new Error(response.statusText);
       }
       const json = await response.json();
-      millionProgressMina.splice(0, 1, json.items[0].statistics.subscriberCount);
+      millionProgressTalent.Mina = json.items[0].statistics.subscriberCount;
     }catch(error){
       console.error(`api3エラー: ${this.channelName}`, error);
     }
@@ -781,15 +824,15 @@ class VEE{
 }
 
 function api0Return(daysAgo = 8){
-  return `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.channelId}&type=video&maxResults=10&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.channelId}&type=video&maxResults=10&publishedAfter=${daysUTCAdjust("subtract", daysAgo, "d")}Z&key=${key}`;
 }
 
 function api1Return(daysAgo = 8){
-  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${daysUTCAdjust("subtract", daysAgo, "d")}Z&key=${key}`;
 }
 
 function api1ReturnRingo(daysAgo){
-  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} OR "${this.twitterId}" ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${dayjs().utc().subtract(daysAgo, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")}Z&key=${key}`;
+  return `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${this.channelName} OR "${this.channelId}" OR ${URLW(this.listURL)} OR "${this.twitterId}" ${NGW(this.listNG)}&type=video&maxResults=50&publishedAfter=${daysUTCAdjust("subtract", daysAgo, "d")}Z&key=${key}`;
 }
 
 const liveAdjustList = [];
@@ -999,33 +1042,30 @@ const channelIdCheck = new RegExp(reTUI(channelIds));
 const loginNameCheck = new RegExp(reTUI(listTwitchLoginName));
 const twitchUserIdCheck = new RegExp(reTUI(listTwitch));
 
-const ObjectData = [[], [], [], [false, []], {videoId:"oOKeXnYFVgA", progress:undefined}, listIcon];
-const printTLN = [];
-const listTLNC = [];
-const printTA = [];
-const printTP = [];
-const printSRLN = [];
+const postedVideosCheckSongs = "歌ってみた|cover(ed)?|歌ってみました。|オリジナルソング|original\\s*song|^202\\d{5}$";
+const postedVideosCheckEtc = "料理対決|完全動画版|現地観戦";
+
+const ObjectData = [[], [], [], [false, []], {videoId:millionEnduranceVideoId, live:false}, listIcon];
+const printTLN =[], listTLNC=[], printTA=[], printTP=[], printSRLN=[];
 function process2(printLN, printUC, printA, printP, ObjectData){
   
-  let printUC2 = printUC.filter((element)=>{        
-    return element.time < dayjs().utc().add(6, "M").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");         
+  const printUC2 = printUC.filter((element)=>{        
+    return element.time < daysUTCAdjust("add", 6, "M");         
   });
   
   const printOldUC = new Array();
 
   ObjectData[1].forEach((element)=>{
     printOldUC.push(element[1]);
-  })
+  });
 
   const printOldUCF = printOldUC.flat();
 
-  const listOldData = printOldUCF.map((element)=>{
-    return element;
-  })
+  const listOldData = printOldUCF.concat();
 
   for(let i=0; i<printUC2.length; i++){    
     const pUC2 = printUC2[i];
-    if(videoIdCheck(listOldData, pUC2)){
+    if(videoIdCheck(listOldData, pUC2, "videoId")){
         continue;
     }
     pUC2.timeBase = standardTime(pUC2.time);
@@ -1038,30 +1078,29 @@ function process2(printLN, printUC, printA, printP, ObjectData){
   const printNewUC = dateList(printOldUCF);
 
 
-  const printNewLN = ObjectData[0];
+  const printNewLN = ObjectData[0].concat();
 
   printNewLN.forEach((element)=>{
     listOldData.push(element);
-  })
+  });
   for(let i=0; i<printLN.length; i++){    
     const pLN = printLN[i];
-    if(videoIdCheck(listOldData, pLN)){
+    if(videoIdCheck(listOldData, pLN, "videoId")){
         continue;
     }
-    pLN.timeBase = standardTime(pLN.timeBase);
     printNewLN.push(pLN);
   }
   printNewLN.sort(sortDate);
 
 
-  const printA2 = ObjectData[2];
+  const printA2 = ObjectData[2].concat();
 
   printA2.forEach((element)=>{
     listOldData.push(element);
-  })
+  });
   for(let i=0; i<printA.length; i++){
     const pA = printA[i];
-    if(videoIdCheck(listOldData, pA)){
+    if(videoIdCheck(listOldData, pA, "videoId")){
         continue;
     }
     pA.time = JST(pA.time);
@@ -1069,18 +1108,19 @@ function process2(printLN, printUC, printA, printP, ObjectData){
     printA2.push(pA);
   }
 
-  const printNewA = printA2.filter((element)=>{        
-    return element.timeBase > dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");         
+  const printA3 = printA2.filter((element)=>{        
+    return element.timeBase > daysUTCAdjust("subtract", 1, "d");         
   });
   console.log(printTLN);
-  printNewA.sort(sortDate);
+  printA3.sort(sortDate);
+  const printNewA = timeFrame(printA3);
 
 
-  const printP2 = ObjectData[3][1];
+  const printP2 = ObjectData[3][1].concat();
 
   for(let i=0; i<printP.length; i++){    
     const pP = printP[i];
-    if(videoIdCheck(printP2, pP)){
+    if(videoIdCheck(printP2, pP, "videoId")){
         continue;
     }
     pP.time = JST(pP.time);
@@ -1089,7 +1129,7 @@ function process2(printLN, printUC, printA, printP, ObjectData){
   }
 
   const printP3 = printP2.filter((element)=>{        
-    return element.timeBase > dayjs().utc().subtract(3, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");         
+    return element.timeBase > daysUTCAdjust("subtract", 3, "d");         
   });
 
   printP3.sort(sortDateReverse);
@@ -1100,8 +1140,16 @@ function process2(printLN, printUC, printA, printP, ObjectData){
 }
 
 async function apis(){
-  // gMyrAOtD-YM 6月30日開始
-  const listAll = ["iDJw_aXZaoc", "Cm_2RoG1ACo", "ku2vGtr1mYg", "xdUpMKGdWWI", "gMyrAOtD-YM"];
+  // _6WOX7G7pKE 糶マシュマロ
+  // ygS0o0lXjSQ ミュウ・ガルシア同時視聴
+  //DIvEr7QsVfA,y5-xY1Q8iPI,JVTxo4jdrjU よづりC+Rust
+  //6d5k3e1-g_M ミーナ朝活
+  //DBL1-5Pjuaw よづりOnliUp!ショトカ練習
+  //2Yf_CqnvaP8 ミュウ・ガルシアのモラード放送局
+  //kGxpBjOXW5g るみなす雑談
+  //030fdEmGgWc よづりスマブラ参加型
+  //WlS8WFdWC5Y リラあつ森
+  const listAll = ["iDJw_aXZaoc", "_6WOX7G7pKE", "ygS0o0lXjSQ", "DIvEr7QsVfA", "6d5k3e1-g_M", "y5-xY1Q8iPI", "JVTxo4jdrjU", "DBL1-5Pjuaw", "2Yf_CqnvaP8", "kGxpBjOXW5g", "030fdEmGgWc", "WlS8WFdWC5Y"];
   await Promise.all(listApi.map(async (URL, index)=>{
     try{
       const response = await fetch(URL());
@@ -1117,10 +1165,7 @@ async function apis(){
     }    
   }));
 
-  const printLN = new Array();
-  const printUC = new Array();
-  const printA = new Array();
-  const printP = new Array();
+  const printLN=[], printUC=[], printA=[], printP=[];
   await Promise.all(divisor(listAll).map(async (array)=>{
     try{
       const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,liveStreamingDetails,status,contentDetails&id=${array}&maxResults=50&key=${key2}`);
@@ -1147,11 +1192,11 @@ async function apis(){
         // UCmKfT7daL3aOt9o-PBJzOug は ダンジョンズ&ドラゴンズのチャンネルID
         // UCg_xsJxJNVmAdMwXIvPNmTA は 甜瓜あんのチャンネルID
         const checkID = new RegExp(`UCXPSFGZZrJ0tQEeP7R2jRqQ|UCOg01LJmZF9UnwFbly73CVw|UCYcnLc0n1ryBDZeGWQTVJ_g|UCmKfT7daL3aOt9o-PBJzOug|UCg_xsJxJNVmAdMwXIvPNmTA|${reTUI(channelIds)}`);
-        if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined)){
+        if((cJson.snippet.liveBroadcastContent==="live" || cJson.snippet.liveBroadcastContent==="upcoming") && cJson.liveStreamingDetails.actualStartTime!==undefined && cJson.liveStreamingDetails.actualEndTime===undefined){
           if(cJson.status.uploadStatus==="processed" && !checkID.test(cJson.snippet.channelId)){
             continue;
           }
-          if(cJson.id === "oOKeXnYFVgA"){
+          if(cJson.id === millionEnduranceVideoId){
             continue;
           }
           printLN.push(rOLN(cJson, icon1, icon2));
@@ -1160,14 +1205,22 @@ async function apis(){
             continue;
           }
           printUC.push(rOUC(cJson, icon1, icon2));
-        }else if(cJson.snippet.liveBroadcastContent==="none" || (cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration!=="P0D")){
+        }else if(cJson.snippet.liveBroadcastContent==="none" || cJson.snippet.liveBroadcastContent==="live"){
           if(cJson.liveStreamingDetails===undefined){
             if(checkID.test(cJson.snippet.channelId)){
               printP.push(rOP(cJson, icon1, icon2));
             }
             continue;              
           }
-          if((cJson.contentDetails.duration.match(/[0-9]{1,2}(?=H)/)===null && (cJson.contentDetails.duration.match(/[0-9]{1,2}(?=M)/)===null || cJson.contentDetails.duration.match(/[0-9]{1,2}(?=M)/)[0]<30)) && !checkID.test(cJson.snippet.channelId)){
+          const checkH = /\d{1,2}(?=H)/;
+          const checkM = /\d{1,2}(?=M)/;
+          if((cJson.contentDetails.duration.match(checkH)===null && (cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 30)) && !checkID.test(cJson.snippet.channelId)){
+            continue;
+          }
+          if(cJson.contentDetails.duration.match(checkH)===null && 
+              (((cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 10) && new RegExp(postedVideosCheckSongs, "i").test(cJson.snippet.title)) || 
+               ((cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 20) && new RegExp(postedVideosCheckEtc, "i").test(cJson.snippet.title)))){
+            printP.push(rOA(cJson, icon1, icon2));
             continue;
           }
           printA.push(rOA(cJson, icon1, icon2));
@@ -1183,25 +1236,20 @@ async function apis(){
 
 
 const adjust02 = (listAll3, ObjectData)=>{
-  const printLN = new Array();
-  const printUC = new Array();
-  const printA = new Array();
-  const printP = new Array();
-  const listT = new Array();
+  const printLN=[], printUC=[], printA=[], printP=[], listT=[];
   for(let i=0; i<listAll3.length; i++){
     const cJson = listAll3[i];
     const {icon1, icon2} = collaboration(cJson);
     if(icon1===shakeHands && icon2.length===0){
       continue;
     }
-    if((cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration==="P0D") || (cJson.snippet.liveBroadcastContent==="upcoming" && cJson.liveStreamingDetails.actualStartTime!==undefined && cJson.liveStreamingDetails.actualEndTime ===undefined)){
-      if(cJson.id === "oOKeXnYFVgA"){
+    if((cJson.snippet.liveBroadcastContent==="live" || cJson.snippet.liveBroadcastContent==="upcoming") && cJson.liveStreamingDetails.actualStartTime!==undefined && cJson.liveStreamingDetails.actualEndTime===undefined){
+      if(cJson.id === millionEnduranceVideoId){
         cJson.liveStreamingDetails.actualStartTime = "2023-04-14T14:02:07Z";
         ObjectData.splice(4, 1, rOMP(cJson, icon1, icon2));
         continue;
       }
       const newObjectLN = rOLN(cJson, icon1, icon2);
-      newObjectLN.timeBase = standardTime(newObjectLN.timeBase);
       printLN.push(newObjectLN);
       const listLoginNames = cJson.snippet.description.match(/(?<=twitch\.tv\/)\w+/g);
       if(listLoginNames!==null && channelIdCheck.test(cJson.snippet.channelId)){
@@ -1209,22 +1257,36 @@ const adjust02 = (listAll3, ObjectData)=>{
           if(!loginNameCheck.test(loginName)){
             listT.push(loginName);
           }
-        })
+        });
       }
     }else if(cJson.snippet.liveBroadcastContent==="upcoming"){
       const newObjectUC = rOUC(cJson, icon1, icon2);
-      if(newObjectUC.time > dayjs().utc().add(6, "M").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+      if(newObjectUC.time > daysUTCAdjust("add", 6, "M")){
         continue;
       }
       newObjectUC.timeBase = standardTime(newObjectUC.time);
       newObjectUC.time = JST(newObjectUC.time);
       printUC.push(newObjectUC);
-    }else if(cJson.snippet.liveBroadcastContent==="none" || (cJson.snippet.liveBroadcastContent==="live" && cJson.contentDetails.duration!=="P0D")){
+    }else if(cJson.snippet.liveBroadcastContent==="none" || cJson.snippet.liveBroadcastContent==="live"){
       if(cJson.liveStreamingDetails!==undefined){
+        if(cJson.id === millionEnduranceVideoId){
+          ObjectData.splice(4, 1, {videoId:millionEnduranceVideoId, live:false});
+          continue;
+        }
         const newObjectA = rOA(cJson, icon1, icon2);
         newObjectA.time = JST(newObjectA.time);
         newObjectA.time2 = duration(newObjectA.time2);
-        if(newObjectA.timeBase < dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+        const minutes = newObjectA.time2.match(/(?<=:)\d{2}(?=:)/)[0];
+        if(newObjectA.time2.match(/^\d{2}/)[0]==="00" && 
+           ((Number(minutes) < 5 && new RegExp(postedVideosCheckSongs, "i").test(newObjectA.videoTitle)) || 
+            (Number(minutes) < 20 && new RegExp(postedVideosCheckEtc, "i").test(newObjectA.videoTitle)))){
+          if(newObjectA.timeBase < daysUTCAdjust("subtract", 3, "d")){
+            continue;
+          } 
+          printP.push(newObjectA);
+          continue;
+        }
+        if(newObjectA.timeBase < daysUTCAdjust("subtract", 1, "d")){
           continue;
         }          
         printA.push(newObjectA);
@@ -1232,7 +1294,7 @@ const adjust02 = (listAll3, ObjectData)=>{
         const newObjectP = rOP(cJson, icon1, icon2);
         newObjectP.time = JST(newObjectP.time);
         newObjectP.time2 = duration(newObjectP.time2);
-        if(newObjectP.timeBase < dayjs().utc().subtract(3, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+        if(newObjectP.timeBase < daysUTCAdjust("subtract", 3, "d")){
           continue;
         }          
         printP.push(newObjectP);
@@ -1254,20 +1316,17 @@ const adjust02 = (listAll3, ObjectData)=>{
     printA.push(object);
   });
   printA.sort(sortDate);
+  const printNewA = timeFrame(printA);
 
   printTP.forEach((object)=>{
     printP.push(object);
-  })
+  });
   printP.sort(sortDateReverse);
   const printNewP = [cPV(printP), printP];
       
-  ObjectData.splice(0, 4, printLN, printNewUC, printA, printNewP);
+  ObjectData.splice(0, 4, printLN, printNewUC, printNewA, printNewP);
 
-  const listNewT = listT.filter((loginName, index)=>{
-    if(listT.indexOf(loginName)===index){
-      return loginName;
-    }
-  });
+  const listNewT = deDuplication(listT);
   for(let i=0; i<listNewT.length; i++){
     if(listTLNC.includes(listNewT[i])){
       continue;
@@ -1277,8 +1336,7 @@ const adjust02 = (listAll3, ObjectData)=>{
 }
 
 async function adjust01s(){
-  const list0 = new Array();
-  const listAll2 = new Array();
+  const list0=[], listAll2=[], listAll3=[];
   ObjectData[0].forEach((element)=>{
     if(element.platform==="youtube"){
       listAll2.push(element.videoId);
@@ -1290,7 +1348,7 @@ async function adjust01s(){
   list0.flat().forEach((element)=>{
     listAll2.push(element.videoId);
   });
-  ObjectData[2].forEach((element)=>{
+  ObjectData[2].flat().forEach((element)=>{
     if(element.platform==="youtube"){
       listAll2.push(element.videoId);
     }
@@ -1299,6 +1357,7 @@ async function adjust01s(){
     listAll2.push(element.videoId);
   });
   listAll2.push(ObjectData[4].videoId);
+  
   for(let i=0; i<liveAdjustList.length; i++){
     const videoId = liveAdjustList[i];
     if(listAll2.includes(videoId)){
@@ -1313,7 +1372,6 @@ async function adjust01s(){
     }
     listAll2.push(videoId);
   }
-  const listAll3 = new Array();
 
   let flag = false;
   await Promise.all(divisor50(listAll2).map(async (array)=>{
@@ -1387,23 +1445,17 @@ async function getStreams() {
           if(!loginNameCheck.test(loginName)){
             listC.push(loginName);
           }
-        })
+        });
       }
     });
     const listT = printTLN.filter((object)=>{
-      if(!loginNameCheck.test(object.loginName)){
-        return object;
-      }
+        return !loginNameCheck.test(object.loginName);
     });
     listTLNC.splice(0, listTLNC.length);
     listT.forEach((object)=>{
       listTLNC.push(object.loginName);
     });
-    const listNewC = listC.filter((loginName, index)=>{
-      if(listC.indexOf(loginName)===index){
-        return loginName;
-      }
-    });
+    const listNewC = deDuplication(listC);
     for(let i=0; i<listNewC.length; i++){
       if(listTLNC.includes(listNewC[i])){
         continue;
@@ -1420,8 +1472,7 @@ async function getStreams() {
 }
 
 async function getArchives(listTwitch){
-  const listTODA = new Array();
-  const listTODP = new Array();
+  const listTODA=[], listTODADD=[], listTODADD2=[], listTODP=[];
   let flag = false;
   await Promise.all(listTwitch.map(async (userId, index)=>{
     const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userId}&type=all&first=5`;
@@ -1457,21 +1508,32 @@ async function getArchives(listTwitch){
   if(flag){
     return;
   }
-  const listTODA2 = listTODA.filter((object)=>{
-    return object.timeBase > dayjs().utc().subtract(1, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms");
-  });
-  printTA.splice(0, printTA.length);
-  for(let i=0; i<listTODA2.length; i++){    
-    const tOD = listTODA2[i];
-    if(printTLN.find((object)=>{if(tOD.streamId===object.streamId){return true}})){
+  for(let i=0; i<listTODA.length; i++){    
+    const tOD = listTODA[i];
+    if(videoIdCheck(printTLN, tOD, "streamId")){
         continue;
     }
-    printTA.push(tOD);
+    listTODADD.push(tOD);
   }
+  for(let i=0; i<printTA.length; i++){
+    const tOD = printTA[i];
+    if(videoIdCheck(listTODADD, tOD, "videoIdT")){
+      continue;
+    }
+    listTODADD2.push(tOD);
+  }
+  const listTODA2 = listTODADD.concat(listTODADD2);
+  
+  printTA.splice(0, printTA.length);
+  listTODA2.forEach((object)=>{
+    if(object.timeBase > daysUTCAdjust("subtract", 1, "d")){
+      printTA.push(object);
+    }
+  });
 
   printTP.splice(0, printTP.length);
   listTODP.forEach((object)=>{
-    if(object.timeBase > dayjs().utc().subtract(3, "d").format("YYYY-MM-DD"+"T"+"HH:mm:ss.ms")){
+    if(object.timeBase > daysUTCAdjust("subtract", 3, "d")){
       printTP.push(object);
     }
   });
@@ -1494,33 +1556,33 @@ async function getShowRoom(){
 }
 
   
-cron.schedule('0 20,50 * * * *', () => {
+cron.schedule('0 5,35 * * * *', ()=>{
   apis();
   console.log(key);
   console.log('30分経過だよ');
 });
 
-cron.schedule('0 5,35 * * * *', () => {
+cron.schedule('0 20,50 * * * *', ()=>{
   liveAdjust();
 });
 
-cron.schedule('10 5,35 * * * *', () => {
+cron.schedule('10 20,50 * * * *', ()=>{
   upcomingAdjust();
 });
 
-cron.schedule('20 * * * * *', () => {
+cron.schedule('20 * * * * *', ()=>{
   adjust01s();
 });
 
-cron.schedule('30 * * * * *', () => {
+cron.schedule('30 * * * * *', ()=>{
   getStreams();
 });
 
-cron.schedule('40 * * * * *', () => {
+cron.schedule('40 * * * * *', ()=>{
   getShowRoom();
 });
 
-cron.schedule('0 0 * * * *', () => {
+cron.schedule('0 0 * * * *', ()=>{
   Official.api2(key2);
   devA2();
   devB2();
@@ -1536,12 +1598,12 @@ devC2();
 devD2();
 devE2();
 
-cron.schedule('0 59 * * * *', () => {
+cron.schedule('0 59 * * * *', ()=>{
   Mina.api3(key2);
 });
 Mina.api3(key2);
 
-app.get('/', (req, res) => {
+app.get('/', (req, res)=>{
   res.render('hello.ejs', {ObjectData:ObjectData});
 });
 
