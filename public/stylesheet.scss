@@ -149,6 +149,15 @@ header {
 
 }
 
+.invisibleCover{
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
 .optionParentFrame{
   margin: 0 auto;
 
@@ -164,8 +173,6 @@ header {
 
   .optionParent{
     position: relative;
-  
-    margin: 0 auto;
     
     width: 480px;
     border: 1.6px solid #807e83;
@@ -186,6 +193,23 @@ header {
       width: 100%;
     
       margin: 0px;
+    }
+
+    #bookTitle{
+      position: absolute;
+      top: 50%;
+      left: 55%;
+
+      color: #215dc6;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: underline;
+
+      margin: 0;
+
+      transform: translate(-50%, -50%);
+
+      display: inline-block;
     }
 
     .optionImageCredit{
@@ -213,17 +237,33 @@ header {
     background-color: #A0CEA8;
   }
 
+  #whiteBoard{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 65%;
+    height: 60%;
+
+    background-color: #fff;
+    border-radius: 10px;
+
+    transform: translate(-50%, -50%);
+  }
+
   #birthdayString{
     top: 50%;
   
-    color: #86b81b;
+    color: #f8c6bd;
+    //color: #D093BF;
     font-size: 22px;
     text-shadow: 0.6px 0.6px 0px #333, -0.6px 0.6px 0px #333, 0.6px -0.6px 0px #333, -0.6px -0.6px 0px #333;
 
-    transform: translate(0%,-50%);
+    transform: translateY(-50%);
 
     #underLine{
-      color: #86b81b;
+      color: #f8c6bd;
+      //color: #D093BF;
       //text-decoration: underline;
     
       cursor: pointer;
@@ -277,6 +317,8 @@ header {
       font-size: 22px;
 
       transform: translate(-50%, -50%);
+
+      transition: color 0.32s;
     }
 
     #violetWindow{
@@ -330,6 +372,230 @@ header {
 
       width: 100%;
       height: 100%;
+
+      .cardCollection{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+  
+        width: 50%;
+  
+        transform: translate(-50%, -50%) rotateY(270deg);
+        transform-origin: 50%;
+  
+        transition: transform 1.2s 0s linear;
+      }
+      #devilCard{
+        transform: translate(-50%, -50%) rotateY(0deg);
+  
+        transition: transform 1.2s 0.3s linear;
+      }
+      #firstStepRuki{
+        width: 53%;
+        #secondStepRuki{
+          transition: transform 1.2s 0s ease;
+          .giggles{
+            animation: giggles 1.0s linear 0s 2;
+          }
+          @keyframes giggles{
+            0%, 50%, 100%{
+              transform: rotate(0deg);
+            }
+            25%{
+              transform: rotate(3deg);
+            }
+            75%{
+              transform: rotate(-3deg);
+            }
+          }
+          #vitamineThumbnail{
+            width: 100%;
+            
+            border-radius: 5px;
+            
+            transform: rotate(-90deg);
+          }
+        }
+      }
+      #shadowSlide{
+        width: 100%;
+        height: 100%;
+  
+        background-color: #333;
+        box-shadow: 0px 0px 24px 0px #333, 0px 0px 36px 0px #333, 0px 0px 48px 0px #333;
+  
+        transform: translateX(0%);
+        transition: transform 2.5s 0s linear;
+      }
+
+      #firstStepYun{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+  
+        width: 12%;
+  
+        transform: translate(-50%, -50%) rotate(90deg) translateX(100%);
+
+        #secondStepYun{
+          transform: rotate(0deg);
+          transform-origin: 100% 50%;
+
+          #thirdStepYun{
+            transform: translateX(0%);
+
+            #dolphin1{
+              width: 100%;
+            }
+          }
+
+          @keyframes thirdStepYun {
+            0%{
+              transform: translateX(0%);
+            }
+            100%{
+              transform: translateX(100%);
+            }
+          }
+          .thirdStepYun{
+            animation: thirdStepYun 1.3s ease-in 0.65s forwards;
+          }
+        }
+
+        @keyframes secondStepYun {
+          0%,33.33%,66.67%,100%{
+            transform: rotate(0deg);
+          }
+          16.67%, 83.33%{
+            transform: rotate(11deg);
+          }
+          50%{
+            transform: rotate(-11deg);
+          }
+        }
+        .secondStepYun{
+          animation: secondStepYun 1.8s linear 0.82s forwards; 
+        }
+      }
+
+      @keyframes firstStepYun {
+        0%{
+          transform: translate(-50%, -50%) rotate(90deg) translateX(100%);
+        }
+        50%{
+          transform: translate(-50%, -50%) rotate(90deg) translateX(-20%);
+        }
+        100%{
+          transform: translate(-50%, -50%) rotate(90deg) translateX(0%);
+        }
+      }
+      .firstStepYun{
+        animation: firstStepYun 0.98s ease 1.65s forwards;
+      }
+
+      .dolphin{
+        position: absolute;
+        top: calc(50% - 16.076952px);
+  
+        width: 12%;
+  
+        transform: translate(-50%, -50%) rotate(60deg);
+        transform-origin: 50% 120px;
+      }
+
+      #dolphin2{
+        left: 87.5%;
+      }
+      #dolphin3{
+        left: 50%;
+      }
+      #dolphin4{
+        left: 12.5%;
+      }
+
+      @keyframes dolphinJump {
+        0%{
+          transform: translate(-50%, -50%) rotate(60deg);
+        }
+        100%{
+          transform: translate(-50%, -50%) rotate(-60deg);
+        }
+      }
+      .dolphinJump{
+        animation: dolphinJump 2.8s ease-in-out 0.7s forwards;
+      }
+
+      #fourthStepYun{
+        position: absolute;
+        top: 50%;
+        left: 0px;
+  
+        width: 12%;
+  
+        transform: translate(-20%, -50%) rotate(-45deg) translateX(-100%);
+
+        #fifthStepYun{
+          transform-origin: 0% 50%;
+          
+          #dolphin5{
+            width: 100%;
+  
+            transform: rotateY(180deg);
+            transform-origin: center;
+          }
+        }
+
+        @keyframes fifthStepYun {
+          0%,33.33%,66.67%,100%{
+            transform: rotate(0deg);
+          }
+          16.67%, 83.33%{
+            transform: rotate(-10deg);
+          }
+          50%{
+            transform: rotate(10deg);
+          }
+        }
+        .fifthStepYun{
+          animation: fifthStepYun 1.8s linear 0.82s forwards; 
+        }
+      }
+
+      @keyframes fourthStepYun {
+        0%{
+          transform: translate(-20%, -50%) rotate(-45deg) translateX(-100%);
+        }
+        100%{
+          transform: translate(-20%, -50%) rotate(-45deg) translateX(0%);
+        }
+      }
+      .fourthStepYun{
+        animation: fourthStepYun 0.98s ease 0.98s forwards;
+      }
+
+      #blackSea{
+        position: absolute;
+        top: 50%;
+        left: 0%;
+  
+        width: 100%;
+        height: 50%;
+  
+        background-color: #333;
+        border-top: 3px solid #333;
+      }
+
+      @keyframes seaHorizon {
+        0%{
+          border-top: 3px solid #333;
+        }
+        100%{
+          border-top: 3px solid #fff;
+        }
+      }
+      .seaHorizon{
+        animation: seaHorizon 0.65s linear 0.65s forwards;
+      }
 
       #kiwiParent{
         position: absolute;
@@ -944,18 +1210,9 @@ header {
         visibility: hidden;
       }
       .twoHeartsFadeIn{
-        animation: twoHeartsFadeIn 1.6s 0.4s ease-out forwards;
+        animation: twoHeartsFadeIn 1.8s 0.2s ease-out forwards;
       }
     }
-  }
-
-  #invisibleCover{
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
   }
 
   .bICPSlide{
@@ -1044,6 +1301,8 @@ header {
   }
 
   #noneImage{
+    aspect-ratio: 4/3;
+
     background-color: #9fcff7;
   }
 
@@ -1167,6 +1426,18 @@ header {
 
 }
 
+#wikipediaParentFrame{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin: 0;
+
+  transform: translate(-50%, -50%);
+
+  display: block;
+}
+
 #notice{
   margin: 0 auto;
 
@@ -1275,6 +1546,10 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+  }
+
+  .videoArchivesCustom{
+    margin-bottom: 24px;
   }
 
   .scheduleDate{
@@ -1469,6 +1744,7 @@ header {
           
           .collaborationIcon{
             width: 20%;
+            aspect-ratio: 1/1;
           
             border-radius: 50%;
 
@@ -1508,9 +1784,12 @@ header {
       position: relative;
     
       width: 100%;
+
+      background-color: #000;
     
       .theater{
         width: 100%;
+        aspect-ratio: 4/3;
       }
       
       .slideFrame{
@@ -1546,6 +1825,8 @@ header {
     
         img{
           width: 100%;
+          aspect-ratio: 16/9;
+          object-fit: cover;
         }
       }
       .slideCurrent{
@@ -1591,6 +1872,10 @@ header {
       }  
     }
   }
+}
+
+#containerA{
+  padding-bottom: 0px;
 }
 
 #containerNico{
@@ -1671,53 +1956,24 @@ header {
   }
 }
 
-#containerFirework{
-  padding-top: 36px;
-  padding-bottom: 36px;
+#fireworkParent{
+  padding-top: 12px;
+  padding-bottom: 24px;
 
   display: none;
 
   #fireworkProcessing{
     margin: 0 auto;
-  
+
     width: 480px;
     height: 360px;
+
+    border: 12px ridge #bbbcbf;
   
     display: block;
   }
 }
 
-#shakeHandsDisplayParent{
-  position: fixed;
-  bottom: 8px;
-  z-index: 114514;
-
-  width: 1720px;
-
-  display: block;
-  #shakeHandsDisplay{
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-  
-    width: 108px;
-    height: 108px;
-  
-    background-color: #505050;
-    
-    border: 0.8px solid #505050;
-    border-radius: 50%;
-
-    overflow: hidden;
-  
-    cursor: pointer;
-    #shakeHandsIcon{
-      width: 100%;
-
-      transition: opacity 0.32s;
-    }
-  }
-}
 
 #contactStringParent{
   position: relative;
@@ -1763,33 +2019,102 @@ header {
       }
     }
   }
-  #topScrollParent{
+  .buttonBasedParent{
     position: fixed;
     bottom: 8px;
     z-index: 114514;
   
     width: 1720px;
-  
-    display: none;
-    #topScroll{
+    .buttonBased{
       position: absolute;
       bottom: 12px;
       right: 12px;
     
-      text-align: center;
-    
       width: 108px;
       height: 108px;
     
-      color: #fff;
       background-color: #505050;
-      opacity: 0.5;
-      font-size: 57.6px;
-      line-height: 108px;
-      
       border-radius: 50%;
     
       cursor: pointer;
+    }
+  }
+  #topScrollParent{
+    display: none;
+    #topScroll{    
+      text-align: center;
+    
+      color: #fff;
+      opacity: 0.5;
+      font-size: 57.6px;
+      line-height: 108px;
+    }
+  }
+  #shakeHandsDisplayParent{
+    display: block;
+    #shakeHandsDisplay{    
+      border: 0.8px solid #505050;
+      border-radius: 50%;
+  
+      overflow: hidden;
+      #shakeHandsIcon{
+        width: 100%;
+  
+        transition: opacity 0.32s;
+      }
+    }
+  }
+  #wikipediaCallParent{
+    z-index: 8101081;
+
+    display: block;
+    .wikipediaCall{
+      text-align: center;
+    
+      color: #fff;
+      background-color: #215dc6;
+      font-size: 57.6px;
+      line-height: 108px;
+      border: 0.8px solid #505050;
+
+      transition-property: color, background-color;
+
+      transition-duration: 1.0s;
+    }
+    .flagWikipediaCall{
+      color: #215dc6;
+      background-color: #fff;
+    }
+  }
+}
+
+#wikipediaNavi{
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: #333;
+
+  transform: translateY(-100%);
+  z-index: 8101000;
+
+  transition: transform 1.0s;
+
+  #wikipediaView{
+    opacity: 0;
+  }
+  .wikipediaViewFadeIn{
+    animation: wikipediaViewFadeIn 3.0s linear 1.0s forwards;
+  }
+  @keyframes wikipediaViewFadeIn{
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 0.8;
     }
   }
 }
@@ -1893,6 +2218,10 @@ header {
 
     padding-bottom: 20px;
 
+    .videoArchivesCustom{
+      margin-bottom: 20px;
+    }
+
     .scheduleDate{
       font-size: 20px;
       border-radius: 4px;
@@ -1952,17 +2281,6 @@ header {
 
   }
 
-  #shakeHandsDisplayParent{  
-    width: 1103px;
-    #shakeHandsDisplay{
-      bottom: 10px;
-      right: 10px;
-  
-      width: 90px;
-      height: 90px;
-    }
-  }
-
   #containerRV{
     padding-top: 36px;
     padding-bottom: 36px;
@@ -1973,9 +2291,9 @@ header {
     padding-bottom: 34.8px;
   }
 
-  #containerFirework{
-    padding-top: 30px;
-    padding-bottom: 30px;
+  #fireworkParent{
+    padding-top: 10px;
+    padding-bottom: 20px;
   }
   
   #contactStringParent{
@@ -2005,15 +2323,24 @@ header {
         }
       }
     }
-    #topScrollParent{  
+    .buttonBasedParent{
       width: 1103px;
-      #topScroll{
+      .buttonBased{
         bottom: 10px;
         right: 10px;
     
         width: 90px;
         height: 90px;
-      
+      }
+    }
+    #topScrollParent{  
+      #topScroll{
+        font-size: 48px;
+        line-height: 90px;
+      }
+    }
+    #wikipediaCallParent{
+      .wikipediaCall{
         font-size: 48px;
         line-height: 90px;
       }
@@ -2085,13 +2412,9 @@ header {
     }
   }  
 
-  #shakeHandsDisplayParent{  
-    width: 733px;
-  }
-
   #contactStringParent{
     width: 733px;
-    #topScrollParent{  
+    .buttonBasedParent{  
       width: 733px;
     }
   }
@@ -2151,13 +2474,9 @@ header {
     }
   }  
 
-  #shakeHandsDisplayParent{  
-    width: 564px;
-  }
-
   #contactStringParent{
     width: 564px;
-    #topScrollParent{  
+    .buttonBasedParent{  
       width: 564px;
     }
   }
@@ -2213,6 +2532,9 @@ header {
 
     margin-top: 4px;
     margin-bottom: 16px;
+    #whiteBoard{
+      border-radius: 6px;
+    }
     #birthdayString{
       font-size: 16px;
       text-shadow: 0.4px 0.4px 0px #333, -0.4px 0.4px 0px #333, 0.4px -0.4px 0px #333, -0.4px -0.4px 0px #333;
@@ -2239,6 +2561,34 @@ header {
       }
 
       .birthdayImageCoverChild{
+
+        #firstStepRuki{
+          #secondStepRuki{
+            #vitamineThumbnail{        
+              border-radius: 3px;
+            }
+          }
+        }
+
+        .dolphin{
+          top: calc(50% - 10.717968px);
+
+          transform-origin: 50% 80px;
+        }
+
+        #blackSea{
+          border-top: 1.8px solid #333;
+        }
+  
+        @keyframes seaHorizon {
+          0%{
+            border-top: 1.8px solid #333;
+          }
+          100%{
+            border-top: 1.8px solid #fff;
+          }
+        }
+
         #kiwiParent{
           #kiwiCover{
             #kiwiResearch{
@@ -2404,6 +2754,9 @@ header {
       width: 320px;
   
       border-radius: 8px;
+      #bookTitle{
+        font-size: 16px;
+      }
       .optionImageCredit{
         font-size: 7px;
       }
@@ -2475,6 +2828,9 @@ header {
     border-bottom: 3px solid #DCDDDD;
 
     padding-bottom: 14px;
+    .videoArchivesCustom{
+      margin-bottom: 14px;
+    }
     .scheduleDate{
       font-size: 13px;
       border-radius: 3px;
@@ -2605,29 +2961,20 @@ header {
     }
   }
 
-  #containerFirework{
-    padding-top: 20px;
-    padding-bottom: 20px;
+  #fireworkParent{
+    padding-top: 4px;
+    padding-bottom: 16px;
   
     #fireworkProcessing{
       width: 360px;
       height: 270px;
-    }
-  }
- 
-  #shakeHandsDisplayParent{  
-    width: 352px;
-    #shakeHandsDisplay{
-      bottom: 6px;
-      right: 6px;
-  
-      width: 60px;
-      height: 60px;
+
+      border: 9px ridge #bbbcbf;
     }
   }
 
   #contactStringParent{
-    width: 352px;
+    width: 363px;
 
     border-bottom: 3px solid #DCDDDD;
   
@@ -2655,15 +3002,24 @@ header {
         }
       }
     }
-    #topScrollParent{  
-      width: 352px;
-      #topScroll{
+    .buttonBasedParent{
+      width: 363px;
+      .buttonBased{
         bottom: 6px;
         right: 6px;
     
         width: 60px;
         height: 60px;
-      
+      }
+    }
+    #topScrollParent{  
+      #topScroll{
+        font-size: 32px;
+        line-height: 60px;
+      }
+    }
+    #wikipediaCallParent{
+      .wikipediaCall{
         font-size: 32px;
         line-height: 60px;
       }
