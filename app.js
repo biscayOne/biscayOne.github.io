@@ -1149,7 +1149,8 @@ async function apis(){
   //kGxpBjOXW5g るみなす雑談
   //030fdEmGgWc よづりスマブラ参加型
   //WlS8WFdWC5Y リラあつ森
-  const listAll = ["iDJw_aXZaoc", "_6WOX7G7pKE", "ygS0o0lXjSQ", "DIvEr7QsVfA", "6d5k3e1-g_M", "y5-xY1Q8iPI", "JVTxo4jdrjU", "DBL1-5Pjuaw", "2Yf_CqnvaP8", "kGxpBjOXW5g", "030fdEmGgWc", "WlS8WFdWC5Y"];
+  //W9xZaqGNavs よづりAPEX
+  const listAll = ["iDJw_aXZaoc", "_6WOX7G7pKE", "ygS0o0lXjSQ", "DIvEr7QsVfA", "6d5k3e1-g_M", "y5-xY1Q8iPI", "JVTxo4jdrjU", "DBL1-5Pjuaw", "2Yf_CqnvaP8", "kGxpBjOXW5g", "030fdEmGgWc", "WlS8WFdWC5Y", "W9xZaqGNavs"];
   await Promise.all(listApi.map(async (URL, index)=>{
     try{
       const response = await fetch(URL());
@@ -1218,7 +1219,7 @@ async function apis(){
             continue;
           }
           if(cJson.contentDetails.duration.match(checkH)===null && 
-              (((cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 10) && new RegExp(postedVideosCheckSongs, "i").test(cJson.snippet.title)) || 
+              (((cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 10) && (new RegExp(postedVideosCheckSongs, "i").test(cJson.snippet.title) || cJson.id==="lYJxRGfXV6I")) || 
                ((cJson.contentDetails.duration.match(checkM)===null || Number(cJson.contentDetails.duration.match(checkM)[0]) < 20) && new RegExp(postedVideosCheckEtc, "i").test(cJson.snippet.title)))){
             printP.push(rOA(cJson, icon1, icon2));
             continue;
@@ -1278,7 +1279,7 @@ const adjust02 = (listAll3, ObjectData)=>{
         newObjectA.time2 = duration(newObjectA.time2);
         const minutes = newObjectA.time2.match(/(?<=:)\d{2}(?=:)/)[0];
         if(newObjectA.time2.match(/^\d{2}/)[0]==="00" && 
-           ((Number(minutes) < 5 && new RegExp(postedVideosCheckSongs, "i").test(newObjectA.videoTitle)) || 
+           ((Number(minutes) < 10 && (new RegExp(postedVideosCheckSongs, "i").test(newObjectA.videoTitle) || newObjectA.videoId==="lYJxRGfXV6I")) || 
             (Number(minutes) < 20 && new RegExp(postedVideosCheckEtc, "i").test(newObjectA.videoTitle)))){
           if(newObjectA.timeBase < daysUTCAdjust("subtract", 3, "d")){
             continue;
