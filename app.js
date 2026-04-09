@@ -13,31 +13,7 @@ dayjs.extend(utc);
 let key = "AIzaSyBo5TPmmERm3zYP0Ngau6PlkaFu9XIBgiw";
 const key2 = "AIzaSyBo5TPmmERm3zYP0Ngau6PlkaFu9XIBgiw";
 const nowHour = dayjs().utc().add(9, "h").hour();
-if(nowHour<2){
-  key = "AIzaSyC5AqocsQC83pRCKcXEa9zoUiHLgMECwj0";
-}else if(nowHour<4){
-  key = "AIzaSyBDOlCzTCfxtpe9Lk7OT60v0VfRIn_RSrA";
-}else if(nowHour<6){
-  key = "AIzaSyARAMAEiJna6Tr5yf8SAulL7TZ1w0w7R5k";
-}else if(nowHour<8){
-  key = "AIzaSyCiqUsLRH44u9UcwZQRL7_dIMljqMIf4JI";
-}else if(nowHour<10){
-  key = "AIzaSyDb94UH4XZWe-OlMcWBSLwVcJrCYye8dUU";
-}else if(nowHour<12){
-  key = "AIzaSyCd7IonmJLfHH_5V8CrKv3kg6w1VCSPV1Q";
-}else if(nowHour<14){
-  key = "AIzaSyAc0ECaEi65tna4h1hb7NMbsnnmavn3K0Q";
-}else if(nowHour<16){
-  key = "AIzaSyAk5iMZRi4a0UmcvEc3C9rUno2o2fu9fzQ";
-}else if(nowHour<18){
-  key = "AIzaSyAP-A7RSKhcI2n-PpuhiLg9fJgYoJMoH-E";
-}else if(nowHour<20){
-  key = "AIzaSyCluyrETb8amHgNVArDqFzeJz07QJ7Vr7c";
-}else if(nowHour<22){
-  key = "AIzaSyDYc1BNMUNQwT-cWriHaKb_NTPL7YTI3gc";
-}else if(nowHour<24){
-  key = "AIzaSyDoqa0Z7dE2CpGwLi90w-KOV65rx6WdUAU";
-}
+
 cron.schedule('0 0,1,2,3,4 0 * * *', ()=>{
   key = "AIzaSyC5AqocsQC83pRCKcXEa9zoUiHLgMECwj0";
 });
